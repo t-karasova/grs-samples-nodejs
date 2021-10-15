@@ -24,7 +24,7 @@ async function searchProductWithPageSizeAndNextPageToken() {
     pageSize: tryPageSize, // try different page sizes, including those over 100
     placement: defaultSearchPlacement,
     query: query_phrase, // experiment with other query strings
-    visitorId: visitorId,
+    visitorId: 'visitor',
   };
   let searchResponse = await searchClient.search(searchRequest);
   console.log(`Products found on the first page:\n`, searchResponse[0]);

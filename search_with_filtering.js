@@ -15,7 +15,7 @@ const searchClient = new SearchServiceClient({
 
 const MAX_RESULTS = 10;
 const sampleFilter = 'colorFamily: ANY("black")'; // experiment with filters
-const sampleQuery = 'Nest'; // experiment with other query strings
+const sampleQuery = 'Nest'; 
 
 // [START search for product using filter]
 async function searchProductWithFilter() {
@@ -24,7 +24,7 @@ async function searchProductWithFilter() {
     filter: sampleFilter,
     placement: defaultSearchPlacement,
     query: sampleQuery,
-    visitorId: visitorId,
+    visitorId: 'visitor',
   };
 
   const searchResponse = await searchClient.search(searchRequest);

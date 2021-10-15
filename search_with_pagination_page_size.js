@@ -26,14 +26,9 @@ async function searchProductWithPageSize() {
     pageSize: tryPageSize,
     placement: defaultSearchPlacement,
     query: sampleQuery,
-    visitorId: visitorId,
+    visitorId: 'visitor',
   };
-  const searchResponse = await searchClient.search(searchRequest
-    //, {
-    // autoPaginate: true,
-    // pageSize: tryPageSize,
-  // }
-  );
+  const searchResponse = await searchClient.search(searchRequest);
   const results = searchResponse[0];
 
   console.log(searchResponse);

@@ -26,7 +26,7 @@ async function searchProductWithPageSizeAndOffset() {
     offset: tryOffset,
     placement: defaultSearchPlacement,
     query: query_phrase, // experiment with other query strings
-    visitorId: visitorId,
+    visitorId: 'visitor',
   };
   const searchResponse = await searchClient.search(searchRequest);
   console.log(

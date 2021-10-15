@@ -118,7 +118,7 @@ async function searchProduct(query) {
         placement: defaultSearchPlacement,
         branch: defaultBranch,
         query: query,
-        visitorId: visitorId
+        visitorId: 'visitor'
     };
     const searchResponse = await searchClient.search(searchRequest);
     return searchResponse[0];
@@ -132,7 +132,7 @@ async function searchProductWithFilter(query, filter) {
         branch: defaultBranch,
         query: query,
         filter: filter,
-        visitorId: visitorId
+        visitorId: 'visitor'
     };
     const searchResponse = await searchClient.search(searchRequest);
     return searchResponse[0];
@@ -146,7 +146,7 @@ async function searchProductWithPageSize(query, pageSize) {
         branch: defaultBranch,
         query: query,
         pageSize: pageSize,
-        visitorId: visitorId
+        visitorId: 'visitor'
     };
     const searchResponse = await searchClient.search(searchRequest);
     return searchResponse[0];
@@ -161,7 +161,7 @@ async function searchProductWithPageSizeAndOffset(query, pageSize, offset) {
         query: query,
         pageSize: pageSize,
         offset: offset,
-        visitorId: visitorId
+        visitorId: 'visitor'
     };
     const searchResponse = await searchClient.search(searchRequest);
     return searchResponse[0];
@@ -176,7 +176,7 @@ async function searchProductWithPageSizeAndNextPageToken(query, pageSize, nextPa
         query: query,
         pageSize: pageSize,
         offset: nextPageToken,
-        visitorId: visitorId
+        visitorId: 'visitor'
     };
     const searchResponse = await searchClient.search(searchRequest);
     return searchResponse[0];
@@ -190,7 +190,7 @@ async function searchAndOrderProducts(query, orderBy) {
         branch: defaultBranch,
         query: query,
         orderBy: orderBy,
-        visitorId: visitorId
+        visitorId: 'visitor'
     };
     const searchResponse = await searchClient.search(searchRequest);
     return searchResponse[0];
@@ -208,7 +208,7 @@ async function searchProductsWithBoostSpec(query, condition, boost_score) {
         branch: defaultBranch,
         query: query,
         boostSpec: boostSpec,
-        visitorId: visitorId
+        visitorId: 'visitor'
     };
     const searchResponse = await searchClient.search(searchRequest);
     return searchResponse[0];
@@ -225,7 +225,7 @@ async function searchProductsWithQueryExpansionSpec(query, condition) {
         branch: defaultBranch,
         query: query,
         queryExpansionSpec: queryExpansionSpec,
-        visitorId: visitorId
+        visitorId: 'visitor'
     };
     const searchResponse = await searchClient.search(searchRequest);
     return searchResponse[0];
@@ -245,7 +245,7 @@ async function searchProductsWithTextualFacet(query, key) {
         branch: defaultBranch,
         query: query,
         facetSpec: facetSpec,
-        visitorId: visitorId
+        visitorId: 'visitor'
     };
     const searchResponse = await searchClient.search(searchRequest);
     return searchResponse[0];
@@ -267,7 +267,7 @@ async function searchProductsWithTextualFacetExcludedFilterKeys(query, key, [exc
         query: query,
         filter: filter,
         facetSpec: facetSpec,
-        visitorId: visitorId
+        visitorId: 'visitor'
     };
     const searchResponse = await searchClient.search(searchRequest);
     return searchResponse[0];
@@ -288,7 +288,7 @@ async function searchProductsWithTextualFacetRestrictedValues(query, key, [restr
         branch: defaultBranch,
         query: query,
         facetSpec: facetSpec,
-        visitorId: visitorId
+        visitorId: 'visitor'
     };
     const searchResponse = await searchClient.search(searchRequest);
     return searchResponse[0];
@@ -309,7 +309,7 @@ async function searchProductsWithNumericalFacet(query, key, [intervals]) {
         branch: defaultBranch,
         query: query,
         facetSpec: facetSpec,
-        visitorId: visitorId
+        visitorId: 'visitor'
     };
     const searchResponse = await searchClient.search(searchRequest);
     return searchResponse[0];
@@ -323,7 +323,7 @@ async function searchProductsWithVariantRollupKeys(query, [variantRollupKeys]) {
         branch: defaultBranch,
         query: query,
         variantRollupKeys: [variantRollupKeys],
-        visitorId: visitorId
+        visitorId: 'visitor'
     };
     const searchResponse = await searchClient.search(searchRequest);
     return searchResponse[0];
