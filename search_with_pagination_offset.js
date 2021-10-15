@@ -1,18 +1,18 @@
 /**
  * @fileoverview Search products by a substring and a filter.
  */
-const { SearchServiceClient } = require("@google-cloud/retail");
+const { SearchServiceClient } = require('@google-cloud/retail');
 
 // Requires a credentials file to be referenced through the following
 // environment variable
-process.env["GOOGLE_APPLICATION_CREDENTIALS"] = "./sa.json";
+process.env['GOOGLE_APPLICATION_CREDENTIALS'] = './sa.json';
 
-const projectId = "SET HERE VALID PROJECT NUMBER";
+const projectId = 'SET HERE VALID PROJECT NUMBER';
 
 const defaultSearchPlacement = `projects/${projectId}/locations/global/catalogs/default_catalog/placements/default_search`;
 
 const searchClient = new SearchServiceClient({
-  apiEndpoint: "test-retail.sandbox.googleapis.com",
+  apiEndpoint: 'test-retail.sandbox.googleapis.com',
 });
 
 // [START search for product defining page size and offset]
@@ -21,8 +21,8 @@ async function searchProductWithPageSizeAndOffset() {
     pageSize: 4, // try different page sizes, including those over 100
     offset: 1,
     placement: defaultSearchPlacement,
-    query: "Maxi_Nest",
-    visitorId: "visitor",
+    query: 'Nest_Maxi',
+    visitorId: 'visitor',
   };
   const searchResponse = await searchClient.search(searchRequest);
   console.log(searchResponse);

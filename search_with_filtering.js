@@ -1,28 +1,28 @@
 /**
  * @fileoverview Search products by a substring and a filter.
  */
-const { SearchServiceClient } = require("@google-cloud/retail");
+const { SearchServiceClient } = require('@google-cloud/retail');
 
 // Requires a credentials file to be referenced through the following
 // environment variable
-process.env["GOOGLE_APPLICATION_CREDENTIALS"] = "./sa.json";
+process.env['GOOGLE_APPLICATION_CREDENTIALS'] = './sa.json';
 
-const projectId = "SET HERE VALID PROJECT NUMBER";
+const projectId = 'SET HERE VALID PROJECT NUMBER';
 
 const defaultSearchPlacement = `projects/${projectId}/locations/global/catalogs/default_catalog/placements/default_search`;
 
 const searchClient = new SearchServiceClient({
-  apiEndpoint: "test-retail.sandbox.googleapis.com",
+  apiEndpoint: 'test-retail.sandbox.googleapis.com',
 });
 
-const sampleFilter = 'colorFamily: ANY("black")'; // experiment with filters
+const sampleFilter = '(colorFamily: ANY("black"))'; // experiment with filters
 
 // [START search for product using filter]
 async function searchProductWithFilter() {
   const searchRequest = {
     filter: sampleFilter,
     placement: defaultSearchPlacement,
-    query: 'Nest',
+    query: 'Nest_Maxi',
     visitorId: 'visitor',
   };
 
