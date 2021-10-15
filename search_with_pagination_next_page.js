@@ -3,27 +3,24 @@
  */
 const { SearchServiceClient } = require("@google-cloud/retail");
 
-const {
-  cleanUpCatalog,
-  defaultBranch,
-  defaultSearchPlacement,
-  createPrimaryAndVariantProductsForSearch,
-  query_phrase,
-  visitorId,
-} = require("./setup_catalog.js");
+// Requires a credentials file to be referenced through the following
+// environment variable
+process.env["GOOGLE_APPLICATION_CREDENTIALS"] = "./sa.json";
+
+const projectId = "SET HERE VALID PROJECT NUMBER";
+
+const defaultSearchPlacement = `projects/${projectId}/locations/global/catalogs/default_catalog/placements/default_search`;
 
 const searchClient = new SearchServiceClient({
   apiEndpoint: "test-retail.sandbox.googleapis.com",
 });
 
+function searchProductWithPageSizeAndNextPageToken() {
 // [START search for product defining page size]
-async function searchProductWithPageSizeAndNextPageToken() {
-  const tryPageSize = 1;
   const searchRequest = {
-    branch: defaultBranch,
-    pageSize: tryPageSize, // try different page sizes, including those over 100
+    pageSize: 4, // try different page sizes, including those over 100
     placement: defaultSearchPlacement,
-    query: query_phrase, // experiment with other query strings
+    query: 'Maxi_Nest', // experiment with other query strings
     visitorId: 'visitor',
   };
   let searchResponse = await searchClient.search(searchRequest);
@@ -33,8 +30,6 @@ async function searchProductWithPageSizeAndNextPageToken() {
   console.log('Search request:', searchRequest);
   searchResponse = await searchClient.search(searchRequest);
   console.log(`Products found on the next page:\n`, searchResponse[0]);
-
-  await cleanUpCatalog();  // TODO: remove when a sample database is setup
 }
 // [END search for product defining page size]
 

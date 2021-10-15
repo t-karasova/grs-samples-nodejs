@@ -10,7 +10,7 @@ const apiEndpoint = 'test-retail.sandbox.googleapis.com';
 const branch = '0';
 const catalog = 'default_catalog';
 const location = 'global';
-const projectId = 1038874412926;
+const projectId = "SET HERE VALID PROJECT NUMBER";
 // [END config to replace with your values]
 
 const options = { apiEndpoint };

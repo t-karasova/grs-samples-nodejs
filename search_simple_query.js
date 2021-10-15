@@ -7,7 +7,7 @@ const { SearchServiceClient } = require("@google-cloud/retail");
 // environment variable
 process.env["GOOGLE_APPLICATION_CREDENTIALS"] = "./sa.json";
 
-const projectId = 1038874412926;
+const projectId = "SET HERE VALID PROJECT NUMBER";
 
 const defaultSearchPlacement = `projects/${projectId}/locations/global/catalogs/default_catalog/placements/default_search`;
 

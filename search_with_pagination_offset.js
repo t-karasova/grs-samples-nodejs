@@ -3,14 +3,13 @@
  */
 const { SearchServiceClient } = require("@google-cloud/retail");
 
-const {
-  cleanUpCatalog,
-  defaultBranch,
-  defaultSearchPlacement,
-  createPrimaryAndVariantProductsForSearch,
-  query_phrase,
-  visitorId,
-} = require("./setup_catalog.js");
+// Requires a credentials file to be referenced through the following
+// environment variable
+process.env["GOOGLE_APPLICATION_CREDENTIALS"] = "./sa.json";
+
+const projectId = "SET HERE VALID PROJECT NUMBER";
+
+const defaultSearchPlacement = `projects/${projectId}/locations/global/catalogs/default_catalog/placements/default_search`;
 
 const searchClient = new SearchServiceClient({
   apiEndpoint: "test-retail.sandbox.googleapis.com",
@@ -18,21 +17,15 @@ const searchClient = new SearchServiceClient({
 
 // [START search for product defining page size and offset]
 async function searchProductWithPageSizeAndOffset() {
-  const tryPageSize = 2;
-  const tryOffset = 1;
   const searchRequest = {
-    branch: defaultBranch,
-    pageSize: tryPageSize, // try different page sizes, including those over 100
-    offset: tryOffset,
+    pageSize: 4, // try different page sizes, including those over 100
+    offset: 1,
     placement: defaultSearchPlacement,
-    query: query_phrase, // experiment with other query strings
-    visitorId: 'visitor',
+    query: "Maxi_Nest",
+    visitorId: "visitor",
   };
   const searchResponse = await searchClient.search(searchRequest);
-  console.log(
-    `First of the products found at the page size of ${tryPageSize}, offset ${tryOffset}:\n`,
-    searchResponse[0]
-  );
+  console.log(searchResponse);
 }
 // [END search for product defining page size and offset]
 

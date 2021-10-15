@@ -3,38 +3,31 @@
  */
 const { SearchServiceClient } = require("@google-cloud/retail");
 
-const {
-  defaultBranch,
-  defaultSearchPlacement,
-  visitorId,
-} = require("./setup_catalog.js");
+// Requires a credentials file to be referenced through the following
+// environment variable
+process.env["GOOGLE_APPLICATION_CREDENTIALS"] = "./sa.json";
+
+const projectId = "SET HERE VALID PROJECT NUMBER";
+
+const defaultSearchPlacement = `projects/${projectId}/locations/global/catalogs/default_catalog/placements/default_search`;
 
 const searchClient = new SearchServiceClient({
   apiEndpoint: "test-retail.sandbox.googleapis.com",
 });
 
-const MAX_RESULTS = 10;
 const sampleFilter = 'colorFamily: ANY("black")'; // experiment with filters
-const sampleQuery = 'Nest'; 
 
 // [START search for product using filter]
 async function searchProductWithFilter() {
   const searchRequest = {
-    branch: defaultBranch,
     filter: sampleFilter,
     placement: defaultSearchPlacement,
-    query: sampleQuery,
+    query: 'Nest',
     visitorId: 'visitor',
   };
 
   const searchResponse = await searchClient.search(searchRequest);
-  const results = searchResponse[0];
-  console.log(
-    `First ${MAX_RESULTS} out of ${results.length} products found with filter:\n`,
-    results
-      .slice(0, MAX_RESULTS)
-      .map((result, i) => `${i + 1}: ${result.product.title}`)
-  );
+  console.log(searchResponse);
 }
 // [END search for product using filter]
 
