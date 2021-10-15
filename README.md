@@ -1,1 +1,1 @@
-# gsr-samples-nodejs
+# grs-samples-nodejs
