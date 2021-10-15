@@ -1,3 +1,6 @@
+/**
+ * @fileoverview Search products and order results.
+ */
 const { SearchServiceClient } = require('@google-cloud/retail');
 
 // Requires a credentials file to be referenced through the following
@@ -21,7 +24,7 @@ async function searchAndOrderProducts() {
     visitorId: 'visitor',
   };
   const searchResponse = await searchClient.search(searchRequest);
-  console.log(`Search result ordered by price:\n`, searchResponse);
+  console.log(`Search results ordered by price:\n`, searchResponse);
 }
 // [END search for product using ordering]
 
