@@ -32,7 +32,9 @@ async function searchProductWithPageSizeAndNextPageToken() {
   console.log('Search request:', searchRequest, {
     autoPaginate: false,
   });
-  searchResponse = await searchClient.search(searchRequest);
+  searchResponse = await searchClient.search(searchRequest, {
+    autoPaginate: false,
+  });
   console.log(`Products found on the next page:\n`, searchResponse);
 }
 // [END search for product defining page size]
