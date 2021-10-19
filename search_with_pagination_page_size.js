@@ -23,7 +23,9 @@ async function searchProductWithPageSize() {
     query: 'Nest_Maxi',
     visitorId: 'visitor',
   };
-  const searchResponse = await searchClient.search(searchRequest);
+  const searchResponse = await searchClient.search(searchRequest, {
+    autoPaginate: false,
+  });
   console.log(searchResponse);
 }
 // [END search for product defining page size]

@@ -19,12 +19,14 @@ const searchClient = new SearchServiceClient({
 async function searchProductWithPageSizeAndOffset() {
   const searchRequest = {
     pageSize: 4, // try different page sizes, including those over 100
-    offset: 1,
+    offset: 1, // try different offsets to see different products
     placement: defaultSearchPlacement,
     query: 'Nest_Maxi',
     visitorId: 'visitor',
   };
-  const searchResponse = await searchClient.search(searchRequest);
+  const searchResponse = await searchClient.search(searchRequest, {
+    autoPaginate: false,
+  });
   console.log(searchResponse);
 }
 // [END search for product defining page size and offset]
