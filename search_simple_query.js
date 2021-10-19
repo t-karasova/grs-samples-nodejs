@@ -19,8 +19,8 @@ const searchClient = new SearchServiceClient({
 async function searchProduct() {
   const searchRequest = {
     placement: defaultSearchPlacement,
-    query: 'Nest_Maxi', // try other strings
-    visitorId: 'visitor',
+    query: 'Hoodie', // try other strings
+    visitorId: '123456',
   };
   const searchResponse = await searchClient.search(searchRequest);
 

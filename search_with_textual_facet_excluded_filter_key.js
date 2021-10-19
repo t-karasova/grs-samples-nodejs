@@ -30,7 +30,7 @@ async function searchProductsWithTextualFacetExcludedFilterKeys() {
     filter: '(colorFamily: ANY("black"))',
     placement: defaultSearchPlacement,
     query: 'Nest_Maxi',
-    visitorId: 'visitor',
+    visitorId: '123456',
   };
   const searchResponse = await searchClient.search(searchRequest);
   console.log('Search results with a textual facet excluding filter keys', searchResponse);

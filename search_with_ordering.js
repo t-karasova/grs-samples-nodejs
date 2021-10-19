@@ -20,8 +20,8 @@ async function searchAndOrderProducts() {
   const searchRequest = {
     placement: defaultSearchPlacement,
     orderBy: 'price desc',
-    query: 'Nest_Maxi',
-    visitorId: 'visitor',
+    query: 'Hoodie',
+    visitorId: '123456',
   };
   const searchResponse = await searchClient.search(searchRequest);
   console.log(`Search results ordered by price:\n`, searchResponse);

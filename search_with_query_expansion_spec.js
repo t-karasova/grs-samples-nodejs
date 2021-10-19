@@ -22,9 +22,9 @@ async function searchProductsWithQueryExpansionSpec() {
   };
   const searchRequest = {
     placement: defaultSearchPlacement,
-    query: 'Nest_Maxi',
+    query: 'Google Youth Hero Tee Grey',
     queryExpansionSpec: queryExpansionSpec,
-    visitorId: 'visitor',
+    visitorId: '123456',
   };
   const searchResponse = await searchClient.search(searchRequest);
   console.log(

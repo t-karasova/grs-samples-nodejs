@@ -22,7 +22,7 @@ async function searchProductsWithVariantRollupKeys() {
     placement: defaultSearchPlacement,
     query: 'Nest_Maxi',
     variantRollupKeys: ['shipToStore.store2'],
-    visitorId: 'visitor',
+    visitorId: '123456',
   };
   const searchResponse = await searchClient.search(searchRequest);
   console.log('Search results with variant rollup keys', searchResponse);

@@ -27,7 +27,7 @@ async function searchProductsWithTextualFacetRestrictedValues() {
     facetSpec: facetSpec,
     placement: defaultSearchPlacement,
     query: 'Nest_Maxi',
-    visitorId: 'visitor',
+    visitorId: '123456',
   };
   const searchResponse = await searchClient.search(searchRequest);
   console.log(

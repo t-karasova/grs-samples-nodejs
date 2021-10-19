@@ -18,10 +18,10 @@ const searchClient = new SearchServiceClient({
   // [START search for product defining page size]
 async function searchProductWithPageSizeAndNextPageToken() {
   const searchRequest = {
-    pageSize: 4, // try different page sizes, including those over 100
+    pageSize: 6, // try different page sizes, including those over 100
     placement: defaultSearchPlacement,
-    query: 'Nest_Maxi', // experiment with other query strings
-    visitorId: 'visitor',
+    query: 'Tee', // experiment with other query strings
+    visitorId: '123456',
   };
   let searchResponse = await searchClient.search(searchRequest, {
     autoPaginate: false,

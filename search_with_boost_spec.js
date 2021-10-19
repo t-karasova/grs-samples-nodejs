@@ -18,14 +18,14 @@ const searchClient = new SearchServiceClient({
 // [START search for product using boost specification]
 async function searchProductsWithBoostSpec() {
   const boostSpec = {
-    condition: '(colorFamily: ANY("blue"))', // try other condiitons
-    boost: 0.5, // try different scores
+    condition: '(colorFamily: ANY("black"))', // try other condiitons
+    boost: 0.1, // try different scores
   };
   const searchRequest = {
     boostSpec: boostSpec,
     placement: defaultSearchPlacement,
-    query: 'Nest_Maxi',
-    visitorId: 'visitor',
+    query: 'Tee',
+    visitorId: '123456',
   };
   const searchResponse = await searchClient.search(searchRequest);
   console.log('Search results with boost specification', searchResponse);

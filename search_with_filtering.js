@@ -22,8 +22,8 @@ async function searchProductWithFilter() {
   const searchRequest = {
     filter: sampleFilter,
     placement: defaultSearchPlacement,
-    query: 'Nest_Maxi',
-    visitorId: 'visitor',
+    query: 'Tee',
+    visitorId: '123456',
   };
 
   const searchResponse = await searchClient.search(searchRequest);
