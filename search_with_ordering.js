@@ -1,5 +1,5 @@
 /**
- * @fileoverview Search products by a substring and a filter.
+ * @fileoverview Search products and order results.
  */
 const { SearchServiceClient } = require('@google-cloud/retail');
 
@@ -15,20 +15,17 @@ const searchClient = new SearchServiceClient({
   apiEndpoint: 'test-retail.sandbox.googleapis.com',
 });
 
-// [START search for product defining page size and offset]
-async function searchProductWithPageSizeAndOffset() {
+// [START search for product using ordering]
+async function searchAndOrderProducts() {
   const searchRequest = {
-    pageSize: 10, // try different page sizes, including those over 100
-    offset: 3, // try different offsets to see different products
     placement: defaultSearchPlacement,
-    query: 'Tee',
+    orderBy: 'price desc',
+    query: 'Hoodie',
     visitorId: '123456',
   };
-  const searchResponse = await searchClient.search(searchRequest, {
-    autoPaginate: false,
-  });
-  console.log(searchResponse);
+  const searchResponse = await searchClient.search(searchRequest);
+  console.log(`Search results ordered by price:\n`, searchResponse);
 }
-// [END search for product defining page size and offset]
+// [END search for product using ordering]
 
-searchProductWithPageSizeAndOffset();
+searchAndOrderProducts();

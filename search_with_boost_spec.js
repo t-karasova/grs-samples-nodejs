@@ -1,5 +1,5 @@
 /**
- * @fileoverview Search products by a substring and a filter.
+ * @fileoverview Search products with a boost specification
  */
 const { SearchServiceClient } = require('@google-cloud/retail');
 
@@ -15,20 +15,21 @@ const searchClient = new SearchServiceClient({
   apiEndpoint: 'test-retail.sandbox.googleapis.com',
 });
 
-// [START search for product defining page size and offset]
-async function searchProductWithPageSizeAndOffset() {
+// [START search for product using boost specification]
+async function searchProductsWithBoostSpec() {
+  const boostSpec = {
+    condition: '(colorFamily: ANY("black"))', // try other condiitons
+    boost: 0.1, // try different scores
+  };
   const searchRequest = {
-    pageSize: 10, // try different page sizes, including those over 100
-    offset: 3, // try different offsets to see different products
+    boostSpec: boostSpec,
     placement: defaultSearchPlacement,
     query: 'Tee',
     visitorId: '123456',
   };
-  const searchResponse = await searchClient.search(searchRequest, {
-    autoPaginate: false,
-  });
-  console.log(searchResponse);
+  const searchResponse = await searchClient.search(searchRequest);
+  console.log('Search results with boost specification', searchResponse);
 }
-// [END search for product defining page size and offset]
+// [END search for product using boost specification]
 
-searchProductWithPageSizeAndOffset();
+searchProductsWithBoostSpec();

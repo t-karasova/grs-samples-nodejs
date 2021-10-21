@@ -8,7 +8,7 @@ process.env['GOOGLE_APPLICATION_CREDENTIALS'] = './sa.json';
 const branch = 'default_branch';
 const catalog = 'default_catalog';
 const location = 'global';
-const projectId = 1038874412926;
+const projectId = "SET HERE VALID PROJECT NUMBER";
 // [END config to replace with your values]
 
 const parentPath = `projects/${projectId}/locations/${location}/catalogs/${catalog}/branches/${branch}`;

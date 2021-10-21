@@ -1,5 +1,5 @@
 /**
- * @fileoverview Search products by a substring and a filter.
+ * @fileoverview Search products with a query expansion specification
  */
 const { SearchServiceClient } = require('@google-cloud/retail');
 
@@ -15,20 +15,23 @@ const searchClient = new SearchServiceClient({
   apiEndpoint: 'test-retail.sandbox.googleapis.com',
 });
 
-const sampleFilter = '(colorFamily: ANY("black"))'; // experiment with filters
-
-// [START search for product using filter]
-async function searchProductWithFilter() {
+// [START search for product using query expansion specification]
+async function searchProductsWithQueryExpansionSpec() {
+  const queryExpansionSpec = {
+    condition: 'AUTO', // try other query expansion conditions here
+  };
   const searchRequest = {
-    filter: sampleFilter,
     placement: defaultSearchPlacement,
-    query: 'Tee',
+    query: 'Google Youth Hero Tee Grey',
+    queryExpansionSpec: queryExpansionSpec,
     visitorId: '123456',
   };
-
   const searchResponse = await searchClient.search(searchRequest);
-  console.log(searchResponse);
+  console.log(
+    'Search results with query expansion specification',
+    searchResponse
+  );
 }
-// [END search for product using filter]
+// [END search for product using query expansion specification]
 
-searchProductWithFilter();
+searchProductsWithQueryExpansionSpec();

@@ -1,40 +1,41 @@
 /**
  * @fileoverview Search products by a substring and a filter.
  */
-const { SearchServiceClient } = require("@google-cloud/retail");
+const { SearchServiceClient } = require('@google-cloud/retail');
 
-const {
-  cleanUpCatalog,
-  defaultBranch,
-  defaultSearchPlacement,
-  createPrimaryAndVariantProductsForSearch,
-  query_phrase,
-  visitorId,
-} = require("./setup_catalog.js");
+// Requires a credentials file to be referenced through the following
+// environment variable
+process.env['GOOGLE_APPLICATION_CREDENTIALS'] = './sa.json';
+
+const projectId = 'SET HERE VALID PROJECT NUMBER';
+
+const defaultSearchPlacement = `projects/${projectId}/locations/global/catalogs/default_catalog/placements/default_search`;
 
 const searchClient = new SearchServiceClient({
-  apiEndpoint: "test-retail.sandbox.googleapis.com",
+  apiEndpoint: 'test-retail.sandbox.googleapis.com',
 });
 
-// [START search for product defining page size]
+  // [START search for product defining page size]
 async function searchProductWithPageSizeAndNextPageToken() {
-  const tryPageSize = 1;
   const searchRequest = {
-    branch: defaultBranch,
-    pageSize: tryPageSize, // try different page sizes, including those over 100
+    pageSize: 6, // try different page sizes, including those over 100
     placement: defaultSearchPlacement,
-    query: query_phrase, // experiment with other query strings
-    visitorId: 'visitor',
+    query: 'Tee', // experiment with other query strings
+    visitorId: '123456',
   };
-  let searchResponse = await searchClient.search(searchRequest);
-  console.log(`Products found on the first page:\n`, searchResponse[0]);
+  let searchResponse = await searchClient.search(searchRequest, {
+    autoPaginate: false,
+  });
+  console.log(`Products found on the first page:\n`, searchResponse);
 
-  searchRequest.offset = searchResponse[0].nextPageToken;
-  console.log('Search request:', searchRequest);
-  searchResponse = await searchClient.search(searchRequest);
-  console.log(`Products found on the next page:\n`, searchResponse[0]);
-
-  await cleanUpCatalog();  // TODO: remove when a sample database is setup
+  searchRequest.pageToken = searchResponse[2].nextPageToken;
+  console.log('Search request:', searchRequest, {
+    autoPaginate: false,
+  });
+  searchResponse = await searchClient.search(searchRequest, {
+    autoPaginate: false,
+  });
+  console.log(`Products found on the next page:\n`, searchResponse);
 }
 // [END search for product defining page size]
 
