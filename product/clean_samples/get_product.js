@@ -20,8 +20,6 @@ async function main() {
   // Imports the Google Cloud client library.
   const { ProductServiceClient } = require('@google-cloud/retail').v2;
 
-  const projectId = process.env['PROJECT_NUMBER'];
-
   // Full resource name of Product
   const name = '' // SET THE RESOURCE NAME HERE
 
