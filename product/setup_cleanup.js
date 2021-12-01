@@ -58,6 +58,27 @@ const createProduct = async (projectId) => {
   })
 }
 
+const getProduct = (name) => {
+  const retailClient = new ProductServiceClient();
+
+  return new Promise(async (resolve, reject) => {
+    try {
+      // Construct request
+      const request = {
+        name
+      };
+
+      // Run request
+      const response = await retailClient.getProduct(request);
+      resolve(response);
+
+    } catch (err) {
+      reject(err);
+    }
+  })
+}
+
+
 const deleteProduct = (name) => {
   const retailClient = new ProductServiceClient();
 
@@ -78,4 +99,4 @@ const deleteProduct = (name) => {
   })
 }
 
-module.exports = {createProduct, deleteProduct}
+module.exports = {createProduct, getProduct, deleteProduct}

@@ -75,16 +75,19 @@ async function main() {
     
         // Run request
         const operation = await retailClient.setInventory(request);
-        const [response] = await operation.promise();
-        console.log(response);
+        console.log(operation);
 
+        resolve()
       } catch (err) {
         reject(err);
       }
     });
   }
 
+  // Set inventory
   await callSetInventory();
+
+  // Delete product
   await utils.deleteProduct(product.name);
   // [END retail_set_inventory]
 }
