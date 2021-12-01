@@ -34,7 +34,7 @@ async function main() {
   // The query expansion specification that specifies the conditions under which
   // query expansion will occur.
   const queryExpansionSpec = {
-    condition: 'AUTO', // try other query expansion conditions here
+    condition: 'AUTO' // TRY OTHER QUERY EXPANSION CONDITIONS HERE
   };
   
   // Instantiates a client.

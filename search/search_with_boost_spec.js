@@ -35,8 +35,8 @@ async function main() {
 
   //Boost specification to boost certain products.
   const boostSpec = {
-    condition: '(colorFamily: ANY("black"))', // try other condiitons
-    boost: 0.1, // try different scores
+    condition: '(colorFamily: ANY("black"))', // TRY OTHER CONDITIONS
+    boost: 0.1, // TRY DIFFERENT SCORES
   };
   
   // Instantiates a client

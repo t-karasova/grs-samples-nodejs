@@ -33,7 +33,7 @@ async function main() {
   const visitorId = '12345';
 
   // The order in which products are returned.
-  const orderBy = 'price desc';
+  const orderBy = 'price desc'; // TRY DIFFERENT ORDER
   
   // Instantiates a client
   const retailClient = new SearchServiceClient();

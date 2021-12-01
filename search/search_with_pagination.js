@@ -15,7 +15,7 @@
 'use strict';
 
 async function main() {
-  // [START retail_search_for_products_with_page_size_and_next_page]
+  // [START retail_search_for_products_with_pagination]
 
   // Imports the Google Cloud client library.
   const { SearchServiceClient } = require('@google-cloud/retail');
@@ -32,14 +32,16 @@ async function main() {
   const visitorId = '12345';
 
   // Maximum number of Products to return.
-  const pageSize = 1;
+  const pageSize = 2; // TRY DIFFERENT PAGE SIZES, INCLUDING THOSE OVER 100
+
+  // A 0-indexed integer that specifies the current offset in search results.
+  const offset = 6; // TRY DIFFERENT OFFSETS TO SEE DIFFERENT PRODUCTS
 
   //A page token recieved from a previous search call.
-  let pageToken = ''; // set next page token here
+  let pageToken = ''; // SET NEXT PAGE TOKEN HERE
   
   // Instantiates a client.
   const retailClient = new SearchServiceClient();
-
 
   const callSearch = async () => {
     // Construct request
@@ -47,7 +49,8 @@ async function main() {
       placement,
       query,
       visitorId,
-      pageSize,
+      pageSize, 
+      offset,
       pageToken
     };
 
@@ -59,8 +62,8 @@ async function main() {
     console.log('Next page token:', getNextPageToken(response));
   }
 
-  // Get next page token from the response
-  const getNextPageToken = (response) => {
+   // Get next page token from the response
+   const getNextPageToken = (response) => {
     const IResponseParams = {
       ISearchResult: 0,
       ISearchRequest: 1,
@@ -70,7 +73,7 @@ async function main() {
   }
 
   callSearch();
-  // [END retail_search_for_products_with_page_size_and_next_page]
+  // [END retail_search_for_products_with_pagination]
 }
 
 process.on('unhandledRejection', err => {

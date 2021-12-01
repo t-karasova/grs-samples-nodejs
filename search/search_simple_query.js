@@ -27,7 +27,7 @@ async function main() {
   const placement = `projects/${projectId}/locations/global/catalogs/default_catalog/placements/default_search`;
 
   // Raw search query.
-  const query = 'Hoodie';
+  const query = 'Hoodie'; //TRY DIFFERENT QUERY PHRASES
 
   // A unique identifier for tracking visitors.
   const visitorId = '12345';
