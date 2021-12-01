@@ -20,10 +20,10 @@ async function main() {
   // Imports the Google Cloud client library.
   const { SearchServiceClient } = require('@google-cloud/retail');
 
-  const projectId = process.env['PROJECT_NUMBER'];
+  const projectNumber = process.env['PROJECT_NUMBER'];
   
   // Placement is used to identify the Serving Config name.
-  const placement = `projects/${projectId}/locations/global/catalogs/default_catalog/placements/default_search`;
+  const placement = `projects/${projectNumber}/locations/global/catalogs/default_catalog/placements/default_search`;
 
   // Raw search query.
   const query = 'Hoodie';
