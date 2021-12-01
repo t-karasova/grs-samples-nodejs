@@ -32,10 +32,10 @@ async function main() {
   const visitorId = '12345';
 
   // Maximum number of Products to return.
-  const pageSize = 2; // TRY DIFFERENT PAGE SIZES, INCLUDING THOSE OVER 100
+  const pageSize = 6; // TRY DIFFERENT PAGE SIZES, INCLUDING THOSE OVER 100
 
   // A 0-indexed integer that specifies the current offset in search results.
-  const offset = 6; // TRY DIFFERENT OFFSETS TO SEE DIFFERENT PRODUCTS
+  const offset = 0; // TRY DIFFERENT OFFSETS TO SEE DIFFERENT PRODUCTS
 
   //A page token recieved from a previous search call.
   let pageToken = ''; // SET NEXT PAGE TOKEN HERE
