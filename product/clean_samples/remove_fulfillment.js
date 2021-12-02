@@ -53,6 +53,7 @@ async function main() {
       removeTime,
       allowMissing
     };
+    console.log('Remove fulfillment request: ', request);
 
     // Run request
     const [operation] = await retailClient.removeFulfillmentPlaces(request);

@@ -21,10 +21,10 @@ async function main() {
   const { ProductServiceClient } = require('@google-cloud/retail').v2;
   const utils = require('./setup_cleanup');
 
-  const projectId = process.env['PROJECT_NUMBER'];
+  const projectNumber = process.env['PROJECT_NUMBER'];
 
   // The parent catalog resource name
-  const parent = `projects/${projectId}/locations/global/catalogs/default_catalog/branches/default_branch`;
+  const parent = `projects/${projectNumber}/locations/global/catalogs/default_catalog/branches/default_branch`;
 
   // The ID to use for the product
   const productId = Math.random().toString(36).slice(2).toUpperCase();
@@ -55,6 +55,7 @@ async function main() {
           product,
           productId
         };
+        console.log('Create product request:', request);
 
         // Run request
         const response = await retailClient.createProduct(request);

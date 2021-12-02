@@ -21,10 +21,10 @@ async function main() {
   const { ProductServiceClient } = require('@google-cloud/retail').v2;
   const utils = require('./setup_cleanup');
 
-  const projectId = process.env['PROJECT_NUMBER'];
+  const projectNumber = process.env['PROJECT_NUMBER'];
 
   // Create product
-  const product = await utils.createProduct(projectId);
+  const product = await utils.createProduct(projectNumber);
 
   // Full resource name of Product
   const name = product?.name;
@@ -39,10 +39,11 @@ async function main() {
         const request = {
           name
         };
+        console.log('Get product request:', request);
 
         // Run request
         const response = await retailClient.getProduct(request);
-        console.log('Get product:', response);
+        console.log('Get product response:', response);
 
         resolve();
       } catch (err) {

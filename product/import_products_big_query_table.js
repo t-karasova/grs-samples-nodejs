@@ -19,15 +19,17 @@ async function main() {
 
   // Imports the Google Cloud client library.
   const { ProductServiceClient } = require('@google-cloud/retail').v2;
+  const utils = require('./setup_cleanup');
 
-  const projectId = process.env['PROJECT_NUMBER'];
+  const projectNumber = process.env['PROJECT_NUMBER'];
+  const projectId = await utils.getProjectId();
 
   const datasetId = 'products';
-  const tableId = 'import_tutorial';
+  const tableId = 'products';
   const dataSchema = 'product';
 
   // Placement
-  const parent = `projects/${projectId}/locations/global/catalogs/default_catalog/branches/default_branch`
+  const parent = `projects/${projectNumber}/locations/global/catalogs/default_catalog/branches/default_branch`;
 
   // The desired input location of the data.
   const inputConfig = {
@@ -39,8 +41,14 @@ async function main() {
     }
   }
 
+  const reconciliationModes = {
+    RECONCILIATION_MODE_UNSPECIFIED: 0,
+    INCREMENTAL: 1,
+    FULL: 2
+  }
+
   // The mode of reconciliation between existing products and the products to be imported.
-  const reconciliationMode = 2
+  const reconciliationMode = reconciliationModes.FULL;
 
   // Instantiates a client.
   const retailClient = new ProductServiceClient();
@@ -52,11 +60,12 @@ async function main() {
       inputConfig,
       reconciliationMode
     };
+    console.log('Import product request:', request);
 
     // Run request
     const [operation] = await retailClient.importProducts(request);
     const [response] = await operation.promise();
-    console.log(response);
+    console.log('Import products operation is done:', response);
   }
 
   await callImportProducts();

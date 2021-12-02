@@ -15,10 +15,11 @@
 'use strict';
 // Imports the Google Cloud client library.
 const { ProductServiceClient } = require('@google-cloud/retail').v2;
+const { exec } = require('child_process');
 
-const createProduct = async (projectId) => {
+const createProduct = async (projectNumber) => {
   // The parent catalog resource name
-  const parent = `projects/${projectId}/locations/global/catalogs/default_catalog/branches/default_branch`;
+  const parent = `projects/${projectNumber}/locations/global/catalogs/default_catalog/branches/default_branch`;
 
   // The ID to use for the product
   const productId = Math.random().toString(36).slice(2).toUpperCase();
@@ -99,4 +100,21 @@ const deleteProduct = (name) => {
   })
 }
 
-module.exports = {createProduct, getProduct, deleteProduct}
+
+const getProjectId = () => {
+  return new Promise((resolve, reject) => {
+    const command = 'gcloud config get-value project --format json'
+    exec(command, (error, stdout, stderr) => {
+      if (error) {
+        reject(error);
+      } else if (stdout) {
+        resolve(JSON.parse(stdout));
+      } else if (stderr) {
+        reject(stderr);
+      }      
+    })
+  })
+
+}
+
+module.exports = {createProduct, getProduct, deleteProduct, getProjectId}

@@ -21,10 +21,10 @@ async function main() {
   const { ProductServiceClient } = require('@google-cloud/retail').v2;
   const utils = require('./setup_cleanup');
 
-  const projectId = process.env['PROJECT_NUMBER'];
+  const projectNumber = process.env['PROJECT_NUMBER'];
 
   // Create product
-  const createdProduct = await utils.createProduct(projectId);
+  const createdProduct = await utils.createProduct(projectNumber);
 
   // The ID to use for the product
   const productId = createdProduct?.id;
@@ -61,6 +61,7 @@ async function main() {
         const request = {
           product
         };
+        console.log('Update product request:', request);
 
         // Run request
         const response = await retailClient.updateProduct(request);

@@ -21,11 +21,10 @@ async function main() {
   const { ProductServiceClient } = require('@google-cloud/retail').v2;
   const utils = require('./setup_cleanup');
 
-  process.env['GOOGLE_APPLICATION_CREDENTIALS'] = './sa.json';
-  const projectId = process.env['PROJECT_NUMBER'];
+  const projectNumber = process.env['PROJECT_NUMBER'];
 
   // Create product
-  const createdProduct = await utils.createProduct(projectId);
+  const createdProduct = await utils.createProduct(projectNumber);
 
   // Full resource name of Product
   const product = createdProduct?.name;
@@ -41,13 +40,13 @@ async function main() {
   // The time when the fulfillment updates are issued, used to prevent
   // out-of-order updates on fulfillment information.
   const addTime = {
-    //seconds: Math.round(Date.now() / 1000)
+    seconds: Math.round(Date.now() / 1000)
   }
 
   // The time when the fulfillment updates are issued, used to prevent
   // out-of-order updates on fulfillment information.
   const removeTime = {
-    //seconds: Math.round(Date.now() / 1000)
+    seconds: Math.round(Date.now() / 1000)
   }
 
   //If set to true, and the product is not found, the fulfillment information will still be processed and retained for
@@ -69,10 +68,10 @@ async function main() {
           allowMissing
         };
 
-        console.log(request);
+        console.log('Add fulfillment request:', request);
 
         // Run request
-        const [operation] = await retailClient.addFulfillmentPlaces(request);
+        await retailClient.addFulfillmentPlaces(request);
 
         console.log('Waiting to complete add operation..');
         setTimeout(() => {
@@ -96,8 +95,9 @@ async function main() {
           placeIds,
         };
 
+        console.log('Remove fulfillment request:', request);
         // Run request
-        const [operation] = await retailClient.removeFulfillmentPlaces(request);
+        await retailClient.removeFulfillmentPlaces(request);
 
         console.log('Waiting to complete remove operation..');
         setTimeout(() => {

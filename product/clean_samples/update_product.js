@@ -20,13 +20,13 @@ async function main() {
   // Imports the Google Cloud client library.
   const { ProductServiceClient } = require('@google-cloud/retail').v2;
 
-  const projectId = process.env['PROJECT_NUMBER'];
+  const projectNumber = process.env['PROJECT_NUMBER'];
 
   // The ID to use for the product
   const productId = ''; //SET THE PRODUCT ID
 
   // The parent catalog resource name
-  const name = `projects/${projectId}/locations/global/catalogs/default_catalog/branches/default_branch/products/${productId}`;
+  const name = `projects/${projectNumber}/locations/global/catalogs/default_catalog/branches/default_branch/products/${productId}`;
 
   // The product to update.
   const product = {
@@ -55,10 +55,11 @@ async function main() {
     const request = {
       product
     };
+    console.log('Update product request:', request);
 
     // Run request
     const response = await retailClient.updateProduct(request);
-    console.log(response);
+    console.log('Updated product:', response);
   }
 
   callUpdateProduct();

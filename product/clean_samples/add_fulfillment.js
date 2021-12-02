@@ -54,6 +54,7 @@ async function main() {
       addTime,
       allowMissing
     };
+    console.log('Add fulfillment request: ', request);
 
     // Run request
     const [operation] = await retailClient.addFulfillmentPlaces(request);

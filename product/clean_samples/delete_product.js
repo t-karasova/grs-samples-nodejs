@@ -20,8 +20,6 @@ async function main() {
   // Imports the Google Cloud client library.
   const { ProductServiceClient } = require('@google-cloud/retail').v2;
 
-  const projectId = process.env['PROJECT_NUMBER'];
-
   // Full resource name of Product
   const name = '' // SET THE RESOURCE NAME
 
@@ -33,10 +31,11 @@ async function main() {
     const request = {
       name
     };
+    console.log('Delete product request:', request);
 
     // Run request
-    const response = await retailClient.deleteProduct(request);
-    console.log(response);
+    await retailClient.deleteProduct(request);
+    console.log("The product was deleted");
   }
 
   callDeleteProduct();

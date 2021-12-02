@@ -21,15 +21,15 @@ async function main() {
   const { ProductServiceClient } = require('@google-cloud/retail').v2;
   const utils = require('./setup_cleanup');
 
-  const projectId = process.env['PROJECT_NUMBER'];
+  const projectNumber = process.env['PROJECT_NUMBER'];
 
   // Create product
-  const product = await utils.createProduct(projectId);
+  const createdProduct = await utils.createProduct(projectNumber);
 
   // The inventory information to update
-  const inventory = {
-    id: product.id,
-    name: product.name,
+  const product = {
+    id: createdProduct.id,
+    name: createdProduct.name,
     priceInfo: {
       price: 15.0,
       originalPrice: 20.0,
@@ -52,7 +52,7 @@ async function main() {
   // The time when the request is issued, used to prevent
   // out-of-order updates on inventory fields with the last update time recorded.
   const setTime = { 
-    //seconds: Math.round(Date.now() / 1000) 
+    seconds: Math.round(Date.now() / 1000) 
   };
 
   // If set to true, and the product with name is not found, the
@@ -67,17 +67,21 @@ async function main() {
       try {
         // Construct request
         const request = {
-          inventory,
-          setMask,
+          inventory: product,
           setTime,
           allowMissing
         };
+        console.log('Set inventory request:', request);
     
         // Run request
-        const operation = await retailClient.setInventory(request);
-        console.log(operation);
+        await retailClient.setInventory(request);
+        console.log('Waiting to complete set inventory operation..');
 
-        resolve()
+        // This is a long running operation and its result is not immediately present with get operations,
+        // thus we simulate wait with setTimeout method.
+        setTimeout(() => {
+          resolve();
+        }, 10000); 
       } catch (err) {
         reject(err);
       }
@@ -87,8 +91,12 @@ async function main() {
   // Set inventory
   await callSetInventory();
 
+  // Get product
+  const changedProduct = await utils.getProduct(createdProduct.name);
+  console.log(changedProduct);
+
   // Delete product
-  await utils.deleteProduct(product.name);
+  await utils.deleteProduct(createdProduct.name);
   // [END retail_set_inventory]
 }
 
