@@ -44,6 +44,7 @@ async function main() {
   const retailClient = new SearchServiceClient();
 
   const callSearch = async () => {
+    console.log('Search start');
     // Construct request
     const request = {
       placement,
@@ -60,6 +61,7 @@ async function main() {
     });
     console.log(response);
     console.log('Next page token:', getNextPageToken(response));
+    console.log('Search end');
   }
 
    // Get next page token from the response
