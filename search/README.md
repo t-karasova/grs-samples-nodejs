@@ -56,9 +56,9 @@ npm install
 ```
 
 ### Running the code samples
-
+Samples are in the `search/`, `products/`, `events/` directories.
 To execute an individual code sample, envoke `node` with a file as a parameter at the command line prompt, e.g.:
 
 ```
-node search_simple_query.test.js
+node search/search_simple_query.js
 ```
