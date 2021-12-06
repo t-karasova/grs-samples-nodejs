@@ -35,7 +35,7 @@ async function main() {
 
   //Boost specification to boost certain products.
   const boostSpec = {
-    condition: '(colorFamily: ANY("black"))', // TRY OTHER CONDITIONS
+    condition: '(colorFamily: ANY("Black"))', // TRY OTHER CONDITIONS
     boost: 0.1, // TRY DIFFERENT SCORES
   };
   
@@ -44,6 +44,7 @@ async function main() {
 
 
   const callSearch = async () => {
+    console.log('Search start');
     // Construct request
     const request = {
       placement,
@@ -57,6 +58,7 @@ async function main() {
     for await (const response of iterable) {
       console.log(response);
     }
+    console.log('Search end');
   }
 
   callSearch();

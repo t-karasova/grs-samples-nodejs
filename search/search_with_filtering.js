@@ -41,6 +41,7 @@ async function main() {
 
 
   const callSearch = async () => {
+    console.log('Search start');
     // Construct request
     const request = {
       placement,
@@ -54,6 +55,7 @@ async function main() {
     for await (const response of iterable) {
       console.log(response);
     }
+    console.log('Search end');
   }
 
   callSearch();
