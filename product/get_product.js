@@ -14,7 +14,7 @@
 
 'use strict';
 
-async function main() {
+async function main(generatedProductId) {
   // [START retail_get_product]
 
   // Imports the Google Cloud client library.
@@ -24,7 +24,7 @@ async function main() {
   const projectNumber = process.env['PROJECT_NUMBER'];
 
   // Create product
-  const product = await utils.createProduct(projectNumber);
+  const product = await utils.createProduct(projectNumber, generatedProductId);
 
   // Full resource name of Product
   const name = product?.name;
@@ -45,7 +45,7 @@ async function main() {
         const response = await retailClient.getProduct(request);
         console.log('Get product response:', response);
 
-        resolve();
+        resolve(response[0]);
       } catch (err) {
         reject(err);
       }
@@ -53,10 +53,13 @@ async function main() {
   }
 
   // Get product 
-  await callGetProduct();
+  console.log('Start get product operation')
+  const foundProduct = await callGetProduct();
+  console.log(`Get product ${foundProduct.id} operation finished`);
 
   // Delete product 
   await utils.deleteProduct(name);
+  console.log(`Product ${foundProduct.id} deleted`);
   // [END retail_get_product]
 }
 
@@ -65,4 +68,4 @@ process.on('unhandledRejection', err => {
   process.exitCode = 1;
 });
 
-main();
+main(...process.argv.slice(2));

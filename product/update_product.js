@@ -14,7 +14,7 @@
 
 'use strict';
 
-async function main() {
+async function main(generatedProductId) {
   // [START retail_update_product]
 
   // Imports the Google Cloud client library.
@@ -24,7 +24,7 @@ async function main() {
   const projectNumber = process.env['PROJECT_NUMBER'];
 
   // Create product
-  const createdProduct = await utils.createProduct(projectNumber);
+  const createdProduct = await utils.createProduct(projectNumber, generatedProductId);
 
   // The ID to use for the product
   const productId = createdProduct?.id;
@@ -43,7 +43,7 @@ async function main() {
     priceInfo: {
       price: 20.0,
       originalPrice: 25.5,
-      currency_code: "EUR"
+      currencyCode: "EUR"
     },
     availability: 'OUT_OF_STOCK'
   }
@@ -75,10 +75,14 @@ async function main() {
   }
 
   // Update product
+  console.log('Start product update');
   const updatedProduct = await callUpdateProduct();
+  console.log(`Product ${updatedProduct.id} update finished: `, JSON.stringify(updatedProduct));
 
   // Delete product
   await utils.deleteProduct(updatedProduct?.name);
+  console.log(`Product ${updatedProduct.id} deleted`)
+
   // [END retail_update_product]
 }
 
@@ -87,4 +91,4 @@ process.on('unhandledRejection', err => {
   process.exitCode = 1;
 });
 
-main();
+main(...process.argv.slice(2));

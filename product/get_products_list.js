@@ -20,16 +20,16 @@ async function main() {
   // Imports the Google Cloud client library.
   const { ProductServiceClient } = require('@google-cloud/retail').v2;
 
-  process.env['GOOGLE_APPLICATION_CREDENTIALS'] = './sa.json';
   const projectNumber = process.env['PROJECT_NUMBER'];
 
   // Placement
-  const parent = `projects/${projectNumber}/locations/global/catalogs/default_catalog/branches/default_branch`
+  const parent = `projects/${projectNumber}/locations/global/catalogs/default_catalog/branches/default_branch`;
 
   // Instantiates a client.
   const retailClient = new ProductServiceClient();
 
   async function callListProducts() {
+    console.log('Start get products list');
     // Construct request
     const request = {
       parent,
@@ -41,6 +41,7 @@ async function main() {
     for await (const response of iterable) {
       console.log(response);
     }
+    console.log('Get products list finished');
   }
 
   callListProducts();

@@ -14,7 +14,7 @@
 
 'use strict';
 
-async function main() {
+async function main(generatedProductId) {
   // [START retail_create_product]
 
   // Imports the Google Cloud client library.
@@ -27,7 +27,7 @@ async function main() {
   const parent = `projects/${projectNumber}/locations/global/catalogs/default_catalog/branches/default_branch`;
 
   // The ID to use for the product
-  const productId = Math.random().toString(36).slice(2).toUpperCase();
+  const productId = generatedProductId ? generatedProductId : Math.random().toString(36).slice(2).toUpperCase();
 
   // The product to create.
   const product = {
@@ -68,18 +68,20 @@ async function main() {
   }
 
   // Create product
+  console.log('Start to create the product');
   const createdProduct = await callCreateProduct();
-
+  console.log(`Product ${createdProduct.id} creation ended`);
+  
   // Delete product
   await utils.deleteProduct(createdProduct?.name);
+  console.log(`Product ${createdProduct.id} deleted`)
   
   // [END retail_create_product]
 }
-
 
 process.on('unhandledRejection', err => {
   console.error(err.message);
   process.exitCode = 1;
 });
 
-main();
+main(...process.argv.slice(2));

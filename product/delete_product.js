@@ -14,7 +14,7 @@
 
 'use strict';
 
-async function main() {
+async function main(generatedProductId) {
   // [START retail_delete_product]
 
   // Imports the Google Cloud client library.
@@ -24,7 +24,7 @@ async function main() {
   const projectNumber = process.env['PROJECT_NUMBER'];
 
   // Create product
-  const product = await utils.createProduct(projectNumber);
+  const product = await utils.createProduct(projectNumber, generatedProductId);
 
   // Full resource name of Product
   const name = product?.name;
@@ -40,8 +40,9 @@ async function main() {
     console.log('Delete product request:', request);
 
     // Run request
+    console.log('Start deleting the product');
     await retailClient.deleteProduct(request);
-    console.log("The product was deleted");
+    console.log(`Product ${product.id} deleted`);
   }
 
   // Delete product
@@ -55,4 +56,4 @@ process.on('unhandledRejection', err => {
   process.exitCode = 1;
 });
 
-main();
+main(...process.argv.slice(2));
