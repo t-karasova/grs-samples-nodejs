@@ -17,12 +17,17 @@
 const { ProductServiceClient } = require('@google-cloud/retail').v2;
 const { exec } = require('child_process');
 
-const createProduct = async (projectNumber, generatedProductId) => {
+const createProduct = async (projectNumber, generatedProductId, isFullfillment = false) => {
   // The parent catalog resource name
   const parent = `projects/${projectNumber}/locations/global/catalogs/default_catalog/branches/default_branch`;
 
   // The ID to use for the product
   const productId = generatedProductId ? generatedProductId : Math.random().toString(36).slice(2).toUpperCase();
+
+  const fulfillmentInfo = isFullfillment ? [{
+    type: 'same-day-delivery',
+    placeIds: ['store1', 'store2', 'store3']
+  }] : [];
 
   // The product to create.
   const product = {
@@ -30,6 +35,7 @@ const createProduct = async (projectNumber, generatedProductId) => {
     type: 'PRIMARY',
     categories: ['Speakers and displays'],
     brands: ['Google'],
+    fulfillmentInfo,
     priceInfo: {
       price: 30.0,
       originalPrice: 35.5,

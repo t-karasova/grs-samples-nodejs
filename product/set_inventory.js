@@ -14,7 +14,7 @@
 
 'use strict';
 
-async function main() {
+async function main(generatedProductId) {
   // [START retail_set_inventory]
 
   // Imports the Google Cloud client library.
@@ -24,7 +24,7 @@ async function main() {
   const projectNumber = process.env['PROJECT_NUMBER'];
 
   // Create product
-  const createdProduct = await utils.createProduct(projectNumber);
+  const createdProduct = await utils.createProduct(projectNumber, generatedProductId);
 
   // The inventory information to update
   const product = {
@@ -81,7 +81,7 @@ async function main() {
         // thus we simulate wait with setTimeout method.
         setTimeout(() => {
           resolve();
-        }, 10000); 
+        }, 50000); 
       } catch (err) {
         reject(err);
       }
@@ -89,14 +89,17 @@ async function main() {
   }
 
   // Set inventory
+  console.log('Start set inventory');
   await callSetInventory();
+  console.log('Set inventory finished');
 
   // Get product
   const changedProduct = await utils.getProduct(createdProduct.name);
-  console.log(changedProduct);
+  console.log(`Updated product ${createdProduct.id}: `, JSON.stringify(changedProduct[0]));
 
   // Delete product
   await utils.deleteProduct(createdProduct.name);
+  console.log(`Product ${createdProduct.id} deleted`);
   // [END retail_set_inventory]
 }
 
@@ -105,4 +108,4 @@ process.on('unhandledRejection', err => {
   process.exitCode = 1;
 });
 
-main();
+main(...process.argv.slice(2));

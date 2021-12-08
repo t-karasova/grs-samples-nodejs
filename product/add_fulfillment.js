@@ -14,7 +14,7 @@
 
 'use strict';
 
-async function main() {
+async function main(generatedProductId) {
   // [START retail_add_remove_fulfillment_places]
 
   // Imports the Google Cloud client library.
@@ -24,7 +24,7 @@ async function main() {
   const projectNumber = process.env['PROJECT_NUMBER'];
 
   // Create product
-  const createdProduct = await utils.createProduct(projectNumber);
+  const createdProduct = await utils.createProduct(projectNumber, generatedProductId);
 
   // Full resource name of Product
   const product = createdProduct?.name;
@@ -40,12 +40,6 @@ async function main() {
   // The time when the fulfillment updates are issued, used to prevent
   // out-of-order updates on fulfillment information.
   const addTime = {
-    seconds: Math.round(Date.now() / 1000)
-  }
-
-  // The time when the fulfillment updates are issued, used to prevent
-  // out-of-order updates on fulfillment information.
-  const removeTime = {
     seconds: Math.round(Date.now() / 1000)
   }
 
@@ -76,57 +70,26 @@ async function main() {
         console.log('Waiting to complete add operation..');
         setTimeout(() => {
           resolve();
-        }, 10000); 
+        }, 50000); 
       } catch (err) {
         console.log(err);
         reject(err);
       }
     })
   }
-
-  const callRemoveFulfillmentPlaces = async () => {
-    return new Promise(async (resolve, reject) => {
-      try {
-        placeIds = ['store1', 'store2']
-        // Construct request
-        const request = {
-          product,
-          type,
-          placeIds,
-        };
-
-        console.log('Remove fulfillment request:', request);
-        // Run request
-        await retailClient.removeFulfillmentPlaces(request);
-
-        console.log('Waiting to complete remove operation..');
-        setTimeout(() => {
-          resolve();
-        }, 10000); 
-      } catch (err) {
-        console.log(err);
-        reject(err);
-      }
-    })
-  }
-  let response = {};
 
   // Add fulfillment places
+  console.log('Start add fulfillment');
   await calladdFulfillmentPlaces();
+  console.log('Add fulfillment finished');
 
   //Get product
-  response = await utils.getProduct(product);
-  console.log(response);
-
-  // Remove fulfillment places
-  await callRemoveFulfillmentPlaces();
-
-  //Get product
-  response = await utils.getProduct(product);
-  console.log(response);
+  const response = await utils.getProduct(product);
+  console.log('Updated product: ', JSON.stringify(response[0]));
 
   // Delete product 
   await utils.deleteProduct(product);
+  console.log(`Product ${createdProduct.id} deleted`);
   // [END retail_add_remove_fulfillment_places]
 }
 
@@ -135,4 +98,4 @@ process.on('unhandledRejection', err => {
   process.exitCode = 1;
 });
 
-main();
+main(...process.argv.slice(2));
