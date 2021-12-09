@@ -88,7 +88,7 @@ async function main() {
   //PASTE CALL WITH NEXT PAGE TOKEN HERE:
 
   //PASTE CALL WITH OFFSET HERE:
- ё
+  
   // [END retail_search_for_products_with_pagination]
 }
 
