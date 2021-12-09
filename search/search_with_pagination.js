@@ -19,9 +19,9 @@ async function main() {
 
   // Imports the Google Cloud client library.
   const { SearchServiceClient } = require('@google-cloud/retail');
-
+ 
   const projectNumber = process.env['PROJECT_NUMBER'];
-  
+
   // Placement is used to identify the Serving Config name.
   const placement = `projects/${projectNumber}/locations/global/catalogs/default_catalog/placements/default_search`;
 
@@ -37,35 +37,37 @@ async function main() {
   // A 0-indexed integer that specifies the current offset in search results.
   const offset = 0; // TRY DIFFERENT OFFSETS TO SEE DIFFERENT PRODUCTS
 
-  //A page token recieved from a previous search call.
-  let pageToken = ''; // SET NEXT PAGE TOKEN HERE
-  
   // Instantiates a client.
   const retailClient = new SearchServiceClient();
 
-  const callSearch = async () => {
-    console.log('Search start');
-    // Construct request
-    const request = {
-      placement,
-      query,
-      visitorId,
-      pageSize, 
-      offset,
-      pageToken
-    };
+  const callSearch = (pageToken) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        // Construct request
+        const request = {
+          placement,
+          query,
+          visitorId,
+          pageSize,
+          offset,
+          pageToken
+        };
 
-    // Run request
-    const response = await retailClient.search(request, {
-      autoPaginate: false
-    });
-    console.log(response);
-    console.log('Next page token:', getNextPageToken(response));
-    console.log('Search end');
+        // Run request
+        const response = await retailClient.search(request, {
+          autoPaginate: false
+        });
+        console.log(response);
+        console.log('Next page token:', getNextPageToken(response));
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    })
   }
 
-   // Get next page token from the response
-   const getNextPageToken = (response) => {
+  // Get next page token from the response
+  const getNextPageToken = (response) => {
     const IResponseParams = {
       ISearchResult: 0,
       ISearchRequest: 1,
@@ -74,7 +76,14 @@ async function main() {
     return response[IResponseParams.ISearchResponse]?.nextPageToken;
   }
 
-  callSearch();
+  // Call search
+  console.log('Search start');
+  await callSearch('');
+  console.log('Search end');
+
+  //PASTE CALL WITH NEXT PAGE TOKEN HERE:
+  //await callSearch('YOUR NEXT PAGE TOKEN');
+
   // [END retail_search_for_products_with_pagination]
 }
 
