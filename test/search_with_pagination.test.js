@@ -25,7 +25,7 @@ const execSync = cmd => cp.execSync(cmd, { encoding: 'utf-8' });
 const cwd = path.join(__dirname, '..');
 
 
-describe('Search with ordering', () => {
+describe('Search with pagination', () => {
 
   describe('Search with pagination run sample', () => {
     let stdout;
