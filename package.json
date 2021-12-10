@@ -10,7 +10,7 @@
   "private": true,
   "scripts": {
     "start": "node app.js",
-    "test": "mocha --timeout 600000 test/search_with_pagination.test.js"
+    "test": "mocha --timeout 600000 test/*.test.js"
   },
   "dependencies": {
     "@google-cloud/bigquery": "^5.9.2",
