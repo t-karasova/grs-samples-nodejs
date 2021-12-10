@@ -19,7 +19,7 @@ async function main(generatedProductId) {
 
   // Imports the Google Cloud client library.
   const { ProductServiceClient } = require('@google-cloud/retail').v2;
-  const utils = require('./setup_cleanup');
+  const utils = require('../setup/setup_cleanup');
 
   const projectNumber = process.env['PROJECT_NUMBER'];
 
