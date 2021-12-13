@@ -14,11 +14,12 @@
 
 'use strict';
 
-async function main() {
+async function main(id1, id2) {
   // [START retail_import_products_from_inline_source]
 
   // Imports the Google Cloud client library.
   const { ProductServiceClient } = require('@google-cloud/retail').v2;
+  const utils = require('../setup/setup_cleanup');
 
   const projectNumber = process.env['PROJECT_NUMBER'];
 
@@ -26,7 +27,7 @@ async function main() {
   const parent = `projects/${projectNumber}/locations/global/catalogs/default_catalog/branches/default_branch`
 
   const product1 = {
-    id: Math.random().toString(36).slice(2).toUpperCase(),
+    id: id1 ? id1 : Math.random().toString(36).slice(2).toUpperCase(),
     title: '#IamRemarkable Pen',  //TO CHECK ERROR HANDLING COMMENT OUT THE PRODUCT TITLE HERE
     uri: 'https://shop.googlemerchandisestore.com/Google+Redesign/Office/IamRemarkable+Pen',
     brands: ['#IamRemarkable'],
@@ -51,7 +52,7 @@ async function main() {
   }
 
   const product2 = {
-    id: Math.random().toString(36).slice(2).toUpperCase(),
+    id: id2 ? id2 : Math.random().toString(36).slice(2).toUpperCase(),
     title: "Android Embroidered Crewneck Sweater",
     uri: 'https://shop.googlemerchandisestore.com/Google+Redesign/Apparel/Android+Embroidered+Crewneck+Sweater',
     brands: ['Android'],
@@ -82,24 +83,47 @@ async function main() {
     }
   }
 
+  const IResponseParams = {
+    IError: 0,
+    ISearchResponse: 1,
+    ISearchMetadata: 2
+  }
+
   // Instantiates a client.
   const retailClient = new ProductServiceClient();
 
   const callImportProducts = async () => {
-    // Construct request
-    const request = {
-      parent,
-      inputConfig
-    };
-    console.log('Import products request:', request);
+    return new Promise(async (resolve, reject) => {
+      try {
+        // Construct request
+        const request = {
+          parent,
+          inputConfig
+        };
+        console.log('Import products request:', request);
 
-    // Run request
-    const [operation] = await retailClient.importProducts(request);
-    const [response] = await operation.promise();
-    console.log('Import products response:', response);
+        // Run request
+        const [operation] = await retailClient.importProducts(request);
+        const response = await operation.promise();
+        const result = response[IResponseParams.ISearchResponse];
+        console.log(`Number of successfully imported products: ${result.successCount | 0}`);
+        console.log(`Number of failures during the importing: ${result.failureCount | 0}`);
+        console.log(`Operation result: ${JSON.stringify(response)}`);
+        resolve();
+      } catch (err) {
+        console.log(err);
+        reject(err);
+      }
+    })
   }
-
+  // Start import products
+  console.log('Start import products');
   await callImportProducts();
+  console.log('Import products finished');
+
+  // Delete imported products
+  await utils.deleteProducts(projectNumber, [product1.id, product2.id]);
+  console.log('Products deleted');
   // [END retail_import_products_from_inline_source]
 }
 
@@ -108,4 +132,4 @@ process.on('unhandledRejection', err => {
   process.exitCode = 1;
 });
 
-main();
+main(...process.argv.slice(2));
