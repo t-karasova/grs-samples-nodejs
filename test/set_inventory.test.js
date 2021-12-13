@@ -75,12 +75,15 @@ describe('Set inventory', () => {
     expect(updatedProduct.priceInfo.originalPrice, 'Original price not equal').to.equal(20.0);
     expect(updatedProduct.priceInfo.cost, 'Cost not equal').to.equal(8.0);
     expect(updatedProduct.priceInfo.currencyCode, 'Currency code not equal').to.equal('USD');
-    expect(updatedProduct.fulfillmentInfo, 'Fulfillment info not equal').to.have.deep.members(
-      [{
-        type: 'same-day-delivery',
-        placeIds: ['store3', 'store4']
-      }]
-    )
+    expect(updatedProduct.fulfillmentInfo).to.be.an('array');
+    expect(updatedProduct.fulfillmentInfo.length, 'Fulfillment array is empty').to.equal(1);
+    
+    const fulfillmentItem = updatedProduct.fulfillmentInfo[0]; 
+    expect(fulfillmentItem).to.be.an('object');
+    expect(fulfillmentItem).to.have.all.keys('type', 'placeIds');
+    expect(fulfillmentItem.type).to.equal('same-day-delivery');
+    expect(fulfillmentItem.placeIds).to.be.an('array').that.includes('store3', 'store4');
+
     expect(updatedProduct.availableQuantity, 'Available quantity not equal').to.deep.equal({ value: 2 });
     expect(updatedProduct.availability, 'Availability not equal').to.equal('IN_STOCK');
   });

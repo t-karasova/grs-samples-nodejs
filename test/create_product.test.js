@@ -20,7 +20,6 @@ const { before, describe, it, after } = require('mocha');
 const { ProductServiceClient } = require('@google-cloud/retail');
 const { assert, expect } = require('chai');
 
-process.env['GOOGLE_APPLICATION_CREDENTIALS'] = './sa.json';
 const execSync = cmd => cp.execSync(cmd, { encoding: 'utf-8' });
 
 const cwd = path.join(__dirname, '..');

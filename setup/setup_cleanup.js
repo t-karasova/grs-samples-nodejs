@@ -142,13 +142,26 @@ const getProjectId = () => {
   })
 }
 
-const isBucketExist = (name) => {
+const getBucketsList = () => {
   return new Promise(async (resolve, reject) => {
     try {
       const storage = new Storage();
       const [buckets] = await storage.getBuckets();
       const bucketNames = buckets.map((item) => item.name);
       console.log(bucketNames);
+      resolve(buckets);
+    } catch (error) {
+      reject(error);
+    }
+  })
+}
+
+const isBucketExist = (name) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const storage = new Storage();
+      const [buckets] = await storage.getBuckets();
+      const bucketNames = buckets.map((item) => item.name);
       bucketNames.indexOf(name) !== -1 ? resolve(true) : resolve(false);
     } catch (error) {
       reject(error);
@@ -261,6 +274,19 @@ const createBqDataset = (datasetId) => {
   })
 }
 
+const deleteBqDataset = (datasetId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const bigquery = new BigQuery();
+      await bigquery.dataset(datasetId).delete({force: true});
+      console.log(`Dataset ${dataset.id} deleted.`);
+      resolve();
+    } catch (error) {
+      reject(error);
+    }
+  })
+}
+
 const isTableExist = (datasetId, tableId) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -339,9 +365,11 @@ module.exports = {
   getProjectId,
   createBucket,
   deleteBucket,
+  getBucketsList,
   uploadFile,
   listFiles,
   createBqDataset,
+  deleteBqDataset,
   createBqTable,
   uploadDataToBqTable
 }
