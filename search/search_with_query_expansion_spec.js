@@ -26,7 +26,7 @@ async function main() {
   const placement = `projects/${projectNumber}/locations/global/catalogs/default_catalog/placements/default_search`;
 
   // Raw search query.
-  const query = 'Hoodie';
+  const query = 'Google Youth Hero Tee Grey';
 
   // A unique identifier for tracking visitors.
   const visitorId = '12345';
@@ -36,6 +36,9 @@ async function main() {
   const queryExpansionSpec = {
     condition: 'AUTO' // TRY OTHER QUERY EXPANSION CONDITIONS HERE
   };
+
+  //Maximum number of products to return
+  const pageSize = 10;
   
   // Instantiates a client.
   const retailClient = new SearchServiceClient();
@@ -48,14 +51,15 @@ async function main() {
       placement,
       query,
       visitorId,
-      queryExpansionSpec
+      queryExpansionSpec,
+      pageSize
     };
 
+    console.log('Search request: ', request);
+
     // Run request
-    const iterable = await retailClient.searchAsync(request);
-    for await (const response of iterable) {
-      console.log(response);
-    }
+    const response = await retailClient.search(request, {autoPaginate: false});
+    console.log('Search response: ', response);
     console.log('Search end');
   }
 

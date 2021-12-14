@@ -50,11 +50,11 @@ async function main() {
       filter
     };
 
+    console.log('Search request: ', request);
+
     // Run request
-    const iterable = await retailClient.searchAsync(request);
-    for await (const response of iterable) {
-      console.log(response);
-    }
+    const response = await retailClient.search(request, {autoPaginate: false});
+    console.log('Search response: ', response);
     console.log('Search end');
   }
 

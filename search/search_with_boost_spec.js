@@ -35,7 +35,7 @@ async function main() {
 
   //Boost specification to boost certain products.
   const boostSpec = {
-    condition: '(colorFamily: ANY("Black"))', // TRY OTHER CONDITIONS
+    condition: '(colorFamily: ANY("Blue"))', // TRY OTHER CONDITIONS
     boost: 0.0, // TRY DIFFERENT SCORES
   };
   
@@ -53,11 +53,11 @@ async function main() {
       boostSpec
     };
 
+    console.log('Search request: ', request);
+
     // Run request
-    const iterable = await retailClient.searchAsync(request);
-    for await (const response of iterable) {
-      console.log(response);
-    }
+    const response = await retailClient.search(request, {autoPaginate: false});
+    console.log('Search response: ', response);
     console.log('Search end');
   }
 
