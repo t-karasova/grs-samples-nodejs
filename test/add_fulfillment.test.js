@@ -34,7 +34,7 @@ describe('Add fulfillment', () => {
   let stdout;
 
   before(async () => {
-    stdout = execSync(`node product/add_fulfillment.js ${productId}`, { cwd });
+    stdout = execSync(`node product/add_fulfillment_places.js ${productId}`, { cwd });
   });
 
   it('should check that product created', () => {

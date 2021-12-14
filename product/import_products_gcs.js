@@ -48,25 +48,42 @@ async function main() {
     gcsPrefix: gcsErrorsBucket
   }
 
+  const IResponseParams = {
+    IError: 0,
+    ISearchResponse: 1,
+    ISearchMetadata: 2
+  }
+
   // Instantiates a client.
   const retailClient = new ProductServiceClient();
 
   const callImportProducts = async () => {
-    // Construct request
-    const request = {
-      parent,
-      inputConfig,
-      errorsConfig
-    };
-    console.log('Import products request:', request);
+    return new Promise(async (resolve, reject) => {
+      try {
+        // Construct request
+        const request = {
+          parent,
+          inputConfig,
+          errorsConfig
+        };
+        console.log('Import products request:', request);
 
-    // Run request
-    const [operation] = await retailClient.importProducts(request);
-    const [response] = await operation.promise();
-    console.log('Import products operation is done:', response);
+        // Run request
+        const [operation] = await retailClient.importProducts(request);
+        const response = await operation.promise();
+        const result = response[IResponseParams.ISearchResponse];
+        console.log(`Number of successfully imported products: ${result.successCount | 0}`);
+        console.log(`Number of failures during the importing: ${result.failureCount | 0}`);
+        console.log(`Operation result: ${JSON.stringify(response)}`);
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    })
   }
-
+  console.log('Start import products');
   await callImportProducts();
+  console.log('Import products finished');
   // [END retail_import_products_from_gcs]
 }
 

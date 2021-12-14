@@ -53,9 +53,9 @@ async function main(generatedProductId) {
   }
 
   // Get product 
-  console.log('Start get product operation')
+  console.log('Start product get operation')
   const foundProduct = await callGetProduct();
-  console.log(`Get product ${foundProduct.id} operation finished`);
+  console.log(`Product ${foundProduct.id} get operation finished`);
 
   // Delete product 
   await utils.deleteProduct(name);
