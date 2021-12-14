@@ -21,9 +21,7 @@ const { SearchServiceClient } = require('@google-cloud/retail');
 const { assert, expect } = require('chai');
 
 const execSync = cmd => cp.execSync(cmd, { encoding: 'utf-8' });
-
 const cwd = path.join(__dirname, '..');
-
 
 describe('Search with pagination', () => {
 
@@ -71,33 +69,32 @@ describe('Search with pagination', () => {
     }
 
     before(async () => {
-      response = await retailClient.search(request, {
-        autoPaginate: false
-      });
+      response = await retailClient.search(request, {autoPaginate: false});
     });
 
     it('should be a valid response', () => {
-      expect(response.length).to.equal(responseParamsCount);
-    })
-
-    it('should be a valid result array', () => {
-      const filterResult = response[IResponseParams.ISearchResult];
-      if (filterResult.length) {
-        filterResult.forEach((resultItem) => {
+      expect(response).to.be.an('array');
+      expect(response.length).to.equal(3);
+      const searchResult = response[IResponseParams.ISearchResult];
+      const searchResponse =  response[IResponseParams.ISearchResponse];
+      if (searchResult.length) {
+        expect(searchResponse.totalSize).to.be.above(0);
+        searchResult.forEach((resultItem)  => {
           expect(resultItem, 'It should be an object').to.be.an('object');
-          expect(resultItem, 'The object has no valid properties').to.have.all.keys('matchingVariantFields', 'variantRollupValues', 'id', 'product', 'matchingVariantCount');
-        })
+          expect(resultItem, 'The object has no  valid properties').to.have.all.keys('matchingVariantFields', 'variantRollupValues', 'id', 'product', 'matchingVariantCount');
+        })        
       } else {
-        expect(filterResult).to.be.an('array').that.is.empty;
+        expect(searchResult).to.be.an('array').that.is.empty;
+        expect(searchResponse.totalSize).to.equal(0);
       }
     })
 
     it('should contain a fixed number of products', () => {
-      const filterResult = response[IResponseParams.ISearchResult];
-      if (filterResult.length) {
-        expect(filterResult.length).to.equal(pageSize);
+      const searchResult = response[IResponseParams.ISearchResult];
+      if (searchResult.length) {
+        expect(searchResult.length).to.equal(pageSize);
       } else {
-        expect(filterResult, 'It should be an empty array').to.be.an('array').that.is.empty;
+        expect(searchResult, 'It should be an empty array').to.be.an('array').that.is.empty;
       }
     })
 

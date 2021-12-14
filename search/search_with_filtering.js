@@ -27,7 +27,7 @@ async function main() {
   const placement = `projects/${projectNumber}/locations/global/catalogs/default_catalog/placements/default_search`;
 
   // Raw search query.
-  const query = 'Hoodie';
+  const query = 'Tee';
 
   // A unique identifier for tracking visitors.
   const visitorId = '12345';
@@ -50,11 +50,11 @@ async function main() {
       filter
     };
 
+    console.log('Search request: ', request);
+
     // Run request
-    const iterable = await retailClient.searchAsync(request);
-    for await (const response of iterable) {
-      console.log(response);
-    }
+    const response = await retailClient.search(request, {autoPaginate: false});
+    console.log('Search response: ', response);
     console.log('Search end');
   }
 

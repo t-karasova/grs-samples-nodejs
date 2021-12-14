@@ -21,9 +21,7 @@ const { SearchServiceClient } = require('@google-cloud/retail');
 const { assert, expect } = require('chai');
 
 const execSync = cmd => cp.execSync(cmd, { encoding: 'utf-8' });
-
 const cwd = path.join(__dirname, '..');
-
 
 describe('Search with ordering', () => {
 
@@ -52,36 +50,45 @@ describe('Search with ordering', () => {
       visitorId: '12345',
       orderBy: 'price desc'
     };
-    let filterResult = [];
+    const IResponseParams = {
+      ISearchResult: 0,
+      ISearchRequest: 1,
+      ISearchResponse: 2
+    }
+    let response = [];
 
     before(async () => {
-      const iterable = await retailClient.searchAsync(request);
-      for await (const response of iterable) {
-        filterResult.push(response);
-      }
+      response = await retailClient.search(request, {autoPaginate: false});
     });
 
-    it('should be a valid array', () => {
-      if (filterResult.length) {
-        filterResult.forEach((resultItem)  => {
+    it('should be a valid response', () => {
+      expect(response).to.be.an('array');
+      expect(response.length).to.equal(3);
+      const searchResult = response[IResponseParams.ISearchResult];
+      const searchResponse =  response[IResponseParams.ISearchResponse];
+      if (searchResult.length) {
+        expect(searchResponse.totalSize).to.be.above(0);
+        searchResult.forEach((resultItem)  => {
           expect(resultItem, 'It should be an object').to.be.an('object');
           expect(resultItem, 'The object has no  valid properties').to.have.all.keys('matchingVariantFields', 'variantRollupValues', 'id', 'product', 'matchingVariantCount');
         })        
       } else {
-        expect(filterResult).to.be.an('array').that.is.empty;
+        expect(searchResult).to.be.an('array').that.is.empty;
+        expect(searchResponse.totalSize).to.equal(0);
       }
     })
 
     it('should be ordered', () => {
-      if (filterResult.length) {
+      const searchResult = response[IResponseParams.ISearchResult];
+      if (searchResult.length) {
         let prices = [];
-        filterResult.forEach((item) => {
+        searchResult.forEach((item) => {
           prices.push(item.product.priceInfo.price);
         });
         const sortedArrayDesc = [...prices].sort((a, b) => b - a);
         expect(prices, 'It should be an ordered array').to.include.ordered.members(sortedArrayDesc);
       } else {
-        expect(filterResult, 'It should be an empty array').to.be.an('array').that.is.empty;
+        expect(searchResult, 'It should be an empty array').to.be.an('array').that.is.empty;
       }
     })
   })
