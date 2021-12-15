@@ -19,7 +19,7 @@ async function main() {
 
   // Imports the Google Cloud client library.
   const { SearchServiceClient } = require('@google-cloud/retail');
- 
+
   const projectNumber = process.env['PROJECT_NUMBER'];
 
   // Placement is used to identify the Serving Config name.
@@ -43,6 +43,12 @@ async function main() {
   // Instantiates a client.
   const retailClient = new SearchServiceClient();
 
+  const IResponseParams = {
+    ISearchResult: 0,
+    ISearchRequest: 1,
+    ISearchResponse: 2
+  }
+
   const callSearch = () => {
     return new Promise(async (resolve, reject) => {
       try {
@@ -61,7 +67,8 @@ async function main() {
         const response = await retailClient.search(request, {
           autoPaginate: false
         });
-        console.log(response);
+        const searchResult = response[IResponseParams.ISearchResponse];
+        console.log('Search result: ', JSON.stringify(searchResult, null, 4));
         pageToken = getNextPageToken(response);
         console.log('Next page token:', getNextPageToken(response));
         console.log('Search end');
@@ -74,11 +81,6 @@ async function main() {
 
   // Get next page token from the response
   const getNextPageToken = (response) => {
-    const IResponseParams = {
-      ISearchResult: 0,
-      ISearchRequest: 1,
-      ISearchResponse: 2
-    }
     return response[IResponseParams.ISearchResponse]?.nextPageToken;
   }
 

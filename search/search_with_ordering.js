@@ -34,10 +34,18 @@ async function main() {
 
   // The order in which products are returned.
   const orderBy = 'price desc'; // TRY DIFFERENT ORDER
+
+  // Maximum number of Products to return.
+  const pageSize = 10;
   
   // Instantiates a client
   const retailClient = new SearchServiceClient();
 
+  const IResponseParams = {
+    ISearchResult: 0,
+    ISearchRequest: 1,
+    ISearchResponse: 2
+  }
 
   const callSearch = async () => {
     console.log('Search start');
@@ -46,14 +54,16 @@ async function main() {
       placement,
       query,
       visitorId,
-      orderBy
+      orderBy,
+      pageSize
     };
 
     console.log('Search request: ', request);
 
     // Run request
     const response = await retailClient.search(request, {autoPaginate: false});
-    console.log('Search response: ', response);
+    const searchResult = response[IResponseParams.ISearchResponse];
+    console.log('Search result: ', JSON.stringify(searchResult, null, 4));
     console.log('Search end');
   }
 
