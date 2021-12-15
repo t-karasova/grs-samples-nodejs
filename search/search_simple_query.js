@@ -31,10 +31,18 @@ async function main() {
 
   // A unique identifier for tracking visitors.
   const visitorId = '12345';
+
+  // Maximum number of Products to return.
+  const pageSize = 10;
   
   // Instantiates a client.
   const retailClient = new SearchServiceClient();
 
+  const IResponseParams = {
+    ISearchResult: 0,
+    ISearchRequest: 1,
+    ISearchResponse: 2
+  }
 
   const callSearch = async () => {
     console.log('Search start');
@@ -42,13 +50,15 @@ async function main() {
     const request = {
       placement,
       query,
-      visitorId
+      visitorId,
+      pageSize
     };
     console.log('Search request: ', request);
 
     // Run request
     const response = await retailClient.search(request, {autoPaginate: false});
-    console.log('Search response: ', response);
+    const searchResult = response[IResponseParams.ISearchResponse];
+    console.log('Search result: ', JSON.stringify(searchResult, null, 4));
     console.log('Search end');
   }
 
