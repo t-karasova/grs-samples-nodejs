@@ -79,7 +79,10 @@ describe('Search with pagination', () => {
         expect(searchResponse.totalSize).to.be.above(0);
         searchResult.forEach((resultItem) => {
           expect(resultItem, 'It should be an object').to.be.an('object');
-          expect(resultItem, 'The object has no  valid properties').to.have.all.keys(
+          expect(
+            resultItem,
+            'The object has no  valid properties'
+          ).to.have.all.keys(
             'matchingVariantFields',
             'variantRollupValues',
             'id',
@@ -98,14 +101,18 @@ describe('Search with pagination', () => {
       if (searchResult.length) {
         expect(searchResult.length).to.equal(pageSize);
       } else {
-        expect(searchResult, 'It should be an empty array').to.be.an('array').that.is.empty;
+        expect(searchResult, 'It should be an empty array').to.be.an('array')
+          .that.is.empty;
       }
     });
 
     it('should be a valid search response object', () => {
       const searchResponse = response[IResponseParams.ISearchResponse];
       expect(searchResponse, 'It should be an object').to.be.an('object');
-      expect(searchResponse, 'The object has no valid properties').to.have.all.keys(
+      expect(
+        searchResponse,
+        'The object has no valid properties'
+      ).to.have.all.keys(
         'results',
         'facets',
         'totalSize',

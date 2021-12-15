@@ -81,7 +81,7 @@ async function main() {
 
   // Get next page token from the response
   const getNextPageToken = (response) => {
-    return response[IResponseParams.ISearchResponse]?.nextPageToken;
+    return response[IResponseParams.ISearchResponse].nextPageToken;
   };
 
   // Call search

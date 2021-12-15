@@ -69,7 +69,10 @@ describe('Search with ordering', () => {
         expect(searchResponse.totalSize).to.be.above(0);
         searchResult.forEach((resultItem) => {
           expect(resultItem, 'It should be an object').to.be.an('object');
-          expect(resultItem, 'The object has no  valid properties').to.have.all.keys(
+          expect(
+            resultItem,
+            'The object has no  valid properties'
+          ).to.have.all.keys(
             'matchingVariantFields',
             'variantRollupValues',
             'id',
@@ -91,9 +94,13 @@ describe('Search with ordering', () => {
           prices.push(item.product.priceInfo.price);
         });
         const sortedArrayDesc = [...prices].sort((a, b) => b - a);
-        expect(prices, 'It should be an ordered array').to.include.ordered.members(sortedArrayDesc);
+        expect(
+          prices,
+          'It should be an ordered array'
+        ).to.include.ordered.members(sortedArrayDesc);
       } else {
-        expect(searchResult, 'It should be an empty array').to.be.an('array').that.is.empty;
+        expect(searchResult, 'It should be an empty array').to.be.an('array')
+          .that.is.empty;
       }
     });
   });

@@ -27,7 +27,9 @@ async function main(generatedProductId) {
   const parent = `projects/${projectNumber}/locations/global/catalogs/default_catalog/branches/default_branch`;
 
   // The ID to use for the product
-  const productId = generatedProductId ? generatedProductId : Math.random().toString(36).slice(2).toUpperCase();
+  const productId = generatedProductId
+    ? generatedProductId
+    : Math.random().toString(36).slice(2).toUpperCase();
 
   // The product to create.
   const product = {
@@ -73,7 +75,7 @@ async function main(generatedProductId) {
   console.log(`Product ${createdProduct.id} creation ended`);
 
   // Delete product
-  await utils.deleteProduct(createdProduct?.name);
+  await utils.deleteProduct(createdProduct.name);
   console.log(`Product ${createdProduct.id} deleted`);
 
   // [END retail_create_product]

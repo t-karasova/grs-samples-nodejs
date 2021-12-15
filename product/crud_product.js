@@ -26,7 +26,9 @@ async function main(generatedProductId) {
   const parent = `projects/${projectNumber}/locations/global/catalogs/default_catalog/branches/default_branch`;
 
   // The ID to use for the product
-  const productId = generatedProductId ? generatedProductId : Math.random().toString(36).slice(2).toUpperCase();
+  const productId = generatedProductId
+    ? generatedProductId
+    : Math.random().toString(36).slice(2).toUpperCase();
 
   // Full resource name of Product
   const name = `${parent}/products/${productId}`;
@@ -157,7 +159,10 @@ async function main(generatedProductId) {
   // Update product
   console.log('Start product update');
   const updatedProduct = await callUpdateProduct();
-  console.log(`Product ${updatedProduct.id} update finished: `, JSON.stringify(updatedProduct));
+  console.log(
+    `Product ${updatedProduct.id} update finished: `,
+    JSON.stringify(updatedProduct)
+  );
 
   // Delete product
   console.log('Start deleting the product');

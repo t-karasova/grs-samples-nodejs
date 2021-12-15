@@ -44,7 +44,10 @@ describe('Get product', () => {
   });
 
   it('should check that get product finished', async () => {
-    const regex = new RegExp(`Product ${productId} get operation finished`, 'g');
+    const regex = new RegExp(
+      `Product ${productId} get operation finished`,
+      'g'
+    );
     assert.match(stdout, regex);
   });
 

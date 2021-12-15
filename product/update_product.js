@@ -24,13 +24,16 @@ async function main(generatedProductId) {
   const projectNumber = process.env['PROJECT_NUMBER'];
 
   // Create product
-  const createdProduct = await utils.createProduct(projectNumber, generatedProductId);
+  const createdProduct = await utils.createProduct(
+    projectNumber,
+    generatedProductId
+  );
 
   // The ID to use for the product
-  const productId = createdProduct?.id;
+  const productId = createdProduct.id;
 
   // The parent catalog resource name
-  const name = createdProduct?.name;
+  const name = createdProduct.name;
 
   // The product to update.
   const product = {
@@ -77,10 +80,13 @@ async function main(generatedProductId) {
   // Update product
   console.log('Start product update');
   const updatedProduct = await callUpdateProduct();
-  console.log(`Product ${updatedProduct.id} update finished: `, JSON.stringify(updatedProduct));
+  console.log(
+    `Product ${updatedProduct.id} update finished: `,
+    JSON.stringify(updatedProduct)
+  );
 
   // Delete product
-  await utils.deleteProduct(updatedProduct?.name);
+  await utils.deleteProduct(updatedProduct.name);
   console.log(`Product ${updatedProduct.id} deleted`);
 
   // [END retail_update_product]

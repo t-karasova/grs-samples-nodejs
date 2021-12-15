@@ -24,7 +24,10 @@ async function main(generatedProductId) {
   const projectNumber = process.env['PROJECT_NUMBER'];
 
   // Create product
-  const createdProduct = await utils.createProduct(projectNumber, generatedProductId);
+  const createdProduct = await utils.createProduct(
+    projectNumber,
+    generatedProductId
+  );
 
   // The inventory information to update
   const product = {
@@ -97,7 +100,10 @@ async function main(generatedProductId) {
 
   // Get product
   const changedProduct = await utils.getProduct(createdProduct.name);
-  console.log(`Updated product ${createdProduct.id}: `, JSON.stringify(changedProduct[0]));
+  console.log(
+    `Updated product ${createdProduct.id}: `,
+    JSON.stringify(changedProduct[0])
+  );
 
   // Delete product
   await utils.deleteProduct(createdProduct.name);

@@ -27,8 +27,16 @@ async function main() {
   await utils.createBucket(bucketName);
 
   //Upload files
-  await utils.uploadFile(bucketName, 'resources/products.json', 'products.json');
-  await utils.uploadFile(bucketName, 'resources/products_some_invalid.json', 'products_some_invalid.json');
+  await utils.uploadFile(
+    bucketName,
+    'resources/products.json',
+    'products.json'
+  );
+  await utils.uploadFile(
+    bucketName,
+    'resources/products_some_invalid.json',
+    'products_some_invalid.json'
+  );
 }
 
 process.on('unhandledRejection', (err) => {

@@ -24,10 +24,14 @@ async function main(generatedProductId) {
   const projectNumber = process.env['PROJECT_NUMBER'];
 
   // Create product
-  const createdProduct = await utils.createProduct(projectNumber, generatedProductId, true);
+  const createdProduct = await utils.createProduct(
+    projectNumber,
+    generatedProductId,
+    true
+  );
 
   // Full resource name of Product
-  const product = createdProduct?.name;
+  const product = createdProduct.name;
 
   // The fulfillment type, including commonly used types (such as
   // pickup in store and same day delivery), and custom types.

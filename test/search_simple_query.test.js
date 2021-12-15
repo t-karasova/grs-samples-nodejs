@@ -69,7 +69,10 @@ describe('Search simple query', () => {
         expect(searchResponse.totalSize).to.be.above(0);
         searchResult.forEach((resultItem) => {
           expect(resultItem, 'It should be an object').to.be.an('object');
-          expect(resultItem, 'The object has no  valid properties').to.have.all.keys(
+          expect(
+            resultItem,
+            'The object has no  valid properties'
+          ).to.have.all.keys(
             'matchingVariantFields',
             'variantRollupValues',
             'id',

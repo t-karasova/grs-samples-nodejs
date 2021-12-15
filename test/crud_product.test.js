@@ -58,14 +58,20 @@ describe('CRUD product', () => {
   });
 
   it('should check that product get operation finished', () => {
-    const regex = new RegExp(`Product ${productId} get operation finished`, 'g');
+    const regex = new RegExp(
+      `Product ${productId} get operation finished`,
+      'g'
+    );
     assert.match(stdout, regex);
   });
 
   it('should check that product update finished', async () => {
     const regex = new RegExp(`Product ${productId} update finished: .*\n`, 'g');
     assert.match(stdout, regex);
-    const string = stdout.match(regex).toString().replace(`Product ${productId} update finished: `, '');
+    const string = stdout
+      .match(regex)
+      .toString()
+      .replace(`Product ${productId} update finished: `, '');
     const updatedProduct = JSON.parse(string);
     expect(updatedProduct).to.be.an('object');
     expect(updatedProduct).to.have.deep.property(

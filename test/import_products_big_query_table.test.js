@@ -39,7 +39,10 @@ describe('Import product from gcs', () => {
   it('should check that products imported correctly', async () => {
     const regex = new RegExp(`Operation result: .*\n`, 'g');
     assert.match(stdout, regex);
-    const string = stdout.match(regex).toString().replace(`Operation result: `, '');
+    const string = stdout
+      .match(regex)
+      .toString()
+      .replace(`Operation result: `, '');
     const importOperation = JSON.parse(string);
 
     expect(importOperation).to.be.an('array');

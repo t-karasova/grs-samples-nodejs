@@ -69,7 +69,10 @@ describe('Search with filtering', () => {
         expect(searchResponse.totalSize).to.be.above(0);
         searchResult.forEach((resultItem) => {
           expect(resultItem, 'It should be an object').to.be.an('object');
-          expect(resultItem, 'The object has no  valid properties').to.have.all.keys(
+          expect(
+            resultItem,
+            'The object has no  valid properties'
+          ).to.have.all.keys(
             'matchingVariantFields',
             'variantRollupValues',
             'id',
@@ -87,9 +90,18 @@ describe('Search with filtering', () => {
       const searchResult = response[IResponseParams.ISearchResult];
       if (searchResult.length) {
         searchResult.forEach((item) => {
-          expect(item.product, 'Object has no "colorInfo" property').to.have.property('colorInfo');
-          expect(item.product.colorInfo, 'Object has no "colorFamilies" array').to.have.property('colorFamilies');
-          expect(item.product.colorInfo.colorFamilies, '"colorFamilies" field does not containt filter condition value')
+          expect(
+            item.product,
+            'Object has no "colorInfo" property'
+          ).to.have.property('colorInfo');
+          expect(
+            item.product.colorInfo,
+            'Object has no "colorFamilies" array'
+          ).to.have.property('colorFamilies');
+          expect(
+            item.product.colorInfo.colorFamilies,
+            '"colorFamilies" field does not containt filter condition value'
+          )
             .to.be.an('array')
             .that.includes('Black');
         });

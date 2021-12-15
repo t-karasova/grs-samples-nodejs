@@ -27,7 +27,7 @@ async function main(generatedProductId) {
   const product = await utils.createProduct(projectNumber, generatedProductId);
 
   // Full resource name of Product
-  const name = product?.name;
+  const name = product.name;
 
   // Instantiates a client.
   const retailClient = new ProductServiceClient();

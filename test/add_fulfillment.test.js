@@ -54,18 +54,26 @@ describe('Add fulfillment', () => {
   it('should check that product updated correctly', async () => {
     const regex = new RegExp(`Updated product: .*\n`, 'g');
     assert.match(stdout, regex);
-    const string = stdout.match(regex).toString().replace(`Updated product: `, '');
+    const string = stdout
+      .match(regex)
+      .toString()
+      .replace(`Updated product: `, '');
     const updatedProduct = JSON.parse(string);
 
     expect(updatedProduct).to.be.an('object');
     expect(updatedProduct.fulfillmentInfo).to.be.an('array');
-    expect(updatedProduct.fulfillmentInfo.length, 'Fulfillment array is empty').to.equal(1);
+    expect(
+      updatedProduct.fulfillmentInfo.length,
+      'Fulfillment array is empty'
+    ).to.equal(1);
 
     const item = updatedProduct.fulfillmentInfo[0];
     expect(item).to.be.an('object');
     expect(item).to.have.all.keys('type', 'placeIds');
     expect(item.type).to.equal('ship-to-store');
-    expect(item.placeIds).to.be.an('array').that.includes('store1', 'store2', 'store3');
+    expect(item.placeIds)
+      .to.be.an('array')
+      .that.includes('store1', 'store2', 'store3');
   });
 
   it('should check that product deleted', async () => {

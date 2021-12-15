@@ -44,7 +44,10 @@ describe('Import product from inline source', () => {
   let stdout;
 
   before(async () => {
-    stdout = execSync(`node product/import_products_inline_source.js ${product1.id} ${product2.id}`, { cwd });
+    stdout = execSync(
+      `node product/import_products_inline_source.js ${product1.id} ${product2.id}`,
+      { cwd }
+    );
   });
 
   it('should check that import started', () => {
@@ -54,7 +57,10 @@ describe('Import product from inline source', () => {
   it('should check that products imported correctly', async () => {
     const regex = new RegExp(`Operation result: .*\n`, 'g');
     assert.match(stdout, regex);
-    const string = stdout.match(regex).toString().replace(`Operation result: `, '');
+    const string = stdout
+      .match(regex)
+      .toString()
+      .replace(`Operation result: `, '');
     const importOperation = JSON.parse(string);
 
     expect(importOperation).to.be.an('array');

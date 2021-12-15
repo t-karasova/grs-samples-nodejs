@@ -106,8 +106,12 @@ async function main(id1, id2) {
         const [operation] = await retailClient.importProducts(request);
         const response = await operation.promise();
         const result = response[IResponseParams.ISearchResponse];
-        console.log(`Number of successfully imported products: ${result.successCount | 0}`);
-        console.log(`Number of failures during the importing: ${result.failureCount | 0}`);
+        console.log(
+          `Number of successfully imported products: ${result.successCount | 0}`
+        );
+        console.log(
+          `Number of failures during the importing: ${result.failureCount | 0}`
+        );
         console.log(`Operation result: ${JSON.stringify(response)}`);
         resolve();
       } catch (err) {

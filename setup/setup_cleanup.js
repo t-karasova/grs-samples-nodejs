@@ -20,12 +20,18 @@ const { BigQuery } = require('@google-cloud/bigquery');
 const { exec } = require('child_process');
 const fs = require('fs');
 
-const createProduct = async (projectNumber, generatedProductId, isFullfillment = false) => {
+const createProduct = async (
+  projectNumber,
+  generatedProductId,
+  isFullfillment = false
+) => {
   // The parent catalog resource name
   const parent = `projects/${projectNumber}/locations/global/catalogs/default_catalog/branches/default_branch`;
 
   // The ID to use for the product
-  const productId = generatedProductId ? generatedProductId : Math.random().toString(36).slice(2).toUpperCase();
+  const productId = generatedProductId
+    ? generatedProductId
+    : Math.random().toString(36).slice(2).toUpperCase();
 
   const fulfillmentInfo = isFullfillment
     ? [
@@ -306,7 +312,9 @@ const createBqTable = (datasetId, tableId) => {
         console.log(`Table ${tableId} already exists`);
         resolve();
       } else {
-        const productSchemaFile = fs.readFileSync('resources/product_schema.json');
+        const productSchemaFile = fs.readFileSync(
+          'resources/product_schema.json'
+        );
         const schema = JSON.parse(productSchemaFile);
 
         const bigquery = new BigQuery();
@@ -316,7 +324,9 @@ const createBqTable = (datasetId, tableId) => {
         };
 
         //Create a new table in the dataset
-        const [table] = await bigquery.dataset(datasetId).createTable(tableId, options);
+        const [table] = await bigquery
+          .dataset(datasetId)
+          .createTable(tableId, options);
 
         console.log(`Table ${table.id} created.`);
         resolve();
@@ -330,7 +340,9 @@ const createBqTable = (datasetId, tableId) => {
 const uploadDataToBqTable = (datasetId, tableId, source) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const productSchemaFile = fs.readFileSync('resources/product_schema.json');
+      const productSchemaFile = fs.readFileSync(
+        'resources/product_schema.json'
+      );
       const schema = {
         fields: JSON.parse(productSchemaFile),
       };
@@ -341,7 +353,10 @@ const uploadDataToBqTable = (datasetId, tableId, source) => {
         schema,
         location: 'US',
       };
-      const [job] = await bigquery.dataset(datasetId).table(tableId).load(source, options);
+      const [job] = await bigquery
+        .dataset(datasetId)
+        .table(tableId)
+        .load(source, options);
       // load() waits for the job to finish
       console.log(`Job ${job.id} completed.`);
       resolve();

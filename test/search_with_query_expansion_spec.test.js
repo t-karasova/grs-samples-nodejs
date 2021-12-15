@@ -28,7 +28,9 @@ describe('Search with query expansion spec', () => {
     let stdout;
 
     before(async () => {
-      stdout = execSync(`node search/search_with_query_expansion_spec.js`, { cwd });
+      stdout = execSync(`node search/search_with_query_expansion_spec.js`, {
+        cwd,
+      });
     });
 
     it('should show that search successfully started', () => {
@@ -72,7 +74,10 @@ describe('Search with query expansion spec', () => {
         expect(searchResponse.totalSize).to.be.above(0);
         searchResult.forEach((resultItem) => {
           expect(resultItem, 'It should be an object').to.be.an('object');
-          expect(resultItem, 'The object has no  valid properties').to.have.all.keys(
+          expect(
+            resultItem,
+            'The object has no  valid properties'
+          ).to.have.all.keys(
             'matchingVariantFields',
             'variantRollupValues',
             'id',
@@ -88,9 +93,10 @@ describe('Search with query expansion spec', () => {
 
     it('should contain expanded query', () => {
       const searchResponse = response[IResponseParams.ISearchResponse];
-      expect(searchResponse.queryExpansionInfo, 'Search response does not contain query expansion info').to.be.an(
-        'object'
-      );
+      expect(
+        searchResponse.queryExpansionInfo,
+        'Search response does not contain query expansion info'
+      ).to.be.an('object');
       expect(searchResponse.queryExpansionInfo.expandedQuery).to.be.true;
     });
   });
