@@ -20,7 +20,7 @@ const { before, describe, it, after } = require('mocha');
 const { ProductServiceClient } = require('@google-cloud/retail');
 const { assert, expect, should } = require('chai');
 
-const execSync = cmd => cp.execSync(cmd, { encoding: 'utf-8' });
+const execSync = (cmd) => cp.execSync(cmd, { encoding: 'utf-8' });
 
 const cwd = path.join(__dirname, '..');
 
@@ -34,16 +34,18 @@ describe('Set inventory', () => {
       price: 15.0,
       originalPrice: 20.0,
       cost: 8.0,
-      currencyCode: "USD",
+      currencyCode: 'USD',
     },
-    fulfillmentInfo: [{
-      type: 'same-day-delivery',
-      placeIds: ['store3', 'store4']
-    }],
+    fulfillmentInfo: [
+      {
+        type: 'same-day-delivery',
+        placeIds: ['store3', 'store4'],
+      },
+    ],
     availableQuantity: {
-      value: 2
+      value: 2,
     },
-    availability: 'IN_STOCK'
+    availability: 'IN_STOCK',
   };
   let stdout;
 
@@ -67,25 +69,44 @@ describe('Set inventory', () => {
   it('should check that product updated correctly', async () => {
     const regex = new RegExp(`Updated product ${productId}: .*\n`, 'g');
     assert.match(stdout, regex);
-    const string = stdout.match(regex).toString().replace(`Updated product ${productId}: `, '');
+    const string = stdout
+      .match(regex)
+      .toString()
+      .replace(`Updated product ${productId}: `, '');
     const updatedProduct = JSON.parse(string);
     expect(updatedProduct).to.be.an('object');
     assert.containsAllDeepKeys(updatedProduct, product);
     expect(updatedProduct.priceInfo.price, 'Price not equal').to.equal(15.0);
-    expect(updatedProduct.priceInfo.originalPrice, 'Original price not equal').to.equal(20.0);
+    expect(
+      updatedProduct.priceInfo.originalPrice,
+      'Original price not equal'
+    ).to.equal(20.0);
     expect(updatedProduct.priceInfo.cost, 'Cost not equal').to.equal(8.0);
-    expect(updatedProduct.priceInfo.currencyCode, 'Currency code not equal').to.equal('USD');
+    expect(
+      updatedProduct.priceInfo.currencyCode,
+      'Currency code not equal'
+    ).to.equal('USD');
     expect(updatedProduct.fulfillmentInfo).to.be.an('array');
-    expect(updatedProduct.fulfillmentInfo.length, 'Fulfillment array is empty').to.equal(1);
-    
-    const fulfillmentItem = updatedProduct.fulfillmentInfo[0]; 
+    expect(
+      updatedProduct.fulfillmentInfo.length,
+      'Fulfillment array is empty'
+    ).to.equal(1);
+
+    const fulfillmentItem = updatedProduct.fulfillmentInfo[0];
     expect(fulfillmentItem).to.be.an('object');
     expect(fulfillmentItem).to.have.all.keys('type', 'placeIds');
     expect(fulfillmentItem.type).to.equal('same-day-delivery');
-    expect(fulfillmentItem.placeIds).to.be.an('array').that.includes('store3', 'store4');
+    expect(fulfillmentItem.placeIds)
+      .to.be.an('array')
+      .that.includes('store3', 'store4');
 
-    expect(updatedProduct.availableQuantity, 'Available quantity not equal').to.deep.equal({ value: 2 });
-    expect(updatedProduct.availability, 'Availability not equal').to.equal('IN_STOCK');
+    expect(
+      updatedProduct.availableQuantity,
+      'Available quantity not equal'
+    ).to.deep.equal({ value: 2 });
+    expect(updatedProduct.availability, 'Availability not equal').to.equal(
+      'IN_STOCK'
+    );
   });
 
   it('should check that product deleted', async () => {
@@ -100,5 +121,5 @@ describe('Set inventory', () => {
     } catch (err) {
       expect(err, 'Bad error code').to.include({ code: 5 });
     }
-  })
+  });
 });

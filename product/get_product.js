@@ -27,17 +27,17 @@ async function main(generatedProductId) {
   const product = await utils.createProduct(projectNumber, generatedProductId);
 
   // Full resource name of Product
-  const name = product?.name;
+  const name = product.name;
 
   // Instantiates a client.
   const retailClient = new ProductServiceClient();
 
-  const callGetProduct = async () => {
+  const callGetProduct = () => {
     return new Promise(async (resolve, reject) => {
       try {
         // Construct request
         const request = {
-          name
+          name,
         };
         console.log('Get product request:', request);
 
@@ -49,21 +49,21 @@ async function main(generatedProductId) {
       } catch (err) {
         reject(err);
       }
-    })
-  }
+    });
+  };
 
-  // Get product 
-  console.log('Start product get operation')
+  // Get product
+  console.log('Start product get operation');
   const foundProduct = await callGetProduct();
   console.log(`Product ${foundProduct.id} get operation finished`);
 
-  // Delete product 
+  // Delete product
   await utils.deleteProduct(name);
   console.log(`Product ${foundProduct.id} deleted`);
   // [END retail_get_product]
 }
 
-process.on('unhandledRejection', err => {
+process.on('unhandledRejection', (err) => {
   console.error(err.message);
   process.exitCode = 1;
 });

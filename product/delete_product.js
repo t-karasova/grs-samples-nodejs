@@ -27,7 +27,7 @@ async function main(generatedProductId) {
   const product = await utils.createProduct(projectNumber, generatedProductId);
 
   // Full resource name of Product
-  const name = product?.name;
+  const name = product.name;
 
   // Instantiates a client.
   const retailClient = new ProductServiceClient();
@@ -35,7 +35,7 @@ async function main(generatedProductId) {
   const callDeleteProduct = async () => {
     // Construct request
     const request = {
-      name
+      name,
     };
     console.log('Delete product request:', request);
 
@@ -43,15 +43,15 @@ async function main(generatedProductId) {
     console.log('Start deleting the product');
     await retailClient.deleteProduct(request);
     console.log(`Product ${product.id} deleted`);
-  }
+  };
 
   // Delete product
   callDeleteProduct();
-  
+
   // [END retail_delete_product]
 }
 
-process.on('unhandledRejection', err => {
+process.on('unhandledRejection', (err) => {
   console.error(err.message);
   process.exitCode = 1;
 });

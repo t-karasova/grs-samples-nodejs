@@ -19,13 +19,21 @@ async function main() {
 
   await utils.createBqDataset('products');
   await utils.createBqTable('products', 'products');
-  await utils.uploadDataToBqTable('products', 'products', 'resources/products.json');
+  await utils.uploadDataToBqTable(
+    'products',
+    'products',
+    'resources/products.json'
+  );
 
   await utils.createBqTable('products', 'products_some_invalid');
-  await utils.uploadDataToBqTable('products', 'products', 'resources/products_some_invalid.json');
+  await utils.uploadDataToBqTable(
+    'products',
+    'products',
+    'resources/products_some_invalid.json'
+  );
 }
 
-process.on('unhandledRejection', err => {
+process.on('unhandledRejection', (err) => {
   console.error(err.message);
   process.exitCode = 1;
 });

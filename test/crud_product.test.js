@@ -20,7 +20,7 @@ const { before, describe, it, after } = require('mocha');
 const { ProductServiceClient } = require('@google-cloud/retail');
 const { assert, expect } = require('chai');
 
-const execSync = cmd => cp.execSync(cmd, { encoding: 'utf-8' });
+const execSync = (cmd) => cp.execSync(cmd, { encoding: 'utf-8' });
 const cwd = path.join(__dirname, '..');
 
 describe('CRUD product', () => {
@@ -38,10 +38,10 @@ describe('CRUD product', () => {
     priceInfo: {
       price: 20.0,
       originalPrice: 25.5,
-      currencyCode: "EUR"
+      currencyCode: 'EUR',
     },
-    availability: 'OUT_OF_STOCK'
-  }
+    availability: 'OUT_OF_STOCK',
+  };
   let stdout;
 
   before(async () => {
@@ -58,24 +58,36 @@ describe('CRUD product', () => {
   });
 
   it('should check that product get operation finished', () => {
-    const regex = new RegExp(`Product ${productId} get operation finished`, 'g');
+    const regex = new RegExp(
+      `Product ${productId} get operation finished`,
+      'g'
+    );
     assert.match(stdout, regex);
   });
 
   it('should check that product update finished', async () => {
     const regex = new RegExp(`Product ${productId} update finished: .*\n`, 'g');
     assert.match(stdout, regex);
-    const string = stdout.match(regex).toString().replace(`Product ${productId} update finished: `, '');
+    const string = stdout
+      .match(regex)
+      .toString()
+      .replace(`Product ${productId} update finished: `, '');
     const updatedProduct = JSON.parse(string);
     expect(updatedProduct).to.be.an('object');
     expect(updatedProduct).to.have.deep.property(
-      'title', product.title,
-      'type', product.type,
-      'categories', product.categories,
-      'brands', product.brands,
-      'priceInfo', product.priceInfo,
-      'availability', product.availability
-    )
+      'title',
+      product.title,
+      'type',
+      product.type,
+      'categories',
+      product.categories,
+      'brands',
+      product.brands,
+      'priceInfo',
+      product.priceInfo,
+      'availability',
+      product.availability
+    );
   });
 
   it('should check that product deleted', async () => {
@@ -94,5 +106,5 @@ describe('CRUD product', () => {
     } catch (err) {
       expect(err, 'Bad error code').to.include({ code: 5 });
     }
-  })
+  });
 });

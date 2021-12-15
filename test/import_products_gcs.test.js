@@ -16,10 +16,10 @@
 
 const path = require('path');
 const cp = require('child_process');
-const { before, describe, it} = require('mocha');
+const { before, describe, it } = require('mocha');
 const { assert, expect } = require('chai');
 
-const execSync = cmd => cp.execSync(cmd, { encoding: 'utf-8' });
+const execSync = (cmd) => cp.execSync(cmd, { encoding: 'utf-8' });
 
 const cwd = path.join(__dirname, '..');
 
@@ -37,9 +37,12 @@ describe('Import product from gcs', () => {
   it('should check that products imported correctly', async () => {
     const regex = new RegExp(`Operation result: .*\n`, 'g');
     assert.match(stdout, regex);
-    const string = stdout.match(regex).toString().replace(`Operation result: `, '');
+    const string = stdout
+      .match(regex)
+      .toString()
+      .replace(`Operation result: `, '');
     const importOperation = JSON.parse(string);
-   
+
     expect(importOperation).to.be.an('array');
     expect(importOperation.length).to.equal(3);
 
@@ -48,7 +51,7 @@ describe('Import product from gcs', () => {
 
     expect(metadata).to.be.an('object');
     expect(metadata.done).to.be.true;
-    
+
     expect(response).to.be.an('object');
     expect(response.successCount).to.equal('316');
   });
@@ -56,5 +59,4 @@ describe('Import product from gcs', () => {
   it('should check that import finished', () => {
     assert.match(stdout, /Import products finished/);
   });
-
 });
