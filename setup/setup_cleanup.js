@@ -18,19 +18,29 @@ const { ProductServiceClient } = require('@google-cloud/retail').v2;
 const { Storage } = require('@google-cloud/storage');
 const { BigQuery } = require('@google-cloud/bigquery');
 const { exec } = require('child_process');
-const fs  = require('fs');
+const fs = require('fs');
 
-const createProduct = async (projectNumber, generatedProductId, isFullfillment = false) => {
+const createProduct = async (
+  projectNumber,
+  generatedProductId,
+  isFullfillment = false
+) => {
   // The parent catalog resource name
   const parent = `projects/${projectNumber}/locations/global/catalogs/default_catalog/branches/default_branch`;
 
   // The ID to use for the product
-  const productId = generatedProductId ? generatedProductId : Math.random().toString(36).slice(2).toUpperCase();
+  const productId = generatedProductId
+    ? generatedProductId
+    : Math.random().toString(36).slice(2).toUpperCase();
 
-  const fulfillmentInfo = isFullfillment ? [{
-    type: 'same-day-delivery',
-    placeIds: ['store1', 'store2', 'store3']
-  }] : [];
+  const fulfillmentInfo = isFullfillment
+    ? [
+        {
+          type: 'same-day-delivery',
+          placeIds: ['store1', 'store2', 'store3'],
+        },
+      ]
+    : [];
 
   // The product to create.
   const product = {
@@ -42,10 +52,10 @@ const createProduct = async (projectNumber, generatedProductId, isFullfillment =
     priceInfo: {
       price: 30.0,
       originalPrice: 35.5,
-      currency_code: "USD"
+      currency_code: 'USD',
     },
-    availability: 'IN_STOCK'
-  }
+    availability: 'IN_STOCK',
+  };
 
   const retailClient = new ProductServiceClient();
 
@@ -55,19 +65,18 @@ const createProduct = async (projectNumber, generatedProductId, isFullfillment =
       const request = {
         parent,
         product,
-        productId
+        productId,
       };
 
       // Run request
       const response = await retailClient.createProduct(request);
       console.log(`Product ${response[0].id} created`);
       resolve(response[0]);
-
     } catch (err) {
       reject(err);
     }
-  })
-}
+  });
+};
 
 const getProduct = (name) => {
   const retailClient = new ProductServiceClient();
@@ -76,19 +85,17 @@ const getProduct = (name) => {
     try {
       // Construct request
       const request = {
-        name
+        name,
       };
 
       // Run request
       const response = await retailClient.getProduct(request);
       resolve(response);
-
     } catch (err) {
       reject(err);
     }
-  })
-}
-
+  });
+};
 
 const deleteProduct = (name) => {
   const retailClient = new ProductServiceClient();
@@ -97,18 +104,17 @@ const deleteProduct = (name) => {
     try {
       // Construct request
       const request = {
-        name
+        name,
       };
 
       // Run request
       const response = await retailClient.deleteProduct(request);
       resolve(response);
-
     } catch (err) {
       reject(err);
     }
-  })
-}
+  });
+};
 
 const deleteProducts = (projectNumber, ids) => {
   const retailClient = new ProductServiceClient();
@@ -123,13 +129,12 @@ const deleteProducts = (projectNumber, ids) => {
     } catch (err) {
       reject(err);
     }
-  })
-}
-
+  });
+};
 
 const getProjectId = () => {
   return new Promise((resolve, reject) => {
-    const command = 'gcloud config get-value project --format json'
+    const command = 'gcloud config get-value project --format json';
     exec(command, (error, stdout, stderr) => {
       if (error) {
         reject(error);
@@ -138,9 +143,9 @@ const getProjectId = () => {
       } else if (stderr) {
         reject(stderr);
       }
-    })
-  })
-}
+    });
+  });
+};
 
 const getBucketsList = () => {
   return new Promise(async (resolve, reject) => {
@@ -153,8 +158,8 @@ const getBucketsList = () => {
     } catch (error) {
       reject(error);
     }
-  })
-}
+  });
+};
 
 const isBucketExist = (name) => {
   return new Promise(async (resolve, reject) => {
@@ -166,8 +171,8 @@ const isBucketExist = (name) => {
     } catch (error) {
       reject(error);
     }
-  })
-}
+  });
+};
 
 const createBucket = (name) => {
   return new Promise(async (resolve, reject) => {
@@ -181,16 +186,16 @@ const createBucket = (name) => {
         const storageClass = 'STANDARD';
         const createdBucket = await storage.createBucket(name, {
           location,
-          [storageClass]: true
+          [storageClass]: true,
         });
         console.log(`Bucket ${createdBucket[0].name} created.`);
         resolve(createdBucket);
-      };
+      }
     } catch (error) {
       reject(error);
     }
-  })
-}
+  });
+};
 
 const deleteBucket = (name) => {
   return new Promise(async (resolve, reject) => {
@@ -202,8 +207,8 @@ const deleteBucket = (name) => {
     } catch (error) {
       reject(error);
     }
-  })
-}
+  });
+};
 
 const uploadFile = (bucketName, filePath, destFileName) => {
   return new Promise(async (resolve, reject) => {
@@ -217,8 +222,8 @@ const uploadFile = (bucketName, filePath, destFileName) => {
     } catch (error) {
       reject(error);
     }
-  })
-}
+  });
+};
 
 const listFiles = (bucketName) => {
   return new Promise(async (resolve, reject) => {
@@ -227,28 +232,28 @@ const listFiles = (bucketName) => {
       const [files] = await storage.bucket(bucketName).getFiles();
 
       console.log('Files:');
-      files.forEach(file => {
+      files.forEach((file) => {
         console.log(file.name);
       });
       resolve();
     } catch (error) {
       reject(error);
     }
-  })
-}
+  });
+};
 
 const isDatasetExist = (datasetId) => {
   return new Promise(async (resolve, reject) => {
     try {
       const bigquery = new BigQuery();
       const [datasets] = await bigquery.getDatasets();
-      const datasetIds = datasets.map(dataset => dataset.id);
+      const datasetIds = datasets.map((dataset) => dataset.id);
       datasetIds.indexOf(datasetId) !== -1 ? resolve(true) : resolve(false);
     } catch (error) {
       reject(error);
     }
-  })
-}
+  });
+};
 
 const createBqDataset = (datasetId) => {
   return new Promise(async (resolve, reject) => {
@@ -271,34 +276,34 @@ const createBqDataset = (datasetId) => {
     } catch (error) {
       reject(error);
     }
-  })
-}
+  });
+};
 
 const deleteBqDataset = (datasetId) => {
   return new Promise(async (resolve, reject) => {
     try {
       const bigquery = new BigQuery();
-      await bigquery.dataset(datasetId).delete({force: true});
+      await bigquery.dataset(datasetId).delete({ force: true });
       console.log(`Dataset ${dataset.id} deleted.`);
       resolve();
     } catch (error) {
       reject(error);
     }
-  })
-}
+  });
+};
 
 const isTableExist = (datasetId, tableId) => {
   return new Promise(async (resolve, reject) => {
     try {
       const bigquery = new BigQuery();
       const [tables] = await bigquery.dataset(datasetId).getTables();
-      const tableIds = tables.map(table => table.id);
+      const tableIds = tables.map((table) => table.id);
       tableIds.indexOf(tableId) !== -1 ? resolve(true) : resolve(false);
     } catch (error) {
       reject(error);
     }
-  })
-}
+  });
+};
 
 const createBqTable = (datasetId, tableId, schemaFile) => {
   return new Promise(async (resolve, reject) => {
@@ -327,16 +332,16 @@ const createBqTable = (datasetId, tableId, schemaFile) => {
     } catch (error) {
       reject(error);
     }
-  })
-}
+  });
+};
 
 const uploadDataToBqTable = (datasetId, tableId, source, schemaFile) => {
   return new Promise(async (resolve, reject) => {
     try {
       const schemaFileData = fs.readFileSync(schemaFile);
       const schema = {
-        fields: JSON.parse(schemaFileData)
-      }
+        fields: JSON.parse(schemaFileData),
+      };
 
       const bigquery = new BigQuery();
       const options = {
@@ -354,8 +359,8 @@ const uploadDataToBqTable = (datasetId, tableId, source, schemaFile) => {
     } catch (error) {
       reject(error);
     }
-  })
-}
+  });
+};
 
 module.exports = {
   createProduct,
@@ -371,5 +376,5 @@ module.exports = {
   createBqDataset,
   deleteBqDataset,
   createBqTable,
-  uploadDataToBqTable
-}
+  uploadDataToBqTable,
+};

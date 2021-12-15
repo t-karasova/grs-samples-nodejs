@@ -24,19 +24,19 @@ async function main(id1, id2) {
   const projectNumber = process.env['PROJECT_NUMBER'];
 
   // Placement
-  const parent = `projects/${projectNumber}/locations/global/catalogs/default_catalog/branches/default_branch`
+  const parent = `projects/${projectNumber}/locations/global/catalogs/default_catalog/branches/default_branch`;
 
   const product1 = {
     id: id1 ? id1 : Math.random().toString(36).slice(2).toUpperCase(),
-    title: '#IamRemarkable Pen',  //TO CHECK ERROR HANDLING COMMENT OUT THE PRODUCT TITLE HERE
+    title: '#IamRemarkable Pen', //TO CHECK ERROR HANDLING COMMENT OUT THE PRODUCT TITLE HERE
     uri: 'https://shop.googlemerchandisestore.com/Google+Redesign/Office/IamRemarkable+Pen',
     brands: ['#IamRemarkable'],
-    categories: ["Apparel"],
+    categories: ['Apparel'],
     priceInfo: {
       price: 16.0,
       originalPrice: 45.0,
       cost: 12.0,
-      currencyCode: 'USD'
+      currencyCode: 'USD',
     },
     colorInfo: {
       colorFamilies: ['Blue'],
@@ -44,16 +44,16 @@ async function main(id1, id2) {
     },
     fulFillmentInfo: {
       type: 'pickup-in-store',
-      placeIds: ['store1', 'store2']
+      placeIds: ['store1', 'store2'],
     },
     retrievable_fields: {
-      paths: ['title', 'categories', 'price_info', 'color_info']
-    }
-  }
+      paths: ['title', 'categories', 'price_info', 'color_info'],
+    },
+  };
 
   const product2 = {
     id: id2 ? id2 : Math.random().toString(36).slice(2).toUpperCase(),
-    title: "Android Embroidered Crewneck Sweater",
+    title: 'Android Embroidered Crewneck Sweater',
     uri: 'https://shop.googlemerchandisestore.com/Google+Redesign/Apparel/Android+Embroidered+Crewneck+Sweater',
     brands: ['Android'],
     categories: ['Apparel'],
@@ -61,7 +61,7 @@ async function main(id1, id2) {
       price: 35.0,
       originalPrice: 45.0,
       cost: 12.0,
-      currencyCode: 'USD'
+      currencyCode: 'USD',
     },
     colorInfo: {
       colorFamilies: ['Blue'],
@@ -69,36 +69,36 @@ async function main(id1, id2) {
     },
     fulFillmentInfo: {
       type: 'pickup-in-store',
-      placeIds: ['store2', 'store3']
+      placeIds: ['store2', 'store3'],
     },
     retrievable_fields: {
-      paths: ['title', 'categories', 'price_info', 'color_info']
-    }
-  }
+      paths: ['title', 'categories', 'price_info', 'color_info'],
+    },
+  };
 
   // The desired input location of the data.
   const inputConfig = {
     productInlineSource: {
-      products: [product1, product2]
-    }
-  }
+      products: [product1, product2],
+    },
+  };
 
   const IResponseParams = {
     IError: 0,
     ISearchResponse: 1,
-    ISearchMetadata: 2
-  }
+    ISearchMetadata: 2,
+  };
 
   // Instantiates a client.
   const retailClient = new ProductServiceClient();
 
-  const callImportProducts = async () => {
+  const callImportProducts = () => {
     return new Promise(async (resolve, reject) => {
       try {
         // Construct request
         const request = {
           parent,
-          inputConfig
+          inputConfig,
         };
         console.log('Import products request:', request);
 
@@ -106,16 +106,20 @@ async function main(id1, id2) {
         const [operation] = await retailClient.importProducts(request);
         const response = await operation.promise();
         const result = response[IResponseParams.ISearchResponse];
-        console.log(`Number of successfully imported products: ${result.successCount | 0}`);
-        console.log(`Number of failures during the importing: ${result.failureCount | 0}`);
+        console.log(
+          `Number of successfully imported products: ${result.successCount | 0}`
+        );
+        console.log(
+          `Number of failures during the importing: ${result.failureCount | 0}`
+        );
         console.log(`Operation result: ${JSON.stringify(response)}`);
         resolve();
       } catch (err) {
         console.log(err);
         reject(err);
       }
-    })
-  }
+    });
+  };
   // Start import products
   console.log('Start import products');
   await callImportProducts();
@@ -127,7 +131,7 @@ async function main(id1, id2) {
   // [END retail_import_products_from_inline_source]
 }
 
-process.on('unhandledRejection', err => {
+process.on('unhandledRejection', (err) => {
   console.error(err.message);
   process.exitCode = 1;
 });

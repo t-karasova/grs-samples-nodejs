@@ -22,7 +22,7 @@ async function main() {
   const { SearchServiceClient } = require('@google-cloud/retail');
 
   const projectNumber = process.env['PROJECT_NUMBER'];
-  
+
   // Placement is used to identify the Serving Config name.
   const placement = `projects/${projectNumber}/locations/global/catalogs/default_catalog/placements/default_search`;
 
@@ -34,15 +34,15 @@ async function main() {
 
   // Maximum number of Products to return.
   const pageSize = 10;
-  
+
   // Instantiates a client.
   const retailClient = new SearchServiceClient();
 
   const IResponseParams = {
     ISearchResult: 0,
     ISearchRequest: 1,
-    ISearchResponse: 2
-  }
+    ISearchResponse: 2,
+  };
 
   const callSearch = async () => {
     console.log('Search start');
@@ -51,22 +51,24 @@ async function main() {
       placement,
       query,
       visitorId,
-      pageSize
+      pageSize,
     };
     console.log('Search request: ', request);
 
     // Run request
-    const response = await retailClient.search(request, {autoPaginate: false});
+    const response = await retailClient.search(request, {
+      autoPaginate: false,
+    });
     const searchResult = response[IResponseParams.ISearchResponse];
     console.log('Search result: ', JSON.stringify(searchResult, null, 4));
     console.log('Search end');
-  }
+  };
 
   callSearch();
   // [END retail_search_for_products_with_query_parameter]
 }
 
-process.on('unhandledRejection', err => {
+process.on('unhandledRejection', (err) => {
   console.error(err.message);
   process.exitCode = 1;
 });

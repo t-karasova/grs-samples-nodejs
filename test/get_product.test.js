@@ -20,7 +20,7 @@ const { before, describe, it, after } = require('mocha');
 const { ProductServiceClient } = require('@google-cloud/retail');
 const { assert, expect } = require('chai');
 
-const execSync = cmd => cp.execSync(cmd, { encoding: 'utf-8' });
+const execSync = (cmd) => cp.execSync(cmd, { encoding: 'utf-8' });
 const cwd = path.join(__dirname, '..');
 
 describe('Get product', () => {
@@ -44,7 +44,10 @@ describe('Get product', () => {
   });
 
   it('should check that get product finished', async () => {
-    const regex = new RegExp(`Product ${productId} get operation finished`, 'g');
+    const regex = new RegExp(
+      `Product ${productId} get operation finished`,
+      'g'
+    );
     assert.match(stdout, regex);
   });
 
@@ -60,5 +63,5 @@ describe('Get product', () => {
     } catch (err) {
       expect(err, 'Bad error code').to.include({ code: 5 });
     }
-  })
+  });
 });

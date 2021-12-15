@@ -24,13 +24,16 @@ async function main(generatedProductId) {
   const projectNumber = process.env['PROJECT_NUMBER'];
 
   // Create product
-  const createdProduct = await utils.createProduct(projectNumber, generatedProductId);
+  const createdProduct = await utils.createProduct(
+    projectNumber,
+    generatedProductId
+  );
 
   // The ID to use for the product
-  const productId = createdProduct?.id;
+  const productId = createdProduct.id;
 
   // The parent catalog resource name
-  const name = createdProduct?.name;
+  const name = createdProduct.name;
 
   // The product to update.
   const product = {
@@ -43,23 +46,23 @@ async function main(generatedProductId) {
     priceInfo: {
       price: 20.0,
       originalPrice: 25.5,
-      currencyCode: "EUR"
+      currencyCode: 'EUR',
     },
-    availability: 'OUT_OF_STOCK'
-  }
+    availability: 'OUT_OF_STOCK',
+  };
 
   // Indicates which fields in the provided product to update
-  const updateMask = {}
+  const updateMask = {};
 
   // Instantiates a client.
   const retailClient = new ProductServiceClient();
 
-  const callUpdateProduct = async () => {
+  const callUpdateProduct = () => {
     return new Promise(async (resolve, reject) => {
       try {
         // Construct request
         const request = {
-          product
+          product,
         };
         console.log('Update product request:', request);
 
@@ -71,22 +74,25 @@ async function main(generatedProductId) {
       } catch (err) {
         reject(err);
       }
-    })
-  }
+    });
+  };
 
   // Update product
   console.log('Start product update');
   const updatedProduct = await callUpdateProduct();
-  console.log(`Product ${updatedProduct.id} update finished: `, JSON.stringify(updatedProduct));
+  console.log(
+    `Product ${updatedProduct.id} update finished: `,
+    JSON.stringify(updatedProduct)
+  );
 
   // Delete product
-  await utils.deleteProduct(updatedProduct?.name);
-  console.log(`Product ${updatedProduct.id} deleted`)
+  await utils.deleteProduct(updatedProduct.name);
+  console.log(`Product ${updatedProduct.id} deleted`);
 
   // [END retail_update_product]
 }
 
-process.on('unhandledRejection', err => {
+process.on('unhandledRejection', (err) => {
   console.error(err.message);
   process.exitCode = 1;
 });
