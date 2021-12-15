@@ -17,22 +17,27 @@
 async function main() {
   const utils = require('./setup_cleanup');
 
-  const dataset = "user_events"
-  const validTable = "events"
-  const invalidTable = "events_some_invalid"
-  const schema = "resources/events_schema.json"
-  const validSourceFile = "resources/user_events.json"
-  const invalidSourceFile = "resources/user_events_some_invalid.json"
+  const dataset = 'user_events';
+  const validTable = 'events';
+  const invalidTable = 'events_some_invalid';
+  const schema = 'resources/events_schema.json';
+  const validSourceFile = 'resources/user_events.json';
+  const invalidSourceFile = 'resources/user_events_some_invalid.json';
 
   await utils.createBqDataset(dataset);
   await utils.createBqTable(dataset, validTable);
   await utils.uploadDataToBqTable(dataset, validTable, validSourceFile, schema);
 
   await utils.createBqTable(dataset, invalidTable);
-  await utils.uploadDataToBqTable(dataset, validTable, invalidSourceFile, schema);
+  await utils.uploadDataToBqTable(
+    dataset,
+    validTable,
+    invalidSourceFile,
+    schema
+  );
 }
 
-process.on('unhandledRejection', err => {
+process.on('unhandledRejection', (err) => {
   console.error(err.message);
   process.exitCode = 1;
 });
