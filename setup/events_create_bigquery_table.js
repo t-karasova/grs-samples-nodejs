@@ -17,12 +17,12 @@
 async function main() {
   const utils = require('./setup_cleanup');
 
-  const dataset = "products"
-  const validTable = "products"
-  const invalidTable = "products_some_invalid"
-  const schema = "resources/product_schema.json"
-  const validSourceFile = "resources/products.json"
-  const invalidSourceFile = "resources/products_some_invalid.json"
+  const dataset = "user_events"
+  const validTable = "events"
+  const invalidTable = "events_some_invalid"
+  const schema = "resources/events_schema.json"
+  const validSourceFile = "resources/user_events.json"
+  const invalidSourceFile = "resources/user_events_some_invalid.json"
 
   await utils.createBqDataset(dataset);
   await utils.createBqTable(dataset, validTable);

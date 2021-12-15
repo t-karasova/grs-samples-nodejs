@@ -300,15 +300,15 @@ const isTableExist = (datasetId, tableId) => {
   })
 }
 
-const createBqTable = (datasetId, tableId) => {
+const createBqTable = (datasetId, tableId, schemaFile) => {
   return new Promise(async (resolve, reject) => {
     try {
       if (await isTableExist(datasetId, tableId)) {
         console.log(`Table ${tableId} already exists`);
         resolve();
       } else {
-        const productSchemaFile = fs.readFileSync('resources/product_schema.json');
-        const schema = JSON.parse(productSchemaFile);
+        const schemaFileData = fs.readFileSync(schemaFile);
+        const schema = JSON.parse(schemaFileData);
 
         const bigquery = new BigQuery();
         const options = {
@@ -330,12 +330,12 @@ const createBqTable = (datasetId, tableId) => {
   })
 }
 
-const uploadDataToBqTable = (datasetId, tableId, source) => {
+const uploadDataToBqTable = (datasetId, tableId, source, schemaFile) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const productSchemaFile = fs.readFileSync('resources/product_schema.json');
+      const schemaFileData = fs.readFileSync(schemaFile);
       const schema = {
-        fields: JSON.parse(productSchemaFile)
+        fields: JSON.parse(schemaFileData)
       }
 
       const bigquery = new BigQuery();
