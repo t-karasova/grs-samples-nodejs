@@ -20,11 +20,10 @@ const { before, describe, it } = require('mocha');
 const { SearchServiceClient } = require('@google-cloud/retail');
 const { assert, expect } = require('chai');
 
-const execSync = cmd => cp.execSync(cmd, { encoding: 'utf-8' });
+const execSync = (cmd) => cp.execSync(cmd, { encoding: 'utf-8' });
 const cwd = path.join(__dirname, '..');
 
 describe('Search with filtering', () => {
-
   describe('Search with filtering run sample', () => {
     let stdout;
 
@@ -39,7 +38,7 @@ describe('Search with filtering', () => {
     it('should show that search successfully finished', () => {
       assert.match(stdout, /Search end/);
     });
-  })
+  });
 
   describe('Search with filtering sample result', () => {
     const retailClient = new SearchServiceClient();
@@ -48,35 +47,41 @@ describe('Search with filtering', () => {
       placement: `projects/${projectNumber}/locations/global/catalogs/default_catalog/placements/default_search`,
       query: 'Tee',
       visitorId: '12345',
-      filter: '(colorFamily: ANY("Black"))'
+      filter: '(colorFamily: ANY("Black"))',
     };
     const IResponseParams = {
       ISearchResult: 0,
       ISearchRequest: 1,
-      ISearchResponse: 2
-    }
+      ISearchResponse: 2,
+    };
     let response = [];
 
     before(async () => {
-      response = await retailClient.search(request, {autoPaginate: false});
+      response = await retailClient.search(request, { autoPaginate: false });
     });
 
     it('should be a valid response', () => {
       expect(response).to.be.an('array');
       expect(response.length).to.equal(3);
       const searchResult = response[IResponseParams.ISearchResult];
-      const searchResponse =  response[IResponseParams.ISearchResponse];
+      const searchResponse = response[IResponseParams.ISearchResponse];
       if (searchResult.length) {
         expect(searchResponse.totalSize).to.be.above(0);
-        searchResult.forEach((resultItem)  => {
+        searchResult.forEach((resultItem) => {
           expect(resultItem, 'It should be an object').to.be.an('object');
-          expect(resultItem, 'The object has no  valid properties').to.have.all.keys('matchingVariantFields', 'variantRollupValues', 'id', 'product', 'matchingVariantCount');
-        })        
+          expect(resultItem, 'The object has no  valid properties').to.have.all.keys(
+            'matchingVariantFields',
+            'variantRollupValues',
+            'id',
+            'product',
+            'matchingVariantCount'
+          );
+        });
       } else {
         expect(searchResult).to.be.an('array').that.is.empty;
         expect(searchResponse.totalSize).to.equal(0);
       }
-    })
+    });
 
     it('should contain filtered values', () => {
       const searchResult = response[IResponseParams.ISearchResult];
@@ -84,11 +89,13 @@ describe('Search with filtering', () => {
         searchResult.forEach((item) => {
           expect(item.product, 'Object has no "colorInfo" property').to.have.property('colorInfo');
           expect(item.product.colorInfo, 'Object has no "colorFamilies" array').to.have.property('colorFamilies');
-          expect(item.product.colorInfo.colorFamilies, '"colorFamilies" field does not containt filter condition value').to.be.an('array').that.includes('Black');
-        })
+          expect(item.product.colorInfo.colorFamilies, '"colorFamilies" field does not containt filter condition value')
+            .to.be.an('array')
+            .that.includes('Black');
+        });
       } else {
         expect(searchResult).to.be.an('array').that.is.empty;
       }
-    })
-  })
+    });
+  });
 });

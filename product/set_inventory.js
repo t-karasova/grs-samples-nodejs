@@ -34,16 +34,18 @@ async function main(generatedProductId) {
       price: 15.0,
       originalPrice: 20.0,
       cost: 8.0,
-      currencyCode: "USD"
+      currencyCode: 'USD',
     },
-    fulfillmentInfo: [{
-      type: 'same-day-delivery',
-      placeIds: ['store3', 'store4']
-    }],
+    fulfillmentInfo: [
+      {
+        type: 'same-day-delivery',
+        placeIds: ['store3', 'store4'],
+      },
+    ],
     availableQuantity: {
-      value: 2
+      value: 2,
     },
-    availability: 'IN_STOCK'
+    availability: 'IN_STOCK',
   };
 
   // Indicates which inventory fields in the provided product to update
@@ -51,8 +53,8 @@ async function main(generatedProductId) {
 
   // The time when the request is issued, used to prevent
   // out-of-order updates on inventory fields with the last update time recorded.
-  const setTime = { 
-    seconds: Math.round(Date.now() / 1000) 
+  const setTime = {
+    seconds: Math.round(Date.now() / 1000),
   };
 
   // If set to true, and the product with name is not found, the
@@ -62,17 +64,17 @@ async function main(generatedProductId) {
   // Instantiates a client.
   const retailClient = new ProductServiceClient();
 
-  const callSetInventory = async () => {
+  const callSetInventory = () => {
     return new Promise(async (resolve, reject) => {
       try {
         // Construct request
         const request = {
           inventory: product,
           setTime,
-          allowMissing
+          allowMissing,
         };
         console.log('Set inventory request:', request);
-    
+
         // Run request
         await retailClient.setInventory(request);
         console.log('Waiting to complete set inventory operation..');
@@ -81,12 +83,12 @@ async function main(generatedProductId) {
         // thus we simulate wait with setTimeout method.
         setTimeout(() => {
           resolve();
-        }, 50000); 
+        }, 50000);
       } catch (err) {
         reject(err);
       }
     });
-  }
+  };
 
   // Set inventory
   console.log('Start set inventory');
@@ -103,7 +105,7 @@ async function main(generatedProductId) {
   // [END retail_set_inventory]
 }
 
-process.on('unhandledRejection', err => {
+process.on('unhandledRejection', (err) => {
   console.error(err.message);
   process.exitCode = 1;
 });

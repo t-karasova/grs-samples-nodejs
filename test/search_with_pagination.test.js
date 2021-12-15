@@ -20,11 +20,10 @@ const { before, describe, it } = require('mocha');
 const { SearchServiceClient } = require('@google-cloud/retail');
 const { assert, expect } = require('chai');
 
-const execSync = cmd => cp.execSync(cmd, { encoding: 'utf-8' });
+const execSync = (cmd) => cp.execSync(cmd, { encoding: 'utf-8' });
 const cwd = path.join(__dirname, '..');
 
 describe('Search with pagination', () => {
-
   describe('Search with pagination run sample', () => {
     let stdout;
 
@@ -43,7 +42,7 @@ describe('Search with pagination', () => {
     it('should show that search successfully finished', () => {
       assert.match(stdout, /Search end/);
     });
-  })
+  });
 
   describe('Search with pagination sample result', () => {
     const retailClient = new SearchServiceClient();
@@ -57,37 +56,42 @@ describe('Search with pagination', () => {
       visitorId: '12345',
       pageSize,
       offset,
-      pageToken
+      pageToken,
     };
     let response;
 
-    const responseParamsCount = 3;
     const IResponseParams = {
       ISearchResult: 0,
       ISearchRequest: 1,
-      ISearchResponse: 2
-    }
+      ISearchResponse: 2,
+    };
 
     before(async () => {
-      response = await retailClient.search(request, {autoPaginate: false});
+      response = await retailClient.search(request, { autoPaginate: false });
     });
 
     it('should be a valid response', () => {
       expect(response).to.be.an('array');
       expect(response.length).to.equal(3);
       const searchResult = response[IResponseParams.ISearchResult];
-      const searchResponse =  response[IResponseParams.ISearchResponse];
+      const searchResponse = response[IResponseParams.ISearchResponse];
       if (searchResult.length) {
         expect(searchResponse.totalSize).to.be.above(0);
-        searchResult.forEach((resultItem)  => {
+        searchResult.forEach((resultItem) => {
           expect(resultItem, 'It should be an object').to.be.an('object');
-          expect(resultItem, 'The object has no  valid properties').to.have.all.keys('matchingVariantFields', 'variantRollupValues', 'id', 'product', 'matchingVariantCount');
-        })        
+          expect(resultItem, 'The object has no  valid properties').to.have.all.keys(
+            'matchingVariantFields',
+            'variantRollupValues',
+            'id',
+            'product',
+            'matchingVariantCount'
+          );
+        });
       } else {
         expect(searchResult).to.be.an('array').that.is.empty;
         expect(searchResponse.totalSize).to.equal(0);
       }
-    })
+    });
 
     it('should contain a fixed number of products', () => {
       const searchResult = response[IResponseParams.ISearchResult];
@@ -96,12 +100,21 @@ describe('Search with pagination', () => {
       } else {
         expect(searchResult, 'It should be an empty array').to.be.an('array').that.is.empty;
       }
-    })
+    });
 
     it('should be a valid search response object', () => {
       const searchResponse = response[IResponseParams.ISearchResponse];
       expect(searchResponse, 'It should be an object').to.be.an('object');
-      expect(searchResponse, 'The object has no valid properties').to.have.all.keys('results', 'facets', 'totalSize', 'correctedQuery', 'attributionToken', 'nextPageToken', 'queryExpansionInfo', 'redirectUri');
-    })
-  })
+      expect(searchResponse, 'The object has no valid properties').to.have.all.keys(
+        'results',
+        'facets',
+        'totalSize',
+        'correctedQuery',
+        'attributionToken',
+        'nextPageToken',
+        'queryExpansionInfo',
+        'redirectUri'
+      );
+    });
+  });
 });

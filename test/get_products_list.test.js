@@ -19,7 +19,7 @@ const cp = require('child_process');
 const { before, describe, it } = require('mocha');
 const { assert } = require('chai');
 
-const execSync = cmd => cp.execSync(cmd, { encoding: 'utf-8' });
+const execSync = (cmd) => cp.execSync(cmd, { encoding: 'utf-8' });
 
 const cwd = path.join(__dirname, '..');
 

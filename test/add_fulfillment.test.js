@@ -20,8 +20,7 @@ const { before, describe, it, after } = require('mocha');
 const { ProductServiceClient } = require('@google-cloud/retail');
 const { assert, expect } = require('chai');
 
-process.env['GOOGLE_APPLICATION_CREDENTIALS'] = './sa.json';
-const execSync = cmd => cp.execSync(cmd, { encoding: 'utf-8' });
+const execSync = (cmd) => cp.execSync(cmd, { encoding: 'utf-8' });
 
 const cwd = path.join(__dirname, '..');
 
@@ -34,7 +33,9 @@ describe('Add fulfillment', () => {
   let stdout;
 
   before(async () => {
-    stdout = execSync(`node product/add_fulfillment_places.js ${productId}`, { cwd });
+    stdout = execSync(`node product/add_fulfillment_places.js ${productId}`, {
+      cwd,
+    });
   });
 
   it('should check that product created', () => {
@@ -55,12 +56,12 @@ describe('Add fulfillment', () => {
     assert.match(stdout, regex);
     const string = stdout.match(regex).toString().replace(`Updated product: `, '');
     const updatedProduct = JSON.parse(string);
-   
+
     expect(updatedProduct).to.be.an('object');
     expect(updatedProduct.fulfillmentInfo).to.be.an('array');
     expect(updatedProduct.fulfillmentInfo.length, 'Fulfillment array is empty').to.equal(1);
-    
-    const item = updatedProduct.fulfillmentInfo[0]; 
+
+    const item = updatedProduct.fulfillmentInfo[0];
     expect(item).to.be.an('object');
     expect(item).to.have.all.keys('type', 'placeIds');
     expect(item.type).to.equal('ship-to-store');
@@ -79,5 +80,5 @@ describe('Add fulfillment', () => {
     } catch (err) {
       expect(err, 'Bad error code').to.include({ code: 5 });
     }
-  })
+  });
 });

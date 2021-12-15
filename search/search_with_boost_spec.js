@@ -15,15 +15,15 @@
 'use strict';
 
 async function main() {
-  // [START retail_search_product_with_boost_spec]  
+  // [START retail_search_product_with_boost_spec]
   // Call Retail API to search for a products in a catalog, rerank the
   // results boosting or burying the products that match defined condition.
-  
+
   // Imports the Google Cloud client library.
   const { SearchServiceClient } = require('@google-cloud/retail');
 
   const projectNumber = process.env['PROJECT_NUMBER'];
-  
+
   // Placement is used to identify the Serving Config name.
   const placement = `projects/${projectNumber}/locations/global/catalogs/default_catalog/placements/default_search`;
 
@@ -41,15 +41,15 @@ async function main() {
 
   // Maximum number of Products to return.
   const pageSize = 10;
-  
+
   // Instantiates a client
   const retailClient = new SearchServiceClient();
 
   const IResponseParams = {
     ISearchResult: 0,
     ISearchRequest: 1,
-    ISearchResponse: 2
-  }
+    ISearchResponse: 2,
+  };
 
   const callSearch = async () => {
     console.log('Search start');
@@ -59,25 +59,27 @@ async function main() {
       query,
       visitorId,
       boostSpec,
-      pageSize
+      pageSize,
     };
 
     console.log('Search request: ', request);
 
     // Run request
-    const response = await retailClient.search(request, {autoPaginate: false});
+    const response = await retailClient.search(request, {
+      autoPaginate: false,
+    });
     const searchResult = response[IResponseParams.ISearchResponse];
     console.log('Search result: ', JSON.stringify(searchResult, null, 4));
     console.log('Search end');
-  }
+  };
 
   callSearch();
   // [END retail_search_product_with_boost_spec]
 }
 
-process.on('unhandledRejection', err => {
+process.on('unhandledRejection', (err) => {
   console.error(err.message);
   process.exitCode = 1;
 });
 
-main()
+main();

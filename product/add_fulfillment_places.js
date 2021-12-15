@@ -40,8 +40,8 @@ async function main(generatedProductId) {
   // The time when the fulfillment updates are issued, used to prevent
   // out-of-order updates on fulfillment information.
   const addTime = {
-    seconds: Math.round(Date.now() / 1000)
-  }
+    seconds: Math.round(Date.now() / 1000),
+  };
 
   //If set to true, and the product is not found, the fulfillment information will still be processed and retained for
   // at most 1 day and processed once the product is created
@@ -50,7 +50,7 @@ async function main(generatedProductId) {
   // Instantiates a client.
   const retailClient = new ProductServiceClient();
 
-  const calladdFulfillmentPlaces = async () => {
+  const calladdFulfillmentPlaces = () => {
     return new Promise(async (resolve, reject) => {
       try {
         // Construct request
@@ -59,7 +59,7 @@ async function main(generatedProductId) {
           type,
           placeIds,
           addTime,
-          allowMissing
+          allowMissing,
         };
 
         console.log('Add fulfillment request:', request);
@@ -70,13 +70,13 @@ async function main(generatedProductId) {
         console.log('Waiting to complete add operation..');
         setTimeout(() => {
           resolve();
-        }, 50000); 
+        }, 50000);
       } catch (err) {
         console.log(err);
         reject(err);
       }
-    })
-  }
+    });
+  };
 
   // Add fulfillment places
   console.log('Start add fulfillment');
@@ -87,13 +87,13 @@ async function main(generatedProductId) {
   const response = await utils.getProduct(product);
   console.log('Updated product: ', JSON.stringify(response[0]));
 
-  // Delete product 
+  // Delete product
   await utils.deleteProduct(product);
   console.log(`Product ${createdProduct.id} deleted`);
   // [END retail_add_remove_fulfillment_places]
 }
 
-process.on('unhandledRejection', err => {
+process.on('unhandledRejection', (err) => {
   console.error('ERROR', err.message);
   process.exitCode = 1;
 });

@@ -25,46 +25,46 @@ async function main() {
 
   const gcsBucket = `gs://${bucketName}`;
   const gcsErrorsBucket = `gs://${bucketName}/error`;
-  const gcsProductsObject = "products.json"
+  const gcsProductsObject = 'products.json';
 
   //TO CHECK ERROR HANDLING USE THE JSON WITH INVALID PRODUCT
   //const gcsProductsObject = "products_some_invalid.json";
 
   // Placement
-  let parent = `projects/${projectNumber}/locations/global/catalogs/default_catalog/branches/default_branch`
+  let parent = `projects/${projectNumber}/locations/global/catalogs/default_catalog/branches/default_branch`;
   //TO CHECK ERROR HANDLING PASTE THE INVALID CATALOG NAME HERE:
-  // parent = "invalid_catalog_name"; 
+  // parent = "invalid_catalog_name";
 
   // The desired input location of the data.
   const inputConfig = {
     gcsSource: {
       inputUris: [gcsBucket + '/' + gcsProductsObject],
-      dataSchema: 'product'
-    }
-  }
+      dataSchema: 'product',
+    },
+  };
 
   // The desired location of errors incurred during the Import.
   const errorsConfig = {
-    gcsPrefix: gcsErrorsBucket
-  }
+    gcsPrefix: gcsErrorsBucket,
+  };
 
   const IResponseParams = {
     IError: 0,
     ISearchResponse: 1,
-    ISearchMetadata: 2
-  }
+    ISearchMetadata: 2,
+  };
 
   // Instantiates a client.
   const retailClient = new ProductServiceClient();
 
-  const callImportProducts = async () => {
+  const callImportProducts = () => {
     return new Promise(async (resolve, reject) => {
       try {
         // Construct request
         const request = {
           parent,
           inputConfig,
-          errorsConfig
+          errorsConfig,
         };
         console.log('Import products request:', request);
 
@@ -79,15 +79,15 @@ async function main() {
       } catch (error) {
         reject(error);
       }
-    })
-  }
+    });
+  };
   console.log('Start import products');
   await callImportProducts();
   console.log('Import products finished');
   // [END retail_import_products_from_gcs]
 }
 
-process.on('unhandledRejection', err => {
+process.on('unhandledRejection', (err) => {
   console.error(err.message);
   process.exitCode = 1;
 });

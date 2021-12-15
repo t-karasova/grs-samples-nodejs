@@ -20,7 +20,7 @@ const { before, describe, it, after } = require('mocha');
 const { ProductServiceClient } = require('@google-cloud/retail');
 const { assert, expect } = require('chai');
 
-const execSync = cmd => cp.execSync(cmd, { encoding: 'utf-8' });
+const execSync = (cmd) => cp.execSync(cmd, { encoding: 'utf-8' });
 
 const cwd = path.join(__dirname, '..');
 
@@ -33,13 +33,13 @@ describe('Import product from inline source', () => {
 
   const product1 = {
     id: id1,
-    name: `projects/${projectNumber}/locations/global/catalogs/default_catalog/branches/default_branch/products/${id1}`
-  }
+    name: `projects/${projectNumber}/locations/global/catalogs/default_catalog/branches/default_branch/products/${id1}`,
+  };
 
   const product2 = {
     id: id2,
-    name: `projects/${projectNumber}/locations/global/catalogs/default_catalog/branches/default_branch/products/${id2}`
-  }
+    name: `projects/${projectNumber}/locations/global/catalogs/default_catalog/branches/default_branch/products/${id2}`,
+  };
 
   let stdout;
 
@@ -65,7 +65,7 @@ describe('Import product from inline source', () => {
 
     expect(metadata).to.be.an('object');
     expect(metadata.done).to.be.true;
-    
+
     expect(response).to.be.an('object');
     expect(response.successCount).to.equal('2');
   });
@@ -81,12 +81,16 @@ describe('Import product from inline source', () => {
 
   after(async () => {
     try {
-      const importedProduct1 = await retailClient.getProduct({ name: product1.name });
-      const importedProduct2 = await retailClient.getProduct({ name: product2.name });
+      const importedProduct1 = await retailClient.getProduct({
+        name: product1.name,
+      });
+      const importedProduct2 = await retailClient.getProduct({
+        name: product2.name,
+      });
       expect(importedProduct1, 'The product not deleted').to.be.undefined;
       expect(importedProduct2, 'The product not deleted').to.be.undefined;
     } catch (err) {
       expect(err, 'Bad error code').to.include({ code: 5 });
     }
-  })
+  });
 });

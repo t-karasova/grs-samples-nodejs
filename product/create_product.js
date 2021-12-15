@@ -38,22 +38,22 @@ async function main(generatedProductId) {
     priceInfo: {
       price: 30.0,
       originalPrice: 35.5,
-      currency_code: "USD"
+      currency_code: 'USD',
     },
-    availability: 'IN_STOCK'
-  }
+    availability: 'IN_STOCK',
+  };
 
   // Instantiates a client.
   const retailClient = new ProductServiceClient();
 
-  const callCreateProduct = async () => {
+  const callCreateProduct = () => {
     return new Promise(async (resolve, reject) => {
       try {
         // Construct request
         const request = {
           parent,
           product,
-          productId
+          productId,
         };
         console.log('Create product request:', request);
 
@@ -64,22 +64,22 @@ async function main(generatedProductId) {
       } catch (err) {
         reject(err);
       }
-    })
-  }
+    });
+  };
 
   // Create product
   console.log('Start to create the product');
   const createdProduct = await callCreateProduct();
   console.log(`Product ${createdProduct.id} creation ended`);
-  
+
   // Delete product
   await utils.deleteProduct(createdProduct?.name);
-  console.log(`Product ${createdProduct.id} deleted`)
-  
+  console.log(`Product ${createdProduct.id} deleted`);
+
   // [END retail_create_product]
 }
 
-process.on('unhandledRejection', err => {
+process.on('unhandledRejection', (err) => {
   console.error(err.message);
   process.exitCode = 1;
 });

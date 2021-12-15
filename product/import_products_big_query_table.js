@@ -37,21 +37,21 @@ async function main() {
       projectId,
       datasetId,
       tableId,
-      dataSchema
-    }
-  }
+      dataSchema,
+    },
+  };
 
   const reconciliationModes = {
     RECONCILIATION_MODE_UNSPECIFIED: 0,
     INCREMENTAL: 1,
-    FULL: 2
-  }
+    FULL: 2,
+  };
 
   const IResponseParams = {
     IError: 0,
     ISearchResponse: 1,
-    ISearchMetadata: 2
-  }
+    ISearchMetadata: 2,
+  };
 
   // The mode of reconciliation between existing products and the products to be imported.
   const reconciliationMode = reconciliationModes.FULL;
@@ -59,14 +59,14 @@ async function main() {
   // Instantiates a client.
   const retailClient = new ProductServiceClient();
 
-  const callImportProducts = async () => {
+  const callImportProducts = () => {
     return new Promise(async (resolve, reject) => {
       try {
         // Construct request
         const request = {
           parent,
           inputConfig,
-          reconciliationMode
+          reconciliationMode,
         };
         console.log('Import product request:', request);
 
@@ -82,7 +82,7 @@ async function main() {
         reject(error);
       }
     });
-  }
+  };
 
   console.log('Start import products');
   await callImportProducts();
@@ -90,7 +90,7 @@ async function main() {
   // [END retail_import_products_from_big_query]
 }
 
-process.on('unhandledRejection', err => {
+process.on('unhandledRejection', (err) => {
   console.error(err.message);
   process.exitCode = 1;
 });

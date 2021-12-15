@@ -20,11 +20,10 @@ const { before, describe, it } = require('mocha');
 const { SearchServiceClient } = require('@google-cloud/retail');
 const { assert, expect } = require('chai');
 
-const execSync = cmd => cp.execSync(cmd, { encoding: 'utf-8' });
+const execSync = (cmd) => cp.execSync(cmd, { encoding: 'utf-8' });
 const cwd = path.join(__dirname, '..');
 
 describe('Search with query expansion spec', () => {
-
   describe('Search with query expansion spec run sample', () => {
     let stdout;
 
@@ -39,7 +38,7 @@ describe('Search with query expansion spec', () => {
     it('should show that search successfully finished', () => {
       assert.match(stdout, /Search end/);
     });
-  })
+  });
 
   describe('Search with query expansion spec sample result', () => {
     const retailClient = new SearchServiceClient();
@@ -49,42 +48,50 @@ describe('Search with query expansion spec', () => {
       query: 'Google Youth Hero Tee Grey',
       visitorId: '12345',
       queryExpansionSpec: {
-        condition: 'AUTO'
+        condition: 'AUTO',
       },
-      pageSize: 10
+      pageSize: 10,
     };
     const IResponseParams = {
       ISearchResult: 0,
       ISearchRequest: 1,
-      ISearchResponse: 2
-    }
+      ISearchResponse: 2,
+    };
     let response = [];
 
     before(async () => {
-      response = await retailClient.search(request, {autoPaginate: false});
+      response = await retailClient.search(request, { autoPaginate: false });
     });
 
     it('should be a valid response', () => {
       expect(response).to.be.an('array');
       expect(response.length).to.equal(3);
       const searchResult = response[IResponseParams.ISearchResult];
-      const searchResponse =  response[IResponseParams.ISearchResponse];
+      const searchResponse = response[IResponseParams.ISearchResponse];
       if (searchResult.length) {
         expect(searchResponse.totalSize).to.be.above(0);
-        searchResult.forEach((resultItem)  => {
+        searchResult.forEach((resultItem) => {
           expect(resultItem, 'It should be an object').to.be.an('object');
-          expect(resultItem, 'The object has no  valid properties').to.have.all.keys('matchingVariantFields', 'variantRollupValues', 'id', 'product', 'matchingVariantCount');
-        })        
+          expect(resultItem, 'The object has no  valid properties').to.have.all.keys(
+            'matchingVariantFields',
+            'variantRollupValues',
+            'id',
+            'product',
+            'matchingVariantCount'
+          );
+        });
       } else {
         expect(searchResult).to.be.an('array').that.is.empty;
         expect(searchResponse.totalSize).to.equal(0);
       }
-    })
+    });
 
     it('should contain expanded query', () => {
       const searchResponse = response[IResponseParams.ISearchResponse];
-      expect(searchResponse.queryExpansionInfo, 'Search response does not contain query expansion info').to.be.an('object');
+      expect(searchResponse.queryExpansionInfo, 'Search response does not contain query expansion info').to.be.an(
+        'object'
+      );
       expect(searchResponse.queryExpansionInfo.expandedQuery).to.be.true;
-    })
-  })
+    });
+  });
 });

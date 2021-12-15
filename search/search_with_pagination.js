@@ -46,8 +46,8 @@ async function main() {
   const IResponseParams = {
     ISearchResult: 0,
     ISearchRequest: 1,
-    ISearchResponse: 2
-  }
+    ISearchResponse: 2,
+  };
 
   const callSearch = () => {
     return new Promise(async (resolve, reject) => {
@@ -60,12 +60,12 @@ async function main() {
           visitorId,
           pageSize,
           offset,
-          pageToken
+          pageToken,
         };
 
         // Run request
         const response = await retailClient.search(request, {
-          autoPaginate: false
+          autoPaginate: false,
         });
         const searchResult = response[IResponseParams.ISearchResponse];
         console.log('Search result: ', JSON.stringify(searchResult, null, 4));
@@ -76,13 +76,13 @@ async function main() {
       } catch (error) {
         reject(error);
       }
-    })
-  }
+    });
+  };
 
   // Get next page token from the response
   const getNextPageToken = (response) => {
     return response[IResponseParams.ISearchResponse]?.nextPageToken;
-  }
+  };
 
   // Call search
   await callSearch();
@@ -90,11 +90,11 @@ async function main() {
   //PASTE CALL WITH NEXT PAGE TOKEN HERE:
 
   //PASTE CALL WITH OFFSET HERE:
-  
+
   // [END retail_search_for_products_with_pagination]
 }
 
-process.on('unhandledRejection', err => {
+process.on('unhandledRejection', (err) => {
   console.error(err.message);
   process.exitCode = 1;
 });

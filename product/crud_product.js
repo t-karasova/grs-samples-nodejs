@@ -40,13 +40,13 @@ async function main(generatedProductId) {
     priceInfo: {
       price: 30.0,
       originalPrice: 35.5,
-      currency_code: "USD"
+      currency_code: 'USD',
     },
-    availability: 'IN_STOCK'
-  }
+    availability: 'IN_STOCK',
+  };
 
-   // The product to update.
-   const productForUpdate = {
+  // The product to update.
+  const productForUpdate = {
     productId,
     name,
     title: 'Updated Nest Mini',
@@ -56,22 +56,22 @@ async function main(generatedProductId) {
     priceInfo: {
       price: 20.0,
       originalPrice: 25.5,
-      currencyCode: "EUR"
+      currencyCode: 'EUR',
     },
-    availability: 'OUT_OF_STOCK'
-  }
+    availability: 'OUT_OF_STOCK',
+  };
 
   // Instantiates a client.
   const retailClient = new ProductServiceClient();
 
-  const callCreateProduct = async () => {
+  const callCreateProduct = () => {
     return new Promise(async (resolve, reject) => {
       try {
         // Construct request
         const request = {
           parent,
           product: productForCreate,
-          productId
+          productId,
         };
         console.log('Create product request:', request);
 
@@ -82,15 +82,15 @@ async function main(generatedProductId) {
       } catch (err) {
         reject(err);
       }
-    })
-  }
+    });
+  };
 
-  const callGetProduct = async () => {
+  const callGetProduct = () => {
     return new Promise(async (resolve, reject) => {
       try {
         // Construct request
         const request = {
-          name
+          name,
         };
         console.log('Get product request:', request);
 
@@ -102,15 +102,15 @@ async function main(generatedProductId) {
       } catch (err) {
         reject(err);
       }
-    })
-  }
+    });
+  };
 
-  const callUpdateProduct = async () => {
+  const callUpdateProduct = () => {
     return new Promise(async (resolve, reject) => {
       try {
         // Construct request
         const request = {
-          product: productForUpdate
+          product: productForUpdate,
         };
         console.log('Update product request:', request);
 
@@ -122,15 +122,15 @@ async function main(generatedProductId) {
       } catch (err) {
         reject(err);
       }
-    })
-  }
+    });
+  };
 
-  const callDeleteProduct = async () => {
+  const callDeleteProduct = () => {
     return new Promise(async (resolve, reject) => {
       try {
         // Construct request
         const request = {
-          name
+          name,
         };
         console.log('Delete product request:', request);
 
@@ -141,7 +141,7 @@ async function main(generatedProductId) {
         reject(err);
       }
     });
-  }
+  };
 
   console.log('Start CRUD product');
   // Create product
@@ -149,8 +149,8 @@ async function main(generatedProductId) {
   const createdProduct = await callCreateProduct();
   console.log(`Product ${createdProduct.id} creation finished`);
 
-  // Get product 
-  console.log('Start product get operation')
+  // Get product
+  console.log('Start product get operation');
   const foundProduct = await callGetProduct();
   console.log(`Product ${foundProduct.id} get operation finished`);
 
@@ -162,12 +162,12 @@ async function main(generatedProductId) {
   // Delete product
   console.log('Start deleting the product');
   await callDeleteProduct();
-  console.log(`Product ${createdProduct.id} deleted`)
+  console.log(`Product ${createdProduct.id} deleted`);
   console.log('CRUD product finished');
   // [END retail_crud_product]
 }
 
-process.on('unhandledRejection', err => {
+process.on('unhandledRejection', (err) => {
   console.error(err.message);
   process.exitCode = 1;
 });
