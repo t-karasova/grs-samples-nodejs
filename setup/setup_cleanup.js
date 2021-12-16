@@ -15,6 +15,7 @@
 'use strict';
 // Imports the Google Cloud client library.
 const { ProductServiceClient } = require('@google-cloud/retail').v2;
+const { UserEventServiceClient } = require('@google-cloud/retail').v2;
 const { Storage } = require('@google-cloud/storage');
 const { BigQuery } = require('@google-cloud/bigquery');
 const { exec } = require('child_process');
@@ -366,6 +367,52 @@ const uploadDataToBqTable = (datasetId, tableId, source) => {
   });
 };
 
+const writeUserEvent = async (visitorId) => {
+  const projectNumber = process.env['PROJECT_NUMBER'];
+  const parent = `projects/${projectNumber}/locations/global/catalogs/default_catalog`;
+  const retailClient = new UserEventServiceClient();
+
+  const userEvent = {
+    eventType: 'detail-page-view',
+    visitorId,
+    eventTime: {
+      seconds: Math.round(Date.now() / 1000),
+    },
+    productDetails: [
+      {
+        product: {
+          id: 'test_id',
+        },
+        quantity: {
+          value: 3,
+        },
+      },
+    ],
+  };
+
+  const request = {
+    parent,
+    userEvent,
+  };
+
+  const response = await retailClient.writeUserEvent(request);
+  return response[0];
+};
+
+const purgeUserEvents = async (parent, visitorId) => {
+  const retailClient = new UserEventServiceClient();
+  const request = {
+    parent,
+    filter: `visitorId="${visitorId}"`,
+    force: true,
+  };
+
+  const [operation] = await retailClient.purgeUserEvents(request);
+  console.log(
+    `Purge operation in progress.. Operation name: ${operation.name}`
+  );
+};
+
 module.exports = {
   createProduct,
   getProduct,
@@ -381,4 +428,6 @@ module.exports = {
   deleteBqDataset,
   createBqTable,
   uploadDataToBqTable,
+  writeUserEvent,
+  purgeUserEvents,
 };
