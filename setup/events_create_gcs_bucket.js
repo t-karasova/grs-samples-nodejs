@@ -27,11 +27,19 @@ async function main() {
   await utils.createBucket(bucketName);
 
   //Upload files
-  await utils.uploadFile(bucketName, 'resources/user_events.json', 'user_events.json');
-  await utils.uploadFile(bucketName, 'resources/user_events_some_invalid.json', 'user_events_some_invalid.json');
+  await utils.uploadFile(
+    bucketName,
+    'resources/user_events.json',
+    'user_events.json'
+  );
+  await utils.uploadFile(
+    bucketName,
+    'resources/user_events_some_invalid.json',
+    'user_events_some_invalid.json'
+  );
 }
 
-process.on('unhandledRejection', err => {
+process.on('unhandledRejection', (err) => {
   console.error(err.message);
   process.exitCode = 1;
 });
