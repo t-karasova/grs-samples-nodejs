@@ -30,8 +30,8 @@ async function main() {
   const UserEventRejoinScope = {
     USER_EVENT_REJOIN_SCOPE_UNSPECIFIED: 0,
     JOINED_EVENTS: 1,
-    UNJOINED_EVENTS: 2
-  }
+    UNJOINED_EVENTS: 2,
+  };
   // The type of the user event rejoin to define the scope and range of the user
   // events to be rejoined with the latest product catalog
   const userEventRejoinScope = UserEventRejoinScope.UNJOINED_EVENTS;
@@ -50,12 +50,16 @@ async function main() {
 
     // Run request
     const [operation] = await retailClient.rejoinUserEvents(request);
-    console.log(`Rejoin operation in progress.. Operation name: ${operation.name}`);
+    console.log(
+      `Rejoin operation in progress.. Operation name: ${operation.name}`
+    );
   };
 
   // Create new event
   const event = await utils.writeUserEvent(visitorId);
-  console.log(`Created event ${event.eventType} with visitor id ${event.visitorId}`);
+  console.log(
+    `Created event ${event.eventType} with visitor id ${event.visitorId}`
+  );
 
   // Rejoin events
   await callRejoinUserEvents();
