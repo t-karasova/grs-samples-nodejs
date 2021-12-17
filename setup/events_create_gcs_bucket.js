@@ -17,23 +17,25 @@
 async function main() {
   const utils = require('./setup_cleanup');
 
-  const dataset = 'products';
-  const validTable = 'products';
-  const invalidTable = 'products_some_invalid';
-  const schema = 'resources/product_schema.json';
-  const validSourceFile = 'resources/products.json';
-  const invalidSourceFile = 'resources/products_some_invalid.json';
+  //Get your project ID
+  const projectId = await utils.getProjectId();
 
-  await utils.createBqDataset(dataset);
-  await utils.createBqTable(dataset, validTable);
-  await utils.uploadDataToBqTable(dataset, validTable, validSourceFile, schema);
+  // The ID of your GCS bucket
+  const bucketName = `${projectId}_events_${Math.round(Date.now() / 1000)}`;
 
-  await utils.createBqTable(dataset, invalidTable);
-  await utils.uploadDataToBqTable(
-    dataset,
-    validTable,
-    invalidSourceFile,
-    schema
+  //Creates the new bucket
+  await utils.createBucket(bucketName);
+
+  //Upload files
+  await utils.uploadFile(
+    bucketName,
+    'resources/user_events.json',
+    'user_events.json'
+  );
+  await utils.uploadFile(
+    bucketName,
+    'resources/user_events_some_invalid.json',
+    'user_events_some_invalid.json'
   );
 }
 
