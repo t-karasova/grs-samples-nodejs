@@ -67,7 +67,7 @@ async function main() {
     const response = await operation.promise();
     const result = response[IResponseParams.ISearchResponse];
     console.log(
-      `Number of successfully imported products: ${result.successCount | 0}`
+      `Number of successfully imported events: ${result.successCount | 0}`
     );
     console.log(
       `Number of failures during the importing: ${result.failureCount | 0}`
