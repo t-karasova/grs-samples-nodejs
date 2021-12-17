@@ -75,7 +75,7 @@ async function main() {
     console.log(
       `Number of failures during the importing: ${result.failureCount | 0}`
     );
-    console.log(`Operation result: ${JSON.stringify(response, null, 4)}`);
+    console.log(`Operation result: ${JSON.stringify(response)}`);
   };
 
   console.log('Start events import');
