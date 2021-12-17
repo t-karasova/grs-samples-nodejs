@@ -32,24 +32,18 @@ async function main(generatedProductId) {
   // Instantiates a client.
   const retailClient = new ProductServiceClient();
 
-  const callGetProduct = () => {
-    return new Promise(async (resolve, reject) => {
-      try {
-        // Construct request
-        const request = {
-          name,
-        };
-        console.log('Get product request:', request);
+  const callGetProduct = async () => {
+    // Construct request
+    const request = {
+      name,
+    };
+    console.log('Get product request:', request);
 
-        // Run request
-        const response = await retailClient.getProduct(request);
-        console.log('Get product response:', response);
+    // Run request
+    const response = await retailClient.getProduct(request);
+    console.log('Get product response:', response);
 
-        resolve(response[0]);
-      } catch (err) {
-        reject(err);
-      }
-    });
+    return response[0];
   };
 
   // Get product

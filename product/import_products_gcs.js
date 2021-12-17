@@ -25,10 +25,10 @@ async function main() {
 
   const gcsBucket = `gs://${bucketName}`;
   const gcsErrorsBucket = `gs://${bucketName}/error`;
-  const gcsProductsObject = 'products.json';
+  let gcsProductsObject = 'products.json';
 
   //TO CHECK ERROR HANDLING USE THE JSON WITH INVALID PRODUCT
-  //const gcsProductsObject = "products_some_invalid.json";
+  //gcsProductsObject = "products_some_invalid.json";
 
   // Placement
   let parent = `projects/${projectNumber}/locations/global/catalogs/default_catalog/branches/default_branch`;
@@ -57,33 +57,26 @@ async function main() {
   // Instantiates a client.
   const retailClient = new ProductServiceClient();
 
-  const callImportProducts = () => {
-    return new Promise(async (resolve, reject) => {
-      try {
-        // Construct request
-        const request = {
-          parent,
-          inputConfig,
-          errorsConfig,
-        };
-        console.log('Import products request:', request);
+  const callImportProducts = async () => {
+    // Construct request
+    const request = {
+      parent,
+      inputConfig,
+      errorsConfig,
+    };
+    console.log('Import products request:', request);
 
-        // Run request
-        const [operation] = await retailClient.importProducts(request);
-        const response = await operation.promise();
-        const result = response[IResponseParams.ISearchResponse];
-        console.log(
-          `Number of successfully imported products: ${result.successCount | 0}`
-        );
-        console.log(
-          `Number of failures during the importing: ${result.failureCount | 0}`
-        );
-        console.log(`Operation result: ${JSON.stringify(response)}`);
-        resolve();
-      } catch (error) {
-        reject(error);
-      }
-    });
+    // Run request
+    const [operation] = await retailClient.importProducts(request);
+    const response = await operation.promise();
+    const result = response[IResponseParams.ISearchResponse];
+    console.log(
+      `Number of successfully imported products: ${result.successCount | 0}`
+    );
+    console.log(
+      `Number of failures during the importing: ${result.failureCount | 0}`
+    );
+    console.log(`Operation result: ${JSON.stringify(response)}`);
   };
   console.log('Start import products');
   await callImportProducts();

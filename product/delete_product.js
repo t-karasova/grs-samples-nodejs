@@ -40,14 +40,13 @@ async function main(generatedProductId) {
     console.log('Delete product request:', request);
 
     // Run request
-    console.log('Start deleting the product');
     await retailClient.deleteProduct(request);
-    console.log(`Product ${product.id} deleted`);
   };
 
   // Delete product
-  callDeleteProduct();
-
+  console.log('Start deleting the product');
+  await callDeleteProduct();
+  console.log(`Product ${product.id} deleted`);
   // [END retail_delete_product]
 }
 
