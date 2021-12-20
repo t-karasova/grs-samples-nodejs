@@ -19,10 +19,10 @@ async function main() {
 
   // Imports the Google Cloud client library.
   const { UserEventServiceClient } = require('@google-cloud/retail').v2;
-  const utils = require('../setup/setup_cleanup');
 
   const projectNumber = process.env['PROJECT_NUMBER'];
-  const projectId = await utils.getProjectId();
+  const projectId = process.env['PROJECT_ID'];
+  const apiEndpoint = 'retail.googleapis.com';
 
   const datasetId = 'user_events';
   const dataSchema = 'user_event';
@@ -45,7 +45,7 @@ async function main() {
   };
 
   // Instantiates a client.
-  const retailClient = new UserEventServiceClient();
+  const retailClient = new UserEventServiceClient({ apiEndpoint });
 
   const IResponseParams = {
     IError: 0,

@@ -28,6 +28,7 @@ const createProduct = async (
 ) => {
   // The parent catalog resource name
   const parent = `projects/${projectNumber}/locations/global/catalogs/default_catalog/branches/default_branch`;
+  const apiEndpoint = 'retail.googleapis.com';
 
   // The ID to use for the product
   const productId = generatedProductId
@@ -58,7 +59,7 @@ const createProduct = async (
     availability: 'IN_STOCK',
   };
 
-  const retailClient = new ProductServiceClient();
+  const retailClient = new ProductServiceClient({ apiEndpoint });
 
   // Construct request
   const request = {
@@ -74,7 +75,8 @@ const createProduct = async (
 };
 
 const getProduct = async (name) => {
-  const retailClient = new ProductServiceClient();
+  const apiEndpoint = 'retail.googleapis.com';
+  const retailClient = new ProductServiceClient({ apiEndpoint });
 
   // Construct request
   const request = {
@@ -87,7 +89,8 @@ const getProduct = async (name) => {
 };
 
 const deleteProduct = async (name) => {
-  const retailClient = new ProductServiceClient();
+  const apiEndpoint = 'retail.googleapis.com';
+  const retailClient = new ProductServiceClient({ apiEndpoint });
 
   // Construct request
   const request = {
@@ -100,7 +103,8 @@ const deleteProduct = async (name) => {
 };
 
 const deleteProducts = (projectNumber, ids) => {
-  const retailClient = new ProductServiceClient();
+  const apiEndpoint = 'retail.googleapis.com';
+  const retailClient = new ProductServiceClient({ apiEndpoint });
 
   return new Promise(async (resolve, reject) => {
     try {
@@ -112,21 +116,6 @@ const deleteProducts = (projectNumber, ids) => {
     } catch (err) {
       reject(err);
     }
-  });
-};
-
-const getProjectId = () => {
-  return new Promise((resolve, reject) => {
-    const command = 'gcloud config get-value project --format json';
-    exec(command, (error, stdout, stderr) => {
-      if (error) {
-        reject(error);
-      } else if (stdout) {
-        resolve(JSON.parse(stdout));
-      } else if (stderr) {
-        reject(stderr);
-      }
-    });
   });
 };
 
@@ -287,9 +276,10 @@ const uploadDataToBqTable = async (datasetId, tableId, source, schemaFile) => {
 };
 
 const writeUserEvent = async (visitorId) => {
+  const apiEndpoint = 'retail.googleapis.com';
   const projectNumber = process.env['PROJECT_NUMBER'];
   const parent = `projects/${projectNumber}/locations/global/catalogs/default_catalog`;
-  const retailClient = new UserEventServiceClient();
+  const retailClient = new UserEventServiceClient({ apiEndpoint });
 
   const userEvent = {
     eventType: 'detail-page-view',
@@ -319,7 +309,8 @@ const writeUserEvent = async (visitorId) => {
 };
 
 const purgeUserEvents = async (parent, visitorId) => {
-  const retailClient = new UserEventServiceClient();
+  const apiEndpoint = 'retail.googleapis.com';
+  const retailClient = new UserEventServiceClient({ apiEndpoint });
   const request = {
     parent,
     filter: `visitorId="${visitorId}"`,
@@ -337,7 +328,6 @@ module.exports = {
   getProduct,
   deleteProduct,
   deleteProducts,
-  getProjectId,
   createBucket,
   deleteBucket,
   getBucketsList,

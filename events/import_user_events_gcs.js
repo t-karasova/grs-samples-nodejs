@@ -21,7 +21,8 @@ async function main() {
   const { UserEventServiceClient } = require('@google-cloud/retail').v2;
 
   const projectNumber = process.env['PROJECT_NUMBER'];
-  const bucketName = process.env['BUCKET_NAME'];
+  const bucketName = process.env['EVENTS_BUCKET_NAME'];
+  const apiEndpoint = 'retail.googleapis.com';
 
   const gcsBucket = `gs://${bucketName}`;
   const gcsErrorsBucket = `gs://${bucketName}/error`;
@@ -47,7 +48,7 @@ async function main() {
   };
 
   // Instantiates a client.
-  const retailClient = new UserEventServiceClient();
+  const retailClient = new UserEventServiceClient({ apiEndpoint });
 
   const IResponseParams = {
     IError: 0,
