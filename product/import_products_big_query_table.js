@@ -19,10 +19,10 @@ async function main() {
 
   // Imports the Google Cloud client library.
   const { ProductServiceClient } = require('@google-cloud/retail').v2;
-  const utils = require('../setup/setup_cleanup');
 
   const projectNumber = process.env['PROJECT_NUMBER'];
-  const projectId = await utils.getProjectId();
+  const projectId = process.env['PROJECT_ID'];
+  const apiEndpoint = 'retail.googleapis.com';
 
   const datasetId = 'products';
   const tableId = 'products';
@@ -57,7 +57,7 @@ async function main() {
   const reconciliationMode = reconciliationModes.FULL;
 
   // Instantiates a client.
-  const retailClient = new ProductServiceClient();
+  const retailClient = new ProductServiceClient({ apiEndpoint });
 
   const callImportProducts = async () => {
     // Construct request

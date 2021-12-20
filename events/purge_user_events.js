@@ -23,6 +23,7 @@ async function main() {
 
   const projectNumber = process.env['PROJECT_NUMBER'];
   const visitorId = 'test_visitor_id';
+  const apiEndpoint = 'retail.googleapis.com';
 
   // Placement
   const parent = `projects/${projectNumber}/locations/global/catalogs/default_catalog`;
@@ -35,7 +36,7 @@ async function main() {
   const force = true;
 
   // Instantiates a client.
-  const retailClient = new UserEventServiceClient();
+  const retailClient = new UserEventServiceClient({ apiEndpoint });
 
   const callPurgeUserEvents = async () => {
     // Construct request
