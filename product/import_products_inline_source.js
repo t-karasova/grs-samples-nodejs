@@ -92,33 +92,25 @@ async function main(id1, id2) {
   // Instantiates a client.
   const retailClient = new ProductServiceClient();
 
-  const callImportProducts = () => {
-    return new Promise(async (resolve, reject) => {
-      try {
-        // Construct request
-        const request = {
-          parent,
-          inputConfig,
-        };
-        console.log('Import products request:', request);
+  const callImportProducts = async () => {
+    // Construct request
+    const request = {
+      parent,
+      inputConfig,
+    };
+    console.log('Import products request:', request);
 
-        // Run request
-        const [operation] = await retailClient.importProducts(request);
-        const response = await operation.promise();
-        const result = response[IResponseParams.ISearchResponse];
-        console.log(
-          `Number of successfully imported products: ${result.successCount | 0}`
-        );
-        console.log(
-          `Number of failures during the importing: ${result.failureCount | 0}`
-        );
-        console.log(`Operation result: ${JSON.stringify(response)}`);
-        resolve();
-      } catch (err) {
-        console.log(err);
-        reject(err);
-      }
-    });
+    // Run request
+    const [operation] = await retailClient.importProducts(request);
+    const response = await operation.promise();
+    const result = response[IResponseParams.ISearchResponse];
+    console.log(
+      `Number of successfully imported products: ${result.successCount | 0}`
+    );
+    console.log(
+      `Number of failures during the importing: ${result.failureCount | 0}`
+    );
+    console.log(`Operation result: ${JSON.stringify(response)}`);
   };
   // Start import products
   console.log('Start import products');

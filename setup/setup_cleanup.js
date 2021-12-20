@@ -60,61 +60,43 @@ const createProduct = async (
 
   const retailClient = new ProductServiceClient();
 
-  return new Promise(async (resolve, reject) => {
-    try {
-      // Construct request
-      const request = {
-        parent,
-        product,
-        productId,
-      };
+  // Construct request
+  const request = {
+    parent,
+    product,
+    productId,
+  };
 
-      // Run request
-      const response = await retailClient.createProduct(request);
-      console.log(`Product ${response[0].id} created`);
-      resolve(response[0]);
-    } catch (err) {
-      reject(err);
-    }
-  });
+  // Run request
+  const response = await retailClient.createProduct(request);
+  console.log(`Product ${response[0].id} created`);
+  return response[0];
 };
 
-const getProduct = (name) => {
+const getProduct = async (name) => {
   const retailClient = new ProductServiceClient();
 
-  return new Promise(async (resolve, reject) => {
-    try {
-      // Construct request
-      const request = {
-        name,
-      };
+  // Construct request
+  const request = {
+    name,
+  };
 
-      // Run request
-      const response = await retailClient.getProduct(request);
-      resolve(response);
-    } catch (err) {
-      reject(err);
-    }
-  });
+  // Run request
+  const response = await retailClient.getProduct(request);
+  return response;
 };
 
-const deleteProduct = (name) => {
+const deleteProduct = async (name) => {
   const retailClient = new ProductServiceClient();
 
-  return new Promise(async (resolve, reject) => {
-    try {
-      // Construct request
-      const request = {
-        name,
-      };
+  // Construct request
+  const request = {
+    name,
+  };
 
-      // Run request
-      const response = await retailClient.deleteProduct(request);
-      resolve(response);
-    } catch (err) {
-      reject(err);
-    }
-  });
+  // Run request
+  const response = await retailClient.deleteProduct(request);
+  return response;
 };
 
 const deleteProducts = (projectNumber, ids) => {
@@ -148,31 +130,19 @@ const getProjectId = () => {
   });
 };
 
-const getBucketsList = () => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const storage = new Storage();
-      const [buckets] = await storage.getBuckets();
-      const bucketNames = buckets.map((item) => item.name);
-      console.log(bucketNames);
-      resolve(buckets);
-    } catch (error) {
-      reject(error);
-    }
-  });
+const getBucketsList = async () => {
+  const storage = new Storage();
+  const [buckets] = await storage.getBuckets();
+  const bucketNames = buckets.map((item) => item.name);
+  console.log(bucketNames);
+  resolve(buckets);
 };
 
-const isBucketExist = (name) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const storage = new Storage();
-      const [buckets] = await storage.getBuckets();
-      const bucketNames = buckets.map((item) => item.name);
-      bucketNames.indexOf(name) !== -1 ? resolve(true) : resolve(false);
-    } catch (error) {
-      reject(error);
-    }
-  });
+const isBucketExist = async (name) => {
+  const storage = new Storage();
+  const [buckets] = await storage.getBuckets();
+  const bucketNames = buckets.map((item) => item.name);
+  return bucketNames.indexOf(name) !== -1 ? true : false;
 };
 
 const createBucket = (name) => {
@@ -198,62 +168,35 @@ const createBucket = (name) => {
   });
 };
 
-const deleteBucket = (name) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const storage = new Storage();
-      await storage.bucket(name).delete();
-      console.log(`Bucket ${name} deleted`);
-      resolve();
-    } catch (error) {
-      reject(error);
-    }
+const deleteBucket = async (name) => {
+  const storage = new Storage();
+  await storage.bucket(name).delete();
+  console.log(`Bucket ${name} deleted`);
+};
+
+const uploadFile = async (bucketName, filePath, destFileName) => {
+  const storage = new Storage();
+  await storage.bucket(bucketName).upload(filePath, {
+    destination: destFileName,
+  });
+  console.log(`File ${destFileName} uploaded to ${bucketName}`);
+};
+
+const listFiles = async (bucketName) => {
+  const storage = new Storage();
+  const [files] = await storage.bucket(bucketName).getFiles();
+
+  console.log('Files:');
+  files.forEach((file) => {
+    console.log(file.name);
   });
 };
 
-const uploadFile = (bucketName, filePath, destFileName) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const storage = new Storage();
-      await storage.bucket(bucketName).upload(filePath, {
-        destination: destFileName,
-      });
-      console.log(`File ${destFileName} uploaded to ${bucketName}`);
-      resolve();
-    } catch (error) {
-      reject(error);
-    }
-  });
-};
-
-const listFiles = (bucketName) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const storage = new Storage();
-      const [files] = await storage.bucket(bucketName).getFiles();
-
-      console.log('Files:');
-      files.forEach((file) => {
-        console.log(file.name);
-      });
-      resolve();
-    } catch (error) {
-      reject(error);
-    }
-  });
-};
-
-const isDatasetExist = (datasetId) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const bigquery = new BigQuery();
-      const [datasets] = await bigquery.getDatasets();
-      const datasetIds = datasets.map((dataset) => dataset.id);
-      datasetIds.indexOf(datasetId) !== -1 ? resolve(true) : resolve(false);
-    } catch (error) {
-      reject(error);
-    }
-  });
+const isDatasetExist = async (datasetId) => {
+  const bigquery = new BigQuery();
+  const [datasets] = await bigquery.getDatasets();
+  const datasetIds = datasets.map((dataset) => dataset.id);
+  return datasetIds.indexOf(datasetId) !== -1 ? true : false;
 };
 
 const createBqDataset = (datasetId) => {
@@ -280,30 +223,17 @@ const createBqDataset = (datasetId) => {
   });
 };
 
-const deleteBqDataset = (datasetId) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const bigquery = new BigQuery();
-      await bigquery.dataset(datasetId).delete({ force: true });
-      console.log(`Dataset ${dataset.id} deleted.`);
-      resolve();
-    } catch (error) {
-      reject(error);
-    }
-  });
+const deleteBqDataset = async (datasetId) => {
+  const bigquery = new BigQuery();
+  await bigquery.dataset(datasetId).delete({ force: true });
+  console.log(`Dataset ${dataset.id} deleted.`);
 };
 
-const isTableExist = (datasetId, tableId) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const bigquery = new BigQuery();
-      const [tables] = await bigquery.dataset(datasetId).getTables();
-      const tableIds = tables.map((table) => table.id);
-      tableIds.indexOf(tableId) !== -1 ? resolve(true) : resolve(false);
-    } catch (error) {
-      reject(error);
-    }
-  });
+const isTableExist = async (datasetId, tableId) => {
+  const bigquery = new BigQuery();
+  const [tables] = await bigquery.dataset(datasetId).getTables();
+  const tableIds = tables.map((table) => table.id);
+  return tableIds.indexOf(tableId) !== -1 ? true : false;
 };
 
 const createBqTable = (datasetId, tableId, schemaFile) => {
@@ -336,31 +266,24 @@ const createBqTable = (datasetId, tableId, schemaFile) => {
   });
 };
 
-const uploadDataToBqTable = (datasetId, tableId, source, schemaFile) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const schemaFileData = fs.readFileSync(schemaFile);
-      const schema = {
-        fields: JSON.parse(schemaFileData),
-      };
+const uploadDataToBqTable = async (datasetId, tableId, source, schemaFile) => {
+  const schemaFileData = fs.readFileSync(schemaFile);
+  const schema = {
+    fields: JSON.parse(schemaFileData),
+  };
 
-      const bigquery = new BigQuery();
-      const options = {
-        sourceFormat: 'NEWLINE_DELIMITED_JSON',
-        schema,
-        location: 'US',
-      };
-      const [job] = await bigquery
-        .dataset(datasetId)
-        .table(tableId)
-        .load(source, options);
-      // load() waits for the job to finish
-      console.log(`Job ${job.id} completed.`);
-      resolve();
-    } catch (error) {
-      reject(error);
-    }
-  });
+  const bigquery = new BigQuery();
+  const options = {
+    sourceFormat: 'NEWLINE_DELIMITED_JSON',
+    schema,
+    location: 'US',
+  };
+  const [job] = await bigquery
+    .dataset(datasetId)
+    .table(tableId)
+    .load(source, options);
+  // load() waits for the job to finish
+  console.log(`Job ${job.id} completed.`);
 };
 
 const writeUserEvent = async (visitorId) => {
