@@ -215,7 +215,7 @@ const createBqDataset = (datasetId) => {
 const deleteBqDataset = async (datasetId) => {
   const bigquery = new BigQuery();
   await bigquery.dataset(datasetId).delete({ force: true });
-  console.log(`Dataset ${dataset.id} deleted.`);
+  console.log(`Dataset ${datasetId} deleted.`);
 };
 
 const isTableExist = async (datasetId, tableId) => {
@@ -253,6 +253,12 @@ const createBqTable = (datasetId, tableId, schemaFile) => {
       reject(error);
     }
   });
+};
+
+const deleteBqTable = async (datasetId, tableId) => {
+  const bigquery = new BigQuery();
+  await bigquery.dataset(datasetId).table(tableId).delete({ force: true });
+  console.log(`Table ${tableId} deleted.`);
 };
 
 const uploadDataToBqTable = async (datasetId, tableId, source, schemaFile) => {
@@ -336,6 +342,7 @@ module.exports = {
   createBqDataset,
   deleteBqDataset,
   createBqTable,
+  deleteBqTable,
   uploadDataToBqTable,
   writeUserEvent,
   purgeUserEvents,
