@@ -37,7 +37,7 @@ async function main() {
   const facetSpecs = [{ facetKey: { key: 'colorFamilies', intervals: [] } }]; //PUT THE INTERVALS HERE
 
   // Maximum number of Products to return.
-  const pageSize = 1;
+  const pageSize = 10;
 
   // Instantiates a client.
   const retailClient = new SearchServiceClient({ apiEndpoint });
