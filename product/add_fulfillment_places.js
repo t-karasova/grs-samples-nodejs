@@ -74,7 +74,7 @@ async function main(generatedProductId) {
         console.log('Waiting to complete add operation..');
         setTimeout(() => {
           resolve();
-        }, 50000);
+        }, 120000);
       } catch (err) {
         console.log(err);
         reject(err);
