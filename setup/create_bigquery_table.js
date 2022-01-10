@@ -25,10 +25,10 @@ async function main() {
   const invalidSourceFile = 'resources/products_some_invalid.json';
 
   await utils.createBqDataset(dataset);
-  await utils.createBqTable(dataset, validTable);
+  await utils.createBqTable(dataset, validTable, schema);
   await utils.uploadDataToBqTable(dataset, validTable, validSourceFile, schema);
 
-  await utils.createBqTable(dataset, invalidTable);
+  await utils.createBqTable(dataset, invalidTable, schema);
   await utils.uploadDataToBqTable(
     dataset,
     validTable,
