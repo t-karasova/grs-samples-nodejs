@@ -15,10 +15,10 @@
 'use strict';
 
 async function main(generatedProductId) {
-  // [START retail_add_remove_fulfillment_places]
+  // [START retail_remove_fulfillment_places]
 
   // Imports the Google Cloud client library.
-  const { ProductServiceClient } = require('@google-cloud/retail').v2;
+  const {ProductServiceClient} = require('@google-cloud/retail').v2;
   const utils = require('../setup/setup_cleanup');
 
   const projectNumber = process.env['PROJECT_NUMBER'];
@@ -49,36 +49,28 @@ async function main(generatedProductId) {
   };
 
   // Instantiates a client.
-  const retailClient = new ProductServiceClient({ apiEndpoint });
+  const retailClient = new ProductServiceClient({apiEndpoint});
 
-  const callRemoveFulfillmentPlaces = () => {
-    return new Promise(async (resolve, reject) => {
-      try {
-        // Construct request
-        const request = {
-          product,
-          type,
-          placeIds,
-        };
+  const callRemoveFulfillmentPlaces = async () => {
+    // Construct request
+    const request = {
+      product,
+      type,
+      placeIds,
+      removeTime,
+    };
 
-        console.log('Remove fulfillment request:', request);
-        // Run request
-        await retailClient.removeFulfillmentPlaces(request);
+    console.log('Remove fulfillment request:', request);
+    // Run request
+    await retailClient.removeFulfillmentPlaces(request);
 
-        console.log('Waiting to complete remove operation..');
-        setTimeout(() => {
-          resolve();
-        }, 50000);
-      } catch (err) {
-        console.log(err);
-        reject(err);
-      }
-    });
+    console.log('Waiting to complete remove operation..');
   };
 
   // Remove fulfillment places
   console.log('Start remove fulfillment');
   await callRemoveFulfillmentPlaces();
+  await utils.delay(50000);
   console.log('Remove fulfillment finished');
 
   //Get product
@@ -88,10 +80,10 @@ async function main(generatedProductId) {
   // Delete product
   await utils.deleteProduct(product);
   console.log(`Product ${createdProduct.id} deleted`);
-  // [END retail_add_remove_fulfillment_places]
+  // [END retail_remove_fulfillment_places]
 }
 
-process.on('unhandledRejection', (err) => {
+process.on('unhandledRejection', err => {
   console.error('ERROR', err.message);
   process.exitCode = 1;
 });

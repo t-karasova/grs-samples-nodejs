@@ -14,12 +14,13 @@
 
 'use strict';
 // Imports the Google Cloud client library.
-const { ProductServiceClient } = require('@google-cloud/retail').v2;
-const { UserEventServiceClient } = require('@google-cloud/retail').v2;
-const { Storage } = require('@google-cloud/storage');
-const { BigQuery } = require('@google-cloud/bigquery');
-const { exec } = require('child_process');
+const {ProductServiceClient} = require('@google-cloud/retail').v2;
+const {UserEventServiceClient} = require('@google-cloud/retail').v2;
+const {Storage} = require('@google-cloud/storage');
+const {BigQuery} = require('@google-cloud/bigquery');
 const fs = require('fs');
+
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 const createProduct = async (
   projectNumber,
@@ -59,7 +60,7 @@ const createProduct = async (
     availability: 'IN_STOCK',
   };
 
-  const retailClient = new ProductServiceClient({ apiEndpoint });
+  const retailClient = new ProductServiceClient({apiEndpoint});
 
   // Construct request
   const request = {
@@ -74,9 +75,9 @@ const createProduct = async (
   return response[0];
 };
 
-const getProduct = async (name) => {
+const getProduct = async name => {
   const apiEndpoint = 'retail.googleapis.com';
-  const retailClient = new ProductServiceClient({ apiEndpoint });
+  const retailClient = new ProductServiceClient({apiEndpoint});
 
   // Construct request
   const request = {
@@ -88,9 +89,9 @@ const getProduct = async (name) => {
   return response;
 };
 
-const deleteProduct = async (name) => {
+const deleteProduct = async name => {
   const apiEndpoint = 'retail.googleapis.com';
-  const retailClient = new ProductServiceClient({ apiEndpoint });
+  const retailClient = new ProductServiceClient({apiEndpoint});
 
   // Construct request
   const request = {
@@ -102,62 +103,50 @@ const deleteProduct = async (name) => {
   return response;
 };
 
-const deleteProducts = (projectNumber, ids) => {
+const deleteProducts = async (projectNumber, ids) => {
   const apiEndpoint = 'retail.googleapis.com';
-  const retailClient = new ProductServiceClient({ apiEndpoint });
+  const retailClient = new ProductServiceClient({apiEndpoint});
 
-  return new Promise(async (resolve, reject) => {
-    try {
-      for (let i = 0; i < ids.length; ++i) {
-        const name = `projects/${projectNumber}/locations/global/catalogs/default_catalog/branches/default_branch/products/${ids[i]}`;
-        await retailClient.deleteProduct({ name });
-      }
-      resolve(true);
-    } catch (err) {
-      reject(err);
-    }
-  });
+  for (let i = 0; i < ids.length; ++i) {
+    const name = `projects/${projectNumber}/locations/global/catalogs/default_catalog/branches/default_branch/products/${ids[i]}`;
+    await retailClient.deleteProduct({name});
+  }
+  return true;
 };
 
 const getBucketsList = async () => {
   const storage = new Storage();
   const [buckets] = await storage.getBuckets();
-  const bucketNames = buckets.map((item) => item.name);
+  const bucketNames = buckets.map(item => item.name);
   console.log(bucketNames);
   return buckets;
 };
 
-const isBucketExist = async (name) => {
+const isBucketExist = async name => {
   const storage = new Storage();
   const [buckets] = await storage.getBuckets();
-  const bucketNames = buckets.map((item) => item.name);
+  const bucketNames = buckets.map(item => item.name);
   return bucketNames.indexOf(name) !== -1 ? true : false;
 };
 
-const createBucket = (name) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      if (await isBucketExist(name)) {
-        console.log(`Bucket ${name} alreaty exists`);
-        resolve(false);
-      } else {
-        const storage = new Storage();
-        const location = 'us';
-        const storageClass = 'STANDARD';
-        const createdBucket = await storage.createBucket(name, {
-          location,
-          [storageClass]: true,
-        });
-        console.log(`Bucket ${createdBucket[0].name} created.`);
-        resolve(createdBucket);
-      }
-    } catch (error) {
-      reject(error);
-    }
-  });
+const createBucket = async name => {
+  if (await isBucketExist(name)) {
+    console.log(`Bucket ${name} alreaty exists`);
+    return false;
+  } else {
+    const storage = new Storage();
+    const location = 'us';
+    const storageClass = 'STANDARD';
+    const createdBucket = await storage.createBucket(name, {
+      location,
+      [storageClass]: true,
+    });
+    console.log(`Bucket ${createdBucket[0].name} created.`);
+    return createdBucket;
+  }
 };
 
-const deleteBucket = async (bucketName) => {
+const deleteBucket = async bucketName => {
   const storage = new Storage();
   await storage.bucket(bucketName).deleteFiles({force: true});
   await storage.bucket(bucketName).delete();
@@ -172,93 +161,81 @@ const uploadFile = async (bucketName, filePath, destFileName) => {
   console.log(`File ${destFileName} uploaded to ${bucketName}`);
 };
 
-const listFiles = async (bucketName) => {
+const listFiles = async bucketName => {
   const storage = new Storage();
   const [files] = await storage.bucket(bucketName).getFiles();
 
   console.log('Files:');
-  files.forEach((file) => {
+  files.forEach(file => {
     console.log(file.name);
   });
 };
 
-const isDatasetExist = async (datasetId) => {
+const isDatasetExist = async datasetId => {
   const bigquery = new BigQuery();
   const [datasets] = await bigquery.getDatasets();
-  const datasetIds = datasets.map((dataset) => dataset.id);
+  const datasetIds = datasets.map(dataset => dataset.id);
   return datasetIds.indexOf(datasetId) !== -1 ? true : false;
 };
 
-const createBqDataset = (datasetId) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      if (await isDatasetExist(datasetId)) {
-        console.log(`Dataset ${datasetId} already exists`);
-        resolve();
-      } else {
-        const bigquery = new BigQuery();
-        // Specify the geographic location where the dataset should reside
-        const options = {
-          location: 'US',
-        };
+const createBqDataset = async datasetId => {
+  if (await isDatasetExist(datasetId)) {
+    console.log(`Dataset ${datasetId} already exists`);
+    return false;
+  } else {
+    const bigquery = new BigQuery();
+    // Specify the geographic location where the dataset should reside
+    const options = {
+      location: 'US',
+    };
 
-        // Create a new dataset
-        const [dataset] = await bigquery.createDataset(datasetId, options);
-        console.log(`Dataset ${dataset.id} created.`);
-        resolve();
-      }
-    } catch (error) {
-      reject(error);
-    }
-  });
+    // Create a new dataset
+    const [dataset] = await bigquery.createDataset(datasetId, options);
+    console.log(`Dataset ${dataset.id} created.`);
+    return true;
+  }
 };
 
-const deleteBqDataset = async (datasetId) => {
+const deleteBqDataset = async datasetId => {
   const bigquery = new BigQuery();
-  await bigquery.dataset(datasetId).delete({ force: true });
+  await bigquery.dataset(datasetId).delete({force: true});
   console.log(`Dataset ${datasetId} deleted.`);
 };
 
 const isTableExist = async (datasetId, tableId) => {
   const bigquery = new BigQuery();
   const [tables] = await bigquery.dataset(datasetId).getTables();
-  const tableIds = tables.map((table) => table.id);
+  const tableIds = tables.map(table => table.id);
   return tableIds.indexOf(tableId) !== -1 ? true : false;
 };
 
-const createBqTable = (datasetId, tableId, schemaFile) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      if (await isTableExist(datasetId, tableId)) {
-        console.log(`Table ${tableId} already exists`);
-        resolve();
-      } else {
-        const schemaFileData = fs.readFileSync(schemaFile);
-        const schema = JSON.parse(schemaFileData);
+const createBqTable = async (datasetId, tableId, schemaFile) => {
+  if (await isTableExist(datasetId, tableId)) {
+    console.log(`Table ${tableId} already exists`);
+    return false;
+  } else {
+    const schemaFileData = fs.readFileSync(schemaFile);
+    const schema = JSON.parse(schemaFileData);
 
-        const bigquery = new BigQuery();
-        const options = {
-          schema: schema,
-          location: 'US',
-        };
+    const bigquery = new BigQuery();
+    const options = {
+      schema: schema,
+      location: 'US',
+    };
 
-        //Create a new table in the dataset
-        const [table] = await bigquery
-          .dataset(datasetId)
-          .createTable(tableId, options);
+    //Create a new table in the dataset
+    const [table] = await bigquery
+      .dataset(datasetId)
+      .createTable(tableId, options);
 
-        console.log(`Table ${table.id} created.`);
-        resolve();
-      }
-    } catch (error) {
-      reject(error);
-    }
-  });
+    console.log(`Table ${table.id} created.`);
+    return true;
+  }
 };
 
 const deleteBqTable = async (datasetId, tableId) => {
   const bigquery = new BigQuery();
-  await bigquery.dataset(datasetId).table(tableId).delete({ force: true });
+  await bigquery.dataset(datasetId).table(tableId).delete({force: true});
   console.log(`Table ${tableId} deleted.`);
 };
 
@@ -282,11 +259,11 @@ const uploadDataToBqTable = async (datasetId, tableId, source, schemaFile) => {
   console.log(`Job ${job.id} completed.`);
 };
 
-const writeUserEvent = async (visitorId) => {
+const writeUserEvent = async visitorId => {
   const apiEndpoint = 'retail.googleapis.com';
   const projectNumber = process.env['PROJECT_NUMBER'];
   const parent = `projects/${projectNumber}/locations/global/catalogs/default_catalog`;
-  const retailClient = new UserEventServiceClient({ apiEndpoint });
+  const retailClient = new UserEventServiceClient({apiEndpoint});
 
   const userEvent = {
     eventType: 'detail-page-view',
@@ -317,7 +294,7 @@ const writeUserEvent = async (visitorId) => {
 
 const purgeUserEvents = async (parent, visitorId) => {
   const apiEndpoint = 'retail.googleapis.com';
-  const retailClient = new UserEventServiceClient({ apiEndpoint });
+  const retailClient = new UserEventServiceClient({apiEndpoint});
   const request = {
     parent,
     filter: `visitorId="${visitorId}"`,
@@ -347,4 +324,5 @@ module.exports = {
   uploadDataToBqTable,
   writeUserEvent,
   purgeUserEvents,
+  delay,
 };
