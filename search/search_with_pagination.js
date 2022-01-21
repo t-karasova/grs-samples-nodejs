@@ -38,7 +38,7 @@ async function main() {
   // A 0-indexed integer that specifies the current offset in search results.
   const offset = 0; // TRY DIFFERENT OFFSETS TO SEE DIFFERENT PRODUCTS
 
-  //A page token recieved from a previous search call.
+  //A page token received from a previous search call.
   let pageToken = '';
 
   // Instantiates a client.
@@ -82,8 +82,6 @@ async function main() {
   await callSearch();
 
   //PASTE CALL WITH NEXT PAGE TOKEN HERE:
-
-  //PASTE CALL WITH OFFSET HERE:
 
   // [END retail_search_for_products_with_pagination]
 }
