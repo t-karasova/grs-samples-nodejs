@@ -14,14 +14,16 @@
 
 'use strict';
 
-async function main() {
+async function main(generatedBucketName) {
   const utils = require('./setup_cleanup');
 
   //Get your project ID
   const projectId = process.env['PROJECT_ID'];
 
   // The ID of your GCS bucket
-  const bucketName = `${projectId}_${Math.round(Date.now() / 1000)}`;
+  const bucketName = generatedBucketName
+    ? generatedBucketName
+    : `${projectId}_${Math.round(Date.now() / 1000)}`;
 
   //Creates the new bucket
   await utils.createBucket(bucketName);
@@ -44,4 +46,4 @@ process.on('unhandledRejection', err => {
   process.exitCode = 1;
 });
 
-main();
+main(...process.argv.slice(2));
