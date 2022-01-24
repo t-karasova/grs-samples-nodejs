@@ -14,11 +14,13 @@
 
 'use strict';
 
-async function main() {
+async function main(generatedBucketName) {
   const utils = require('./setup_cleanup');
 
   // The ID of your GCS bucket
-  const bucketName = process.env['BUCKET_NAME'];
+  const bucketName = generatedBucketName
+    ? generatedBucketName
+    : process.env['BUCKET_NAME'];
 
   //Delete created bucket
   await utils.deleteBucket(bucketName);
@@ -29,4 +31,4 @@ process.on('unhandledRejection', err => {
   process.exitCode = 1;
 });
 
-main();
+main(...process.argv.slice(2));
