@@ -22,17 +22,13 @@ async function main() {
 
   const projectNumber = process.env['PROJECT_NUMBER'];
   const projectId = process.env['PROJECT_ID'];
-  const apiEndpoint = 'retail.googleapis.com';
 
   const datasetId = 'user_events';
   const dataSchema = 'user_event';
-  const tableId = 'events';
-
-  // TO CHECK ERROR HANDLING USE THE TABLE OF INVALID USER EVENTS
-  //tableId = 'user_events_some_invalid.json';
+  const tableId = 'events'; // TO CHECK ERROR HANDLING USE THE TABLE OF INVALID USER EVENTS
 
   // Placement
-  const parent = `projects/${projectNumber}/locations/global/catalogs/default_catalog`;
+  const parent = `projects/${projectNumber}/locations/global/catalogs/default_catalog`; // TO CHECK ERROR HANDLING PASTE THE INVALID CATALOG NAME HERE
 
   // The desired input location of the data.
   const inputConfig = {
@@ -45,12 +41,12 @@ async function main() {
   };
 
   // Instantiates a client.
-  const retailClient = new UserEventServiceClient({apiEndpoint});
+  const retailClient = new UserEventServiceClient();
 
   const IResponseParams = {
-    IError: 0,
-    ISearchResponse: 1,
-    ISearchMetadata: 2,
+    IImportUserEventsResponse: 0,
+    IImportMetadata: 1,
+    IOperation: 2,
   };
 
   const callImportUserEvents = async () => {
@@ -65,7 +61,7 @@ async function main() {
     // Run request
     const [operation] = await retailClient.importUserEvents(request);
     const response = await operation.promise();
-    const result = response[IResponseParams.ISearchResponse];
+    const result = response[IResponseParams.IImportMetadata];
     console.log(
       `Number of successfully imported events: ${result.successCount | 0}`
     );

@@ -31,7 +31,7 @@ async function main() {
   await utils.createBqTable(dataset, invalidTable, schema);
   await utils.uploadDataToBqTable(
     dataset,
-    validTable,
+    invalidTable,
     invalidSourceFile,
     schema
   );
