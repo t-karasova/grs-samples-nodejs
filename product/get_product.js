@@ -22,7 +22,6 @@ async function main(generatedProductId) {
   const utils = require('../setup/setup_cleanup');
 
   const projectNumber = process.env['PROJECT_NUMBER'];
-  const apiEndpoint = 'retail.googleapis.com';
 
   // Create product
   const product = await utils.createProduct(projectNumber, generatedProductId);
@@ -31,7 +30,7 @@ async function main(generatedProductId) {
   const name = product.name;
 
   // Instantiates a client.
-  const retailClient = new ProductServiceClient({apiEndpoint});
+  const retailClient = new ProductServiceClient();
 
   const callGetProduct = async () => {
     // Construct request

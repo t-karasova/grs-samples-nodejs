@@ -22,7 +22,6 @@ async function main(id1, id2) {
   const utils = require('../setup/setup_cleanup');
 
   const projectNumber = process.env['PROJECT_NUMBER'];
-  const apiEndpoint = 'retail.googleapis.com';
 
   // Placement
   const parent = `projects/${projectNumber}/locations/global/catalogs/default_catalog/branches/default_branch`;
@@ -85,13 +84,13 @@ async function main(id1, id2) {
   };
 
   const IResponseParams = {
-    IError: 0,
-    ISearchResponse: 1,
-    ISearchMetadata: 2,
+    IImportProductsResponse: 0,
+    IImportMetadata: 1,
+    IOperation: 2,
   };
 
   // Instantiates a client.
-  const retailClient = new ProductServiceClient({apiEndpoint});
+  const retailClient = new ProductServiceClient();
 
   const callImportProducts = async () => {
     // Construct request
@@ -104,7 +103,7 @@ async function main(id1, id2) {
     // Run request
     const [operation] = await retailClient.importProducts(request);
     const response = await operation.promise();
-    const result = response[IResponseParams.ISearchResponse];
+    const result = response[IResponseParams.IImportMetadata];
     console.log(
       `Number of successfully imported products: ${result.successCount | 0}`
     );
