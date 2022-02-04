@@ -118,9 +118,9 @@ Clone the Git repository with all the code samples to learn the Retail features 
     ```
 ## Upload catalog data to Cloud Storage
 
-There is a <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-nodejs/resources/user_events.json" regex="id">resources/user_events.json</walkthrough-editor-select-regex> file with valid user events prepared in the `resources` directory.
+There is a <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/resources/user_events.json" regex="id">resources/user_events.json</walkthrough-editor-select-regex> file with valid user events prepared in the `resources` directory.
 
-The other file, <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-nodejs/resources/user_events_some_invalid.json" regex="id">resources/user_events_some_invalid.json</walkthrough-editor-select-regex>, contains both valid and invalid user events. You will use it to check the error handling.
+The other file, <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/resources/user_events_some_invalid.json" regex="id">resources/user_events_some_invalid.json</walkthrough-editor-select-regex>, contains both valid and invalid user events. You will use it to check the error handling.
 
 In your own project you should create a Cloud Storage bucket and put the JSON file there.
 The bucket name must be unique. For convenience, you can name it `<YOUR_PROJECT_ID>_<TIMESTAMP>`.
@@ -138,11 +138,11 @@ The bucket name must be unique. For convenience, you can name it `<YOUR_PROJECT_
 
 ## Import user events to the Retail catalog from the Cloud Storage source
 
-1. To check the example of an import user events request, open <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-nodejs/events/import_user_events_gcs.js" regex="# call the Retail API to import user events">events/import_user_events_gcs.js</walkthrough-editor-select-regex>.
+1. To check the example of an import user events request, open <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/events/import_user_events_gcs.js" regex="# call the Retail API to import user events">events/import_user_events_gcs.js</walkthrough-editor-select-regex>.
 
     The `parent` field in the `ImportUserEventsRequest` contains a catalog name along with a branch number you are going to import your user events to.
 
-    If you are using user events prepared for these tutorials from the <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-nodejs/resources/user_events.json" regex="id">resources/user_events.json</walkthrough-editor-select-regex> file, you can use the default branch to import user events to. However, if you are using custom user events, change the default_branch, which is `0`, to another branch ID, for example `1`.
+    If you are using user events prepared for these tutorials from the <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/resources/user_events.json" regex="id">resources/user_events.json</walkthrough-editor-select-regex> file, you can use the default branch to import user events to. However, if you are using custom user events, change the default_branch, which is `0`, to another branch ID, for example `1`.
 
     The `inputConfig` field defines the `GcsSource` as an import source.
 
@@ -186,9 +186,9 @@ Try to import some invalid user events objects and check the error message in th
 
 The `type` field is required and should have one of the [defined values](https://cloud.google.com/retail/docs/user-events#types), so if you set some invalid value, you get the invalid user event objects.
 
-There is a <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-nodejs/resources/user_events_some_invalid.json" regex="id">resources/user_events_some_invalid.json</walkthrough-editor-select-regex> file in the Cloud Storage bucket that contains some invalid user events.
+There is a <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/resources/user_events_some_invalid.json" regex="id">resources/user_events_some_invalid.json</walkthrough-editor-select-regex> file in the Cloud Storage bucket that contains some invalid user events.
 
-1. Open the <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-nodejs/events/import_user_events_gcs.js" regex="// TO CHECK ERROR HANDLING USE THE JSON WITH INVALID USER EVENTS">code sample</walkthrough-editor-select-regex> and assign the `gcsEventsObject` value to the filename:
+1. Open the <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/events/import_user_events_gcs.js" regex="// TO CHECK ERROR HANDLING USE THE JSON WITH INVALID USER EVENTS">code sample</walkthrough-editor-select-regex> and assign the `gcsEventsObject` value to the filename:
     ```
     gcsEventsObject = "user_events_some_invalid.json"
     ```
@@ -224,7 +224,7 @@ importSummary {
 
 Next, send an invalid import request to check the error message.
 
-1. Open the  <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-nodejs/events/import_user_events_gcs.js" regex="// TO CHECK ERROR HANDLING PASTE THE INVALID CATALOG NAME HERE">events/import_user_events_gcs.js</walkthrough-editor-select-regex> file, and change a local variable `parent` with any invalid catalog name.
+1. Open the  <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/events/import_user_events_gcs.js" regex="// TO CHECK ERROR HANDLING PASTE THE INVALID CATALOG NAME HERE">events/import_user_events_gcs.js</walkthrough-editor-select-regex> file, and change a local variable `parent` with any invalid catalog name.
 
 1. Run the code again with the following command:
     ```bash

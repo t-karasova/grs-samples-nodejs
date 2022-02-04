@@ -134,7 +134,7 @@ The Retail API returns the created user event. Check the output in the Terminal.
 
 Next, check the error handling by sending a request with an invalid parent.
 
-1. Open the <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-nodejs/events/write_user_event.js" regex="// TO CHECK ERROR HANDLING PASTE THE INVALID CATALOG NAME HERE">events/write_user_event.js</walkthrough-editor-select-regex> file, and change a local variable `parent` with any invalid catalog name.
+1. Open the <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/events/write_user_event.js" regex="// TO CHECK ERROR HANDLING PASTE THE INVALID CATALOG NAME HERE">events/write_user_event.js</walkthrough-editor-select-regex> file, and change a local variable `parent` with any invalid catalog name.
     ```bash
     const parent = `projects/${projectNumber}/locations/global/catalogs/invalid_catalog`;
     ```

@@ -124,11 +124,11 @@ Clone the Git repository with all the code samples to learn the Retail features 
 ## Prepare user events for importing
 
 There is a
-<walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-nodejs/resources/user_events.json" regex="id">resources/user_events.json</walkthrough-editor-select-regex>
+<walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/resources/user_events.json" regex="id">resources/user_events.json</walkthrough-editor-select-regex>
 file with valid user events prepared in the `resources` directory.
 
 The other file,
-<walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-nodejs/resources/user_events_some_invalid.json" regex="id">resources/user_events_some_invalid.json</walkthrough-editor-select-regex>,
+<walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/resources/user_events_some_invalid.json" regex="id">resources/user_events_some_invalid.json</walkthrough-editor-select-regex>,
 contains both valid and invalid user events. You will use it to check the error
 handling.
 
@@ -139,9 +139,9 @@ You can import events that aren't older than 90 days into the Retail catalog.
 Otherwise, the import will fail.
 
 To keep our historical user events more recent, update the timestamps in the
-<walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-nodejs/resources/user_events.json" regex="id">user_events.json</walkthrough-editor-select-regex>
+<walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/resources/user_events.json" regex="id">user_events.json</walkthrough-editor-select-regex>
 and
-<walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-nodejs/resources/user_events_some_invalid.json" regex="id">user_events_some_invalid.json</walkthrough-editor-select-regex>
+<walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/resources/user_events_some_invalid.json" regex="id">user_events_some_invalid.json</walkthrough-editor-select-regex>
 files.
 
 1.  Run this script in the Terminal to get the user events with yesterday's
@@ -160,10 +160,10 @@ then create table with specific user events data schema.
 Next, upload data to the table from prepared JSON file. The data in the file
 should correspond the user events schema as well.
 
-The <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-nodejs/resources/user_events.json" regex="id">resources/user_events.json</walkthrough-editor-select-regex>
+The <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/resources/user_events.json" regex="id">resources/user_events.json</walkthrough-editor-select-regex>
 file should be uploaded to the `user_events` dataset, in the `events` table.
 
-The <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-nodejs/resources/user_events_some_invalid.json" regex="id">resources/user_events_some_invalid.json</walkthrough-editor-select-regex>
+The <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/resources/user_events_some_invalid.json" regex="id">resources/user_events_some_invalid.json</walkthrough-editor-select-regex>
 file, which contains some invalid user events along with valid ones, should be uploaded
 to the `user_events` dataset, `events_some_invalid` table. This table will be
 used to demonstrate the error handling.
@@ -187,9 +187,9 @@ to create the table and upload your data.
 ### Upload catalog data to Cloud Storage
 
 After you have updated the timestamps in
-<walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-nodejs/resources/user_events.json" regex="id">resources/user_events.json</walkthrough-editor-select-regex>
+<walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/resources/user_events.json" regex="id">resources/user_events.json</walkthrough-editor-select-regex>
 and
-<walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-nodejs/resources/user_events_some_invalid.json" regex="id">resources/user_events_some_invalid.json</walkthrough-editor-select-regex>,
+<walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/resources/user_events_some_invalid.json" regex="id">resources/user_events_some_invalid.json</walkthrough-editor-select-regex>,
 you can proceed with uploading these data to Cloud Storage.
 
 In your own project create a Cloud Storage bucket and put the JSON file there.
@@ -244,7 +244,7 @@ You have already created a BigQuery table, so you can use it in your Retail API
 import request.
 
 1.  To check the example of an import user events request, open
-    <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-nodejs/events/import_user_events_big_query.js" regex="id">events/import_user_events_big_query.js</walkthrough-editor-select-regex>
+    <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/events/import_user_events_big_query.js" regex="id">events/import_user_events_big_query.js</walkthrough-editor-select-regex>
     file.
 
     The `parent` field in the `ImportUserEventsRequest` contains a
@@ -306,11 +306,11 @@ is, if you set some invalid value, you get the invalid user event object.
     Follow the instructions described in the **Upload user events data to the Cloud
     Storage bucket** and **Create the BigQuery table with the user events data**
     steps and use the
-    <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-nodejs/resources/user_events_some_invalid.json" regex="id">resources/user_events_some_invalid.json</walkthrough-editor-select-regex>
+    <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/resources/user_events_some_invalid.json" regex="id">resources/user_events_some_invalid.json</walkthrough-editor-select-regex>
     file as the source.
 
 1.  Go to the
-    <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-nodejs/events/import_user_events_big_query.js" regex="// TO CHECK ERROR HANDLING USE THE TABLE OF INVALID USER EVENTS">events/import_user_events_big_query.js</walkthrough-editor-select-regex>
+    <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/events/import_user_events_big_query.js" regex="// TO CHECK ERROR HANDLING USE THE TABLE OF INVALID USER EVENTS">events/import_user_events_big_query.js</walkthrough-editor-select-regex>
     file and assign a value of `tableId` to the table name: `const tableId = 'events_some_invalid'`
 
 1.  Run the code sample and wait until the operation is completed: 
@@ -345,7 +345,7 @@ import_summary { joined_events_count: 3 }`
 Next, send an invalid import request to check the error message.
 
 1.  Open the
-    <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-nodejs/events/import_user_events_big_query.js" regex="// TO CHECK ERROR HANDLING PASTE THE INVALID CATALOG NAME HERE">events/import_user_events_big_query.js</walkthrough-editor-select-regex>
+    <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/events/import_user_events_big_query.js" regex="// TO CHECK ERROR HANDLING PASTE THE INVALID CATALOG NAME HERE">events/import_user_events_big_query.js</walkthrough-editor-select-regex>
     file, and change a local variable `parent` with any invalid catalog name.
 
 1.  Run the code again in the Terminal: 

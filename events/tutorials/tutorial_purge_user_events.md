@@ -123,7 +123,7 @@ To send the `PurgeUserEventsRequest` request you need to specify the following f
   - userId: specifying this deletes all events associated with a user.
 - `force`—if force is set to `false`, the method returns the expected purge count without deleting any user events; if set to `true`, the user events are purged from the catalog.
 
-1. Open the`PurgeUserEventsRequest` example in the <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-nodejs/events/purge_user_events.js" regex="id">`events/purge_user_events.js`</walkthrough-editor-select-regex> file.
+1. Open the`PurgeUserEventsRequest` example in the <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/events/purge_user_events.js" regex="id">`events/purge_user_events.js`</walkthrough-editor-select-regex> file.
 
 1. Check that the visitorId and filter fields are set with the values:
     ```
@@ -145,7 +145,7 @@ The purge operation might take up to 24 hours. If the long-running operation is 
 
 Next, let's check the error handling. Send a request with an invalid filter.
 
-1. Find the <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-nodejs/events/purge_user_events.js" regex="// TO CHECK ERROR HANDLING SET INVALID FILTER HERE">comment</walkthrough-editor-select-regex> and set the filter field with an invalid value:
+1. Find the <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/events/purge_user_events.js" regex="// TO CHECK ERROR HANDLING SET INVALID FILTER HERE">comment</walkthrough-editor-select-regex> and set the filter field with an invalid value:
     ```
     const filter = 'invalid="123abc"';
     ```
