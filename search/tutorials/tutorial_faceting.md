@@ -129,7 +129,7 @@ the search request body, explicitly passing product attributes as facets.
    textual or numerical field name. The full list of the facet keys you can find
    in the [Retail documentation.](https://cloud.google.com/retail/docs/reference/rpc/google.cloud.retail.v2#facetkey)
 
-1. Now open <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/search/search_with_facet_spec.js" regex="id">search_with_facet_spec.js</walkthrough-editor-select-regex>.
+1. Now open <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/search/search-with-facet-spec.js" regex="id">search-with-facet-spec.js</walkthrough-editor-select-regex>.
 
    In the initial request, the textual facet "colorFamilies" is going to be returned.
 
@@ -154,7 +154,7 @@ the search request body, explicitly passing product attributes as facets.
 1. Run the sample in a terminal with the following command:
 
     ```bash
-    node search/search_with_facet_spec.js
+    node search/search-with-facet-spec.js
     ```
 1. Check the response contains the object **```facets```**:
 
@@ -289,7 +289,7 @@ values for each faceting field.
 1. Run the sample in a terminal with the following command:
 
     ```bash
-    node search/search_with_facet_spec.js
+    node search/search-with-facet-spec.js
     ```
 1. Check the response contains the object **```facets```**:
 
