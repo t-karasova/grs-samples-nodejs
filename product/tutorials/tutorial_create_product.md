@@ -179,7 +179,7 @@ In this tutorial you will create a simple `PRIMARY` product presented in JSON fo
 
 1. To create a product, run the sample in the Terminal using the command:
     ```bash
-    node product/create_product.js
+    node product/create-product.js
     ```
 
 The Retail API returns the created product as a response.
@@ -192,7 +192,7 @@ If you send a request without one of the required fields or if the field format 
 
 1. Run the sample in the Terminal using the command:
     ```bash
-    node product/create_product.js
+    node product/create-product.js
     ```
 
 1. You should see the following error message:

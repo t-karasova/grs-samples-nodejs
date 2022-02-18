@@ -159,7 +159,7 @@ The originally created product is the following:
 
 To update each of its fields, you need to set the product object in a catalog to the `product` request field.
 
-The product object with updated fields is already preset in <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/update_product.js" regex="id">update_product.js</walkthrough-editor-select-regex>:
+The product object with updated fields is already preset in <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/update-product.js" regex="id">update-product.js</walkthrough-editor-select-regex>:
 ```
 {
   "name": "projects/<PROJECT_NUMBER>/locations/global/catalogs/default_catalog/branches/default_branch/products/<PRODUCT_ID>", #cannot be updated , should point to the existing product
@@ -181,11 +181,11 @@ The product object with updated fields is already preset in <walkthrough-editor-
 }
 ```
 
-1. Open <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/update_product.js" regex="id">update_product.js</walkthrough-editor-select-regex>.
+1. Open <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/update-product.js" regex="id">update-product.js</walkthrough-editor-select-regex>.
 
 1. Run this code sample in the Terminal to create a product in a catalog and update it using a prepared request:
     ```bash
-    node product/update_product.js
+    node product/update-product.js
     ```
 1. Check that the Retail API returns an updated product in the response.
 
@@ -204,7 +204,7 @@ The `updateMask` in the `UpdateProductRequest` method indicates which fields in 
 
 1. Run the code sample in the Terminal and check the response
     ```bash
-    node product/update_product.js
+    node product/update-product.js
     ```
 
 As you can see, only the product fields listed in the  `updateMask` were updated. Other fields weren't changed even if they were provided in the product object in the `UpdateProductRequest` method.

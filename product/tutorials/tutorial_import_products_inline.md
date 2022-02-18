@@ -128,7 +128,7 @@ Clone the Git repository with all the code samples to learn the Retail features 
 
 The only reconciliation mode available for inline importing is `INCREMENTAL`. That is, importing automatically creates new products and updates current products. Products already present in a catalog and missing from the imported JSON source will not change.
 
-1. To check the example of an import product request, open <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/import_products_inline_source.js" regex="id">product/import_products_inline_source.js</walkthrough-editor-select-regex>.
+1. To check the example of an import product request, open <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/import-products-inline-source.js" regex="id">product/import-products-inline-source.js</walkthrough-editor-select-regex>.
 
     The `parent` field contains a catalog name along with a branch number where products will be imported.
 
@@ -138,7 +138,7 @@ The only reconciliation mode available for inline importing is `INCREMENTAL`. Th
 
 1. To import the products, open the Terminal and run the following command:
     ```bash
-    node product/import_products_inline_source.js
+    node product/import-products-inline-source.js
     ```
 
 ## Response analysis
@@ -164,11 +164,11 @@ Try to import a few product objects, add an invalid one to them, and check the e
 
 The title field is required, so if you remove it, you will get an invalid product object.
 
-1. Go to the code sample and comment or remove the <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/import_products_inline_source.js" regex="#IamRemarkable Pen">line `title: '#IamRemarkable Pen'`. </walkthrough-editor-select-regex>
+1. Go to the code sample and comment or remove the <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/import-products-inline-source.js" regex="#IamRemarkable Pen">line `title: '#IamRemarkable Pen'`. </walkthrough-editor-select-regex>
 
 1. Run the code sample and wait till the operation is completed:
     ```bash
-    node product/import_products_inline_source.js
+    node product/import-products-inline-source.js
     ```
 
 Next, check the operation printed out in the Terminal.
@@ -193,7 +193,7 @@ If the operation is completed successfully, the `result` array will be displayed
 
 1. Run the code sample and wait till the operation is completed:
     ```bash
-    node product/import_products_inline_source.js
+    node product/import-products-inline-source.js
     ```
 
 1. Check the result:

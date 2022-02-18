@@ -142,7 +142,7 @@ The only reconciliation mode available for import from Cloud Storage is `INCREME
 
 To upload catalog data to the Cloud Storage bucket, you can create one or more JSON product files that do not exceed 2 GB each. You can set up to 100 JSON files in a single import request. For more information, see the [example of the product in JSON format](https://cloud.google.com/retail/docs/upload-catalog#json-format).
 
-1. To check the example of an import product request, open <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/import_products_gcs.js" regex="id">product/import_products_gcs.js</walkthrough-editor-select-regex>.
+1. To check the example of an import product request, open <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/import-products-gcs.js" regex="id">product/import-products-gcs.js</walkthrough-editor-select-regex>.
 
     The `parent` field contains a catalog name along with a branch number where products will be imported.
 
@@ -152,7 +152,7 @@ To upload catalog data to the Cloud Storage bucket, you can create one or more J
 
 1. To perform the product import, open Terminal and run the command:
     ```bash
-    node product/import_products_gcs.js
+    node product/import-products-gcs.js
     ```
 
 ## Response analysis
@@ -191,14 +191,14 @@ Another example of an invalid product is a product with an incorrect value in th
 
 There is a <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/resources/products_some_invalid.json" regex="id">resources/products_some_invalid.json</walkthrough-editor-select-regex> file in the Cloud Storage bucket that contains some invalid products.
 
-1. Open the <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/import_products_gcs.js" regex="// TO CHECK ERROR HANDLING USE THE JSON WITH INVALID PRODUCT">code sample</walkthrough-editor-select-regex> and assign `gcsProductsObject` value to the file name:
+1. Open the <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/import-products-gcs.js" regex="// TO CHECK ERROR HANDLING USE THE JSON WITH INVALID PRODUCT">code sample</walkthrough-editor-select-regex> and assign `gcsProductsObject` value to the file name:
     ```
     const gcsProductsObject = "products_some_invalid.json"
     ```
 
 1. Run the code sample and wait until the operation is completed:
     ```bash
-    node product/import_products_gcs.js
+    node product/import-products-gcs.js
     ```
 
 Next, check the operation printed out in the Terminal.
@@ -222,11 +222,11 @@ The error is the following:
 
 Next, send an invalid import request to check the error message.
 
-1. Open the  <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/events/import_products_gcs.js" regex="// TO CHECK ERROR HANDLING PASTE THE INVALID CATALOG NAME HERE">events/import_products_gcs.js</walkthrough-editor-select-regex> file, and change a local variable `parent` with any invalid catalog name.
+1. Open the  <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/import-products-gcs.js" regex="// TO CHECK ERROR HANDLING PASTE THE INVALID CATALOG NAME HERE">product/import-products-gcs.js</walkthrough-editor-select-regex> file, and change a local variable `parent` with any invalid catalog name.
 
 1. Run the code again with the following command:
     ```bash
-    node product/import_products_gcs.js
+    node product/import-products-gcs.js
     ```
 1. Check the error message in the Terminal:
     ```terminal

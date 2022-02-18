@@ -199,7 +199,7 @@ The BigQuery table is created. You can proceed to importing products to the cata
 
 1. Add the service account `cloud-retail-customer-data-access@system.gserviceaccount.com` as a BigQuery Data Viewer for your project.
 
-1. Open the file <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/import_products_big_query_table.js" regex="id">`product/import_products_big_query_table.js`</walkthrough-editor-select-regex> and look at the example of the import product request.
+1. Open the file <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/import-products-big-query-table.js" regex="id">`product/import-products-big-query-table.js`</walkthrough-editor-select-regex> and look at the example of the import product request.
 
     The field `parent` contains a catalog name along with a branch number where you are going to import your
     products to. You can use the default branch to import products to. However, if you are using custom products, change `default_branch`, which is **0**, to another branch ID, for example **1**. In the search tutorials you request `SearchService` to search for products in the default branch.
@@ -208,7 +208,7 @@ The BigQuery table is created. You can proceed to importing products to the cata
 
 1. To import products, open the Terminal and run the following command:
     ```bash
-    node product/import_products_big_query_table.js
+    node product/import-products-big-query-table.js
     ```
 
 ## Response analysis
@@ -250,13 +250,13 @@ There is a `products_some_invalid` table in the BigQuery dataset that contains s
 
 Use it for importing to get an error message.
 
-1. Go to the <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/import_products_big_query_table.js" regex="// TO CHECK ERROR HANDLING USE THE TABLE WITH INVALID PRODUCTS">`product/import_products_big_query_table.js`</walkthrough-editor-select-regex> file and assign the `tableId` value to the table with invalid products:
+1. Go to the <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/import-products-big-query-table.js" regex="// TO CHECK ERROR HANDLING USE THE TABLE WITH INVALID PRODUCTS">`product/import-products-big-query-table.js`</walkthrough-editor-select-regex> file and assign the `tableId` value to the table with invalid products:
     ```
     const tableId = "products_some_invalid"
     ```
 1. Run the code sample and wait till the operation is completed:
     ```bash
-    node product/import_products_big_query_table.js
+    node product/import-products-big-query-table.js
     ```
 
 Next, check the operation printed out to the Terminal.
@@ -280,7 +280,7 @@ The error is the following:
 
 Send an invalid import request to make the operation fail.
 
-1. Open the <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/import_products_big_query_table.js" regex="// TO CHECK ERROR HANDLING PASTE THE INVALID CATALOG NAME HERE">`product/import_products_big_query_table.js`</walkthrough-editor-select-regex> file, and change a local variable `parent` with any invalid catalog name.
+1. Open the <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/import-products-big-query-table.js" regex="// TO CHECK ERROR HANDLING PASTE THE INVALID CATALOG NAME HERE">`product/import-products-big-query-table.js`</walkthrough-editor-select-regex> file, and change a local variable `parent` with any invalid catalog name.
 
 1. Run the code again and check the error message
 

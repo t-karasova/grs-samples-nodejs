@@ -1,27 +1,24 @@
 <walkthrough-metadata>
-  <meta name="title" content="Get product tutorial" />
-  <meta name="description" content="In this tutorial you will call the `get_product()` method and check the service response." />
+  <meta name="title" content="Update inventory: remove fulfillment places tutorial" />
+  <meta name="description" content="Removing fulfillment places." />
   <meta name="component_id" content="593554" />
 </walkthrough-metadata>
 
-# Get product tutorial
+# Update inventory: remove fulfillment places tutorial
 
-## Get started
+## Introduction
 
-To fill the catalog or to update a massive number of products, we recommend using the `import_products` method. However,
-sometimes you might need to make some detached changes in your product catalog.
+Changes to a product's inventory information might occur more frequently than changes to its catalog information.
 
-For such cases, the Retail API provides you with the following methods:
-- create_product
-- get_product
-- update_product
-- delete_product
+After the fulfillment availability for some specific places has changed, you can push updates instead of using the `UpdateProduct` method to respecify all of the product fulfillment information.
 
-In this tutorial you will call the `get_product()` method and check the service response.
+In such cases `AddFulfillmentPlaces` and `RemoveFulfillmentPlaces` methods can be used to incrementally update product fulfillment. The place IDs are added to or removed from a given fulfillment type based on the fulfillment changes.
 
-For information about managing catalog information, see the [Retail API documentation](https://cloud.google.com/retail/docs/manage-catalog).
+These methods are asynchronous because of downstream optimizations that support hundreds of concurrent updates per product without sacrificing performance.
 
-<walkthrough-tutorial-duration duration="4"></walkthrough-tutorial-duration>
+For more information about managing catalog information, see the [Retail API documentation](https://cloud.google.com/retail/docs/inventory-updates#inventory-update-methods).
+
+<walkthrough-tutorial-duration duration="5"></walkthrough-tutorial-duration>
 
 ## Get started with Google Cloud Retail
 
@@ -122,35 +119,39 @@ Clone the Git repository with all the code samples to learn the Retail features 
     npm install
     ```
 
-## Get a product
+## Remove fulfillment places
 
-To build `GetProductRequest`, only the `name` field is required. You should pass the full resource name of the product, which is:
-    ```
-    projects/<project_number>/locations/global/catalogs/<catalog_id>/branches/<branch_id>/products/<product_id>
-    ```
+The `RemoveFulfillmentPlacesRequest` and `AddFulfillmentPlacesRequest` requests are similar.
 
-1. Find the `GetProductRequest` object in a <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/get-product.js" regex="id">get-product.js</walkthrough-editor-select-regex>.
+1. Check the `RemoveFulfillmentPlacesRequest` request.
 
-1. Run this code sample in the Terminal to create a product in a catalog and get it using a prepared request.
+1. Run the code sample in the Terminal with the following command:
     ```bash
-    node product/get-product.js
+    node product/remove-fulfillment-places.js
     ```
 
-1. The Retail API returns the requested product with all product fields despite the list of retrievable fields provided in  `product.retrievableFields`. It defines which product fields should be displayed only in a search response.
+1. Check the response with current time in the Terminal. The product was initially created with fulfillment places `store1`, `store2` and `store3`.
+
+1. Check the updated product response. The `store1` place has been removed from the list of fulfillment places for the `same-day-delivery` type.
+
+## Send an out-of-order RemoveFulfillmentPlaces request
+
+The `RemoveFulfillmentPlaces` method lets you set an update time.
+If its value is greater than the latest update time value recorded for the relevant inventory fields, the update proceeds.
+
+1. Check the response with outdated time printed out in the Terminal. The fulfillment places information isn't updated.
 
 ## Congratulations
 
 <walkthrough-conclusion-trophy></walkthrough-conclusion-trophy>
 
-You have completed the tutorial! We encourage you to test the getting products by yourself.
+You have completed the tutorial! We encourage you to test removing the product fulfillment places by yourself.
 
 <walkthrough-inline-feedback></walkthrough-inline-feedback>
 
-
 ### Do more with the Retail API
 
-<walkthrough-tutorial-card id="retail_api_v2_create_product_python" icon="LOGO_PYTHON" title="Create product tutorial" keepPrevious=true>Try to create a product via the Retail API</walkthrough-tutorial-card>
+<walkthrough-tutorial-card id="retail_api_v2_set_invenory_python" icon="LOGO_PYTHON" title="Set inventory tutorial" keepPrevious=true>
+Try to get a product via the Retail API</walkthrough-tutorial-card>
 
-<walkthrough-tutorial-card id="retail_api_v2_update_product_python" icon="LOGO_PYTHON" title="Update product tutorial" keepPrevious=true>Try to update a product via the Retail API</walkthrough-tutorial-card>
-
-<walkthrough-tutorial-card id="retail_api_v2_delete_product_python" icon="LOGO_PYTHON" title="Delete product tutorial" keepPrevious=true>Try to remove a product via the Retail API</walkthrough-tutorial-card>
+<walkthrough-tutorial-card id="retail_api_v2_add_fulfillment_places_python" icon="LOGO_PYTHON" title="Add fulfillment tutorial" keepPrevious=true>Try to update a product via the Retail API</walkthrough-tutorial-card>

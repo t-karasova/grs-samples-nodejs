@@ -131,20 +131,20 @@ You should use the full resource name of a product, such as:
 projects/<project_number>/locations/global/catalogs/<catalog_id>/branches/<branch_id>/products/<product_id>
 ```
 
-1. Find the `DeleteProductRequest` example in <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/delete_product.js" regex="id">delete_product.js</walkthrough-editor-select-regex>.
+1. Find the `DeleteProductRequest` example in <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/delete-product.js" regex="id">delete-product.js</walkthrough-editor-select-regex>.
 
 1. Run the code sample in the Terminal to create a product in a catalog and remove it using a prepared request:
     ```bash
-    node product/delete_product.js
+    node product/delete-product.js
     ```
 
 There is no return value for this method. To check if the product was successfully removed, try to delete this product one more time:
 
-1. Copy the product name from the output message in the Terminal and assign it <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/delete_product.js" regex="# delete created product">here</walkthrough-editor-select-regex> to the `name` variable.
+1. Copy the product name from the output message in the Terminal and assign it <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/delete-product.js" regex="# delete created product">here</walkthrough-editor-select-regex> to the `name` variable.
 
 1. Run the following command in the Terminal:
    ```bash
-    node product/delete_product.js
+    node product/delete-product.js
     ```
 
 1. You should see the following error message:

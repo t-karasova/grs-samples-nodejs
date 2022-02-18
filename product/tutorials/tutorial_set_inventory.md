@@ -1,27 +1,20 @@
 <walkthrough-metadata>
-  <meta name="title" content="Get product tutorial" />
-  <meta name="description" content="In this tutorial you will call the `get_product()` method and check the service response." />
+  <meta name="title" content="Set inventory tutorial" />
+  <meta name="description" content="You can push inventory updates using the `SetInventory` method instead of updating the entire product." />
   <meta name="component_id" content="593554" />
 </walkthrough-metadata>
 
-# Get product tutorial
+# Set inventory tutorial
 
-## Get started
+## Introduction
 
-To fill the catalog or to update a massive number of products, we recommend using the `import_products` method. However,
-sometimes you might need to make some detached changes in your product catalog.
+Changes to a product's inventory information might occur more frequently than changes to the catalog information.
 
-For such cases, the Retail API provides you with the following methods:
-- create_product
-- get_product
-- update_product
-- delete_product
+You can push inventory updates using the `SetInventory` method instead of updating the entire product.
 
-In this tutorial you will call the `get_product()` method and check the service response.
+For more information about managing catalog information, see the [Retail API documentation](https://cloud.google.com/retail/docs/inventory-updates#non-incremental-updates).
 
-For information about managing catalog information, see the [Retail API documentation](https://cloud.google.com/retail/docs/manage-catalog).
-
-<walkthrough-tutorial-duration duration="4"></walkthrough-tutorial-duration>
+<walkthrough-tutorial-duration duration="5"></walkthrough-tutorial-duration>
 
 ## Get started with Google Cloud Retail
 
@@ -122,35 +115,47 @@ Clone the Git repository with all the code samples to learn the Retail features 
     npm install
     ```
 
-## Get a product
+## Set inventory
 
-To build `GetProductRequest`, only the `name` field is required. You should pass the full resource name of the product, which is:
-    ```
-    projects/<project_number>/locations/global/catalogs/<catalog_id>/branches/<branch_id>/products/<product_id>
-    ```
+1. Set the following fields to send the `SetInventoryRequest` call:
+    - `inventory`— the inventory information to update. The fields allowed for updating are:
+        - `priceInfo`
+        - `vailability`
+        - `vailableQuantity`
+        - `fulfillmentInfo`
+    - `setMask`—indicates what product inventory fields to update
+    - `setTime`—the time when the request is sent. It is used to prevent out-of-order updates on inventory fields that contain the last update time recorded value.
+    - `allowMissing`—if set to true and the product is not found, the fulfillment information will be retained for up to 24 hours and processed after the product is created.
 
-1. Find the `GetProductRequest` object in a <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/get-product.js" regex="id">get-product.js</walkthrough-editor-select-regex>.
+1. Open the <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/set-inventory.js" regex="#">product/set-inventory.js</walkthrough-editor-select-regex> file and check the `SetInventoryRequest` request. 
 
-1. Run this code sample in the Terminal to create a product in a catalog and get it using a prepared request.
+1. To add the fulfillment places, open the Terminal and run the following command:
     ```bash
-    node product/get-product.js
+    node product/set-inventory.js
     ```
 
-1. The Retail API returns the requested product with all product fields despite the list of retrievable fields provided in  `product.retrievableFields`. It defines which product fields should be displayed only in a search response.
+1. Check the response with current date in the Terminal. The product is initially created with `priceInfo` and `availability` information.
+
+Next, to ensure that the product inventory information was updated successfully, check the response.
+
+## Send an out-of-order SetInventory request
+
+The `SetInventory` method allows you to specify an update time when the request is sent.
+The Retail API compares the update time you've specified with the latest time recorded for the relevant inventory fields. An update happens only if the specified update time value is greater than the latest update time value.
+
+1. Check the response with outdated time printed out in the Terminal. The inventory information isn't updated.
 
 ## Congratulations
 
 <walkthrough-conclusion-trophy></walkthrough-conclusion-trophy>
 
-You have completed the tutorial! We encourage you to test the getting products by yourself.
+You have completed the tutorial! We encourage you to test the product inventory information by yourself.
 
 <walkthrough-inline-feedback></walkthrough-inline-feedback>
 
-
 ### Do more with the Retail API
 
-<walkthrough-tutorial-card id="retail_api_v2_create_product_python" icon="LOGO_PYTHON" title="Create product tutorial" keepPrevious=true>Try to create a product via the Retail API</walkthrough-tutorial-card>
+<walkthrough-tutorial-card id="retail_api_v2_add_fulfillment_places_python" icon="LOGO_PYTHON" title="Add fulfillment tutorial" keepPrevious=true>
+Try to get a product via the Retail API</walkthrough-tutorial-card>
 
-<walkthrough-tutorial-card id="retail_api_v2_update_product_python" icon="LOGO_PYTHON" title="Update product tutorial" keepPrevious=true>Try to update a product via the Retail API</walkthrough-tutorial-card>
-
-<walkthrough-tutorial-card id="retail_api_v2_delete_product_python" icon="LOGO_PYTHON" title="Delete product tutorial" keepPrevious=true>Try to remove a product via the Retail API</walkthrough-tutorial-card>
+<walkthrough-tutorial-card id="retail_api_v2_remove_fulfillment_places_python" icon="LOGO_PYTHON" title="Removee fulfillment tutorial" keepPrevious=true>Try to update a product via the Retail API</walkthrough-tutorial-card>

@@ -158,7 +158,7 @@ In this tutorial you will create a simple `PRIMARY` product presented in JSON fo
 }
 ```
 
-Open the <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/crud_product.js" regex="">crud_product.js</walkthrough-editor-select-regex> code sample and check this product generation.
+Open the <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/crud-product.js" regex="">crud-product.js</walkthrough-editor-select-regex> code sample and check this product generation.
 
 ## Create a product request
 
@@ -167,13 +167,13 @@ Open the <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retai
     - `productId`—product ID
     - `parent`—a branch name in a catalog where the product will be created
 
-1. Check the `CreateProductRequest` request along with the Retail API call in a <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/crud_product.js" regex="// Create product">`callCreateProduct()`</walkthrough-editor-select-regex> method.
+1. Check the `CreateProductRequest` request along with the Retail API call in a <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/crud-product.js" regex="// Create product">`callCreateProduct()`</walkthrough-editor-select-regex> method.
 
-1. Comment out <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/crud_product.js" regex="">the lines</walkthrough-editor-select-regex> with the following calls: `callGetProduct()`, `callUpdateProduct()`, and `callDeleteProduct()`. These actions will be checked in the next steps.
+1. Comment out <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/crud-product.js" regex="">the lines</walkthrough-editor-select-regex> with the following calls: `callGetProduct()`, `callUpdateProduct()`, and `callDeleteProduct()`. These actions will be checked in the next steps.
 
 1. To create a product, run the sample in the Terminal using the command:
     ```bash
-    node product/crud_product.js
+    node product/crud-product.js
     ```
 
     The Retail API returns a created product as a response.
@@ -185,15 +185,15 @@ To build the `GetProductRequest` request, only the `name` field is required. You
     projects/<project_number>/locations/global/catalogs/<catalog_id>/branches/<branch_id>/products/<product_id>
     ```
 
-1. You can find the `GetProductRequest` example in a <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/crud_product.js" regex="// Get product">`callGetProduct()`</walkthrough-editor-select-regex> method.
+1. You can find the `GetProductRequest` example in a <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/crud-product.js" regex="// Get product">`callGetProduct()`</walkthrough-editor-select-regex> method.
 
-1. Comment out <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/crud_product.js" regex="">the lines</walkthrough-editor-select-regex> with the following calls: `callCreateProduct()`, `callUpdateProduct()`, and `callDeleteProduct()`. These actions were already checked or will be checked in the next steps.
+1. Comment out <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/crud-product.js" regex="">the lines</walkthrough-editor-select-regex> with the following calls: `callCreateProduct()`, `callUpdateProduct()`, and `callDeleteProduct()`. These actions were already checked or will be checked in the next steps.
 
 1. Uncomment the line with the `callGetProduct()` method call.
 
 1. To get a product, run the sample in the Terminal using the command:
     ```bash
-    node product/crud_product.js
+    node product/crud-product.js
     ```
 
     The Retail API returns the requested product with all product fields. The `product.retrievableFields` value, which defines the displayed product fields in the search response, won't affect the product fields in the result.
@@ -233,15 +233,15 @@ Take a look at the `productForUpdate` object that contain the product object wit
 }
 ```
 
-1. Check the `UpdateProductRequest` example in the <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/crud_product.js" regex="// Update product">`callUpdateProduct()`</walkthrough-editor-select-regex> method.
+1. Check the `UpdateProductRequest` example in the <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/crud-product.js" regex="// Update product">`callUpdateProduct()`</walkthrough-editor-select-regex> method.
 
-1. Comment out <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/crud_product.js" regex="">the lines</walkthrough-editor-select-regex> with the following calls: `callCreateProduct()`, `callGetProduct()`, `callDeleteProduct()`. These actions were already checked or will be checked in the next steps.
+1. Comment out <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/crud-product.js" regex="">the lines</walkthrough-editor-select-regex> with the following calls: `callCreateProduct()`, `callGetProduct()`, `callDeleteProduct()`. These actions were already checked or will be checked in the next steps.
 
 1. Uncomment the line with the `callUpdateProduct()` method call.
 
 1. To update a product, run the sample in the Terminal using the command:
     ```bash
-    node product/crud_product.js
+    node product/crud-product.js
     ```
 
     In the Retail API response an updated product is returned.
@@ -255,21 +255,21 @@ You should use the full resource name of a product, such as:
 projects/<project_number>/locations/global/catalogs/<catalog_id>/branches/<branch_id>/products/<product_id>
 ```
 
-1. Check the `DeleteProductRequest` example in the <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/crud_product.js" regex="// Delete product">`callDeleteProduct()`</walkthrough-editor-select-regex> method.
+1. Check the `DeleteProductRequest` example in the <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/crud-product.js" regex="// Delete product">`callDeleteProduct()`</walkthrough-editor-select-regex> method.
 
-1. Comment out <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/crud_product.js" regex="">the lines</walkthrough-editor-select-regex> with the following calls: `callCreateProduct()`, `callGetProduct()`, and `callUpdateProduct()`. These actions were already checked or will be checked in the next steps.
+1. Comment out <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/product/crud-product.js" regex="">the lines</walkthrough-editor-select-regex> with the following calls: `callCreateProduct()`, `callGetProduct()`, and `callUpdateProduct()`. These actions were already checked or will be checked in the next steps.
 
 1. Uncomment the line with the `callDeleteProduct()` method call.
 
 1. To remove a product, run the sample in the Terminal using the command:
     ```bash
-    node product/crud_product.js
+    node product/crud-product.js
     ```
 
     There is no return value for this method.
 1. To check if the product was successfully removed, you need to remove the product one more time.
     ```bash
-    node product/crud_product.js
+    node product/crud-product.js
     ```
 
     You should see the following error message:
