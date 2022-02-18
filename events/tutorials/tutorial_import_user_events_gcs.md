@@ -138,7 +138,7 @@ The bucket name must be unique. For convenience, you can name it `<YOUR_PROJECT_
 
 ## Import user events to the Retail catalog from the Cloud Storage source
 
-1. To check the example of an import user events request, open <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/events/import_user_events_gcs.js" regex="# call the Retail API to import user events">events/import_user_events_gcs.js</walkthrough-editor-select-regex>.
+1. To check the example of an import user events request, open <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/events/import-user-events-gcs.js" regex="# call the Retail API to import user events">events/import-user-events-gcs.js</walkthrough-editor-select-regex>.
 
     The `parent` field in the `ImportUserEventsRequest` contains a catalog name along with a branch number you are going to import your user events to.
 
@@ -148,7 +148,7 @@ The bucket name must be unique. For convenience, you can name it `<YOUR_PROJECT_
 
 1. To perform the user events import, open Terminal and run the command:
     ```bash
-    node events/import_user_events_gcs.js
+    node events/import-user-events-gcs.js
     ```
 
 ## Response analysis
@@ -188,14 +188,14 @@ The `type` field is required and should have one of the [defined values](https:/
 
 There is a <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/resources/user_events_some_invalid.json" regex="id">resources/user_events_some_invalid.json</walkthrough-editor-select-regex> file in the Cloud Storage bucket that contains some invalid user events.
 
-1. Open the <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/events/import_user_events_gcs.js" regex="// TO CHECK ERROR HANDLING USE THE JSON WITH INVALID USER EVENTS">code sample</walkthrough-editor-select-regex> and assign the `gcsEventsObject` value to the filename:
+1. Open the <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/events/import-user-events-gcs.js" regex="// TO CHECK ERROR HANDLING USE THE JSON WITH INVALID USER EVENTS">code sample</walkthrough-editor-select-regex> and assign the `gcsEventsObject` value to the filename:
     ```
     gcsEventsObject = "user_events_some_invalid.json"
     ```
 
 1. Run the code sample and wait until the operation is completed:
     ```bash
-    node events/import_user_events_gcs.js
+    node events/import-user-events-gcs.js
     ```
 
 Next, check the operation printed out in the Terminal.
@@ -224,11 +224,11 @@ importSummary {
 
 Next, send an invalid import request to check the error message.
 
-1. Open the  <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/events/import_user_events_gcs.js" regex="// TO CHECK ERROR HANDLING PASTE THE INVALID CATALOG NAME HERE">events/import_user_events_gcs.js</walkthrough-editor-select-regex> file, and change a local variable `parent` with any invalid catalog name.
+1. Open the  <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/events/import-user-events-gcs.js" regex="// TO CHECK ERROR HANDLING PASTE THE INVALID CATALOG NAME HERE">events/import-user-events-gcs.js</walkthrough-editor-select-regex> file, and change a local variable `parent` with any invalid catalog name.
 
 1. Run the code again with the following command:
     ```bash
-    node events/import_user_events_gcs.js
+    node events/import-user-events-gcs.js
     ```
 1. Check the error message in the Terminal:
     ```terminal

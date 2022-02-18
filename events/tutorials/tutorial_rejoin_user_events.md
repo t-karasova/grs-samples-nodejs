@@ -125,13 +125,13 @@ The `RejoinUserEventsRequest` method consists of two fields:
 
 Learn more about the user events in [the Retail documentation](https://cloud.google.com/retail/docs/reference/rpc/google.cloud.retail.v2#rejoinusereventsrequest).
 
-You can check the `RejoinUserEventsRequest` example in the `events/rejoin_user_events.js` file.
+You can check the `RejoinUserEventsRequest` example in the `events/rejoin-user-events.js` file.
 
-1. Check the `RejoinUserEventsRequest` request example in the <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/events/rejoin_user_events.js" regex="id">`events/rejoin_user_events.js`</walkthrough-editor-select-regex> file.
+1. Check the `RejoinUserEventsRequest` request example in the <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/events/rejoin-user-events.js" regex="id">`events/rejoin-user-events.js`</walkthrough-editor-select-regex> file.
 
 1. Run the code sample in the Terminal with the following command:
     ```bash
-    node events/rejoin_user_events.js
+    node events/rejoin-user-events.js
     ```
 
 The rejoin operation might take up to 24 hours. If the long-running operation is successful, then `rejoinedUserEventsCount`, the number of user events that were joined with the latest product catalogs, is returned.
@@ -140,14 +140,14 @@ The rejoin operation might take up to 24 hours. If the long-running operation is
 
 Next, check the error handling by sending a rejoin request with an invalid parent.
 
-1. Open the <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/events/rejoin_user_events.js" regex="// TO CHECK ERROR HANDLING PASTE THE INVALID CATALOG NAME HERE">events/rejoin_user_event.js</walkthrough-editor-select-regex> file, and change a local variable `parent` with any invalid catalog name.
+1. Open the <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/events/rejoin-user-events.js" regex="// TO CHECK ERROR HANDLING PASTE THE INVALID CATALOG NAME HERE">events/rejoin_user_event.js</walkthrough-editor-select-regex> file, and change a local variable `parent` with any invalid catalog name.
     ```bash
     const parent = `projects/${projectNumber}/locations/global/catalogs/invalid_catalog`;
     ```
 
 1. Run the code sample in the Terminal with the following command:
     ```bash
-    node events/rejoin_user_events.js
+    node events/rejoin-user-events.js
     ```
 
 1. Check the error message:

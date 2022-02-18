@@ -244,7 +244,7 @@ You have already created a BigQuery table, so you can use it in your Retail API
 import request.
 
 1.  To check the example of an import user events request, open
-    <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/events/import_user_events_big_query.js" regex="id">events/import_user_events_big_query.js</walkthrough-editor-select-regex>
+    <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/events/import-user-events-big-query.js" regex="id">events/import-user-events-big-query.js</walkthrough-editor-select-regex>
     file.
 
     The `parent` field in the `ImportUserEventsRequest` contains a
@@ -258,7 +258,7 @@ import request.
 
 1.  To perform the user events import, open Terminal and run the command: 
     ```bash
-    node events/import_user_events_big_query.js
+    node events/import-user-events-big-query.js
     ```
 
 ## Response analysis
@@ -310,12 +310,12 @@ is, if you set some invalid value, you get the invalid user event object.
     file as the source.
 
 1.  Go to the
-    <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/events/import_user_events_big_query.js" regex="// TO CHECK ERROR HANDLING USE THE TABLE OF INVALID USER EVENTS">events/import_user_events_big_query.js</walkthrough-editor-select-regex>
+    <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/events/import-user-events-big-query.js" regex="// TO CHECK ERROR HANDLING USE THE TABLE OF INVALID USER EVENTS">events/import-user-events-big-query.js</walkthrough-editor-select-regex>
     file and assign a value of `tableId` to the table name: `const tableId = 'events_some_invalid'`
 
 1.  Run the code sample and wait until the operation is completed: 
     ```bash
-    node events/import_user_events_big_query.js
+    node events/import-user-events-big-query.js
     ```
 
 Next, check that the operation printed out to the Terminal.
@@ -345,12 +345,12 @@ import_summary { joined_events_count: 3 }`
 Next, send an invalid import request to check the error message.
 
 1.  Open the
-    <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/events/import_user_events_big_query.js" regex="// TO CHECK ERROR HANDLING PASTE THE INVALID CATALOG NAME HERE">events/import_user_events_big_query.js</walkthrough-editor-select-regex>
+    <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/events/import-user-events-big-query.js" regex="// TO CHECK ERROR HANDLING PASTE THE INVALID CATALOG NAME HERE">events/import-user-events-big-query.js</walkthrough-editor-select-regex>
     file, and change a local variable `parent` with any invalid catalog name.
 
 1.  Run the code again in the Terminal: 
     ```bash
-    node events/import_user_events_big_query.js
+    node events/import-user-events-big-query.js
     ```
 
 1.  Check the error message: `INVALID_ARGUMENT: Request contains an invalid argument.`

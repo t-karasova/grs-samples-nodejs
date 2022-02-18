@@ -116,7 +116,7 @@ Clone the Git repository with all the code samples to learn the Retail features 
     ```
 ## Import user events to the Retail catalog from the inline source
 
-1. To check the example of an import user events request, open the <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/events/import_user_events_inline.js" regex="id">`events/import_user_events_inline.js`</walkthrough-editor-select-regex> file.
+1. To check the example of an import user events request, open the <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/events/import-user-events-inline.js" regex="id">`events/import-user-events-inline.js`</walkthrough-editor-select-regex> file.
 
     The `generateEvent()` method creates the user events to be used in the `inputConfig` field.
 
@@ -126,7 +126,7 @@ Clone the Git repository with all the code samples to learn the Retail features 
 
 1. To perform the user events import, run the following command in the Terminal:
     ```bash
-    node events/import_user_events_inline.js
+    node events/import-user-events-inline.js
     ```
 
 ## Response analysis

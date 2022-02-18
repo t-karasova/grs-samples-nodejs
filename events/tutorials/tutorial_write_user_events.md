@@ -120,11 +120,11 @@ The `WriteUserEventRequest` request consists of two fields:
 
 Learn more about the user events in [the Retail documentation](https://cloud.google.com/retail/docs/reference/rpc/google.cloud.retail.v2#userevent)
 
-1. Check the `WriteUserEventRequest` request example in the <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/events/write_user_event.js" regex="id">`events/write_user_event.js`</walkthrough-editor-select-regex> file.
+1. Check the `WriteUserEventRequest` request example in the <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/events/write-user-event.js" regex="id">`events/write-user-event.js`</walkthrough-editor-select-regex> file.
 
 1. Run the code sample in the Terminal with the following command:
     ```bash
-    node events/write_user_event.js
+    node events/write-user-event.js
     ```
 
 The Retail API returns the created user event. Check the output in the Terminal.
@@ -134,14 +134,14 @@ The Retail API returns the created user event. Check the output in the Terminal.
 
 Next, check the error handling by sending a request with an invalid parent.
 
-1. Open the <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/events/write_user_event.js" regex="// TO CHECK ERROR HANDLING PASTE THE INVALID CATALOG NAME HERE">events/write_user_event.js</walkthrough-editor-select-regex> file, and change a local variable `parent` with any invalid catalog name.
+1. Open the <walkthrough-editor-select-regex filePath="cloudshell_open/nodejs-retail/samples/interactive-tutorials/events/write-user-event.js" regex="// TO CHECK ERROR HANDLING PASTE THE INVALID CATALOG NAME HERE">events/write-user-event.js</walkthrough-editor-select-regex> file, and change a local variable `parent` with any invalid catalog name.
     ```bash
     const parent = `projects/${projectNumber}/locations/global/catalogs/invalid_catalog`;
     ```
 
 1. Run the code sample in the Terminal with the following command:
     ```bash
-    node events/write_user_event.js
+    node events/write-user-event.js
     ```
 
 1. Check the error message:
