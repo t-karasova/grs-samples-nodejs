@@ -23,10 +23,9 @@ async function main() {
 
   const projectNumber = process.env['PROJECT_NUMBER'];
   const visitorId = 'test_visitor_id';
-  const apiEndpoint = 'retail.googleapis.com';
 
   // Placement
-  const parent = `projects/${projectNumber}/locations/global/catalogs/default_catalog`;
+  const parent = `projects/${projectNumber}/locations/global/catalogs/default_catalog`; // TO CHECK ERROR HANDLING PASTE THE INVALID CATALOG NAME HERE
 
   const UserEventRejoinScope = {
     USER_EVENT_REJOIN_SCOPE_UNSPECIFIED: 0,
@@ -38,7 +37,7 @@ async function main() {
   const userEventRejoinScope = UserEventRejoinScope.UNJOINED_EVENTS;
 
   // Instantiates a client.
-  const retailClient = new UserEventServiceClient({apiEndpoint});
+  const retailClient = new UserEventServiceClient();
 
   const callRejoinUserEvents = async () => {
     // Construct request

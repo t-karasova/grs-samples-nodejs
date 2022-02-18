@@ -23,20 +23,19 @@ async function main() {
 
   const projectNumber = process.env['PROJECT_NUMBER'];
   const visitorId = 'test_visitor_id';
-  const apiEndpoint = 'retail.googleapis.com';
 
   // Placement
   const parent = `projects/${projectNumber}/locations/global/catalogs/default_catalog`;
 
   // The filter string to specify the events to be deleted with a
   // length limit of 5,000 characters.
-  const filter = `visitorId="${visitorId}"`;
+  const filter = `visitorId="${visitorId}"`; // TO CHECK ERROR HANDLING SET INVALID FILTER HERE
 
   // Actually perform the purge.
   const force = true;
 
   // Instantiates a client.
-  const retailClient = new UserEventServiceClient({apiEndpoint});
+  const retailClient = new UserEventServiceClient();
 
   const callPurgeUserEvents = async () => {
     // Construct request
