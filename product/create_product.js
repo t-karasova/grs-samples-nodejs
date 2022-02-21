@@ -22,7 +22,6 @@ async function main(generatedProductId) {
   const utils = require('../setup/setup_cleanup');
 
   const projectNumber = process.env['PROJECT_NUMBER'];
-  const apiEndpoint = 'retail.googleapis.com';
 
   // The parent catalog resource name
   const parent = `projects/${projectNumber}/locations/global/catalogs/default_catalog/branches/default_branch`;
@@ -41,13 +40,13 @@ async function main(generatedProductId) {
     priceInfo: {
       price: 30.0,
       originalPrice: 35.5,
-      currency_code: 'USD',
+      currencyCode: 'USD',
     },
     availability: 'IN_STOCK',
   };
 
   // Instantiates a client.
-  const retailClient = new ProductServiceClient({apiEndpoint});
+  const retailClient = new ProductServiceClient();
 
   const callCreateProduct = async () => {
     // Construct request
